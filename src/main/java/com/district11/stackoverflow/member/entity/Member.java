@@ -1,4 +1,4 @@
-package com.district11.stackoverflow.member;
+package com.district11.stackoverflow.member.entity;
 
 
 
