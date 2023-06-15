@@ -1,4 +1,8 @@
 package com.district11.stackoverflow.answer.mapper;
 
-public class AnswerMapper {
+import org.mapstruct.Mapper;
+
+@Mapper(componentModel = "spring")
+public interface AnswerMapper {
+
 }
