@@ -1,4 +1,4 @@
-package com.district11.stackoverflow.answer;
+package com.district11.stackoverflow.answer.entity;
 
 import javax.persistence.Entity;
 
