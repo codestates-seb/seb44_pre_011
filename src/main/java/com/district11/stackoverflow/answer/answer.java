@@ -1,4 +1,7 @@
 package com.district11.stackoverflow.answer;
 
-public class answer {
+import javax.persistence.Entity;
+
+@Entity
+public class Answer {
 }
