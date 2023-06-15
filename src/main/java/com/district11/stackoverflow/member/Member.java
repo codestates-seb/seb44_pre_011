@@ -6,5 +6,6 @@ import javax.persistence.Entity;
 
 @Entity
 public class Member {
+    public String name;
 
 }
