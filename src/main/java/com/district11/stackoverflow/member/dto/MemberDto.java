@@ -1,6 +1,7 @@
 package com.district11.stackoverflow.member.dto;
 
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,12 +12,22 @@ public class MemberDto {
     @AllArgsConstructor
     public static class Post {
 
+        private String email;
+
+        private String password;
+
+        private String displayName;
     }
 
     @Getter
     @AllArgsConstructor
     public static class Pacth {
 
+        private Long memberId;
+
+        private String displayName;
+
+        private String password;
     }
 
     @Getter
