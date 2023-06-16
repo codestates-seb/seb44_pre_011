@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 public class QuestionResponseDto {
-    private long memberId;
     private long questionId;
     private String title;
     private String content;

@@ -19,7 +19,10 @@ public class Question extends Auditable {
     private String title;
     @Column(length = 2000, nullable = false)
     private String content;
-
+    /*
+    @Column(name = "member_id", insertable = false, updatable = false)
+    private Long memberId;
+    */
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;

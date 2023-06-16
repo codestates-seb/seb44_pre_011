@@ -2,6 +2,7 @@ package com.district11.stackoverflow.question.service;
 
 import com.district11.stackoverflow.exception.BusinessLogicException;
 import com.district11.stackoverflow.exception.ExceptionCode;
+import com.district11.stackoverflow.member.entity.Member;
 import com.district11.stackoverflow.question.entity.Question;
 import com.district11.stackoverflow.question.repository.QuestionRepository;
 import org.springframework.data.domain.Page;

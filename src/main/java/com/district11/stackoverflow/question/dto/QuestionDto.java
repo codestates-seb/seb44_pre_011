@@ -10,15 +10,13 @@ public class QuestionDto {
     @Getter
     @Setter
     public static class Post {
-        @NotNull
-        private long memberId;
+
         @NotNull
         private String title;
         @NotNull
         private String content;
 
-        public Post(long memberId, String title, String content) {
-            this.memberId = memberId;
+        public Post(String title, String content) {
             this.title = title;
             this.content = content;
         }
@@ -27,7 +25,6 @@ public class QuestionDto {
     @Getter
     @Setter
     public static class Patch {
-        private long memberId;
 
         private String title;
 
@@ -35,8 +32,7 @@ public class QuestionDto {
 
         private long questionId;
 
-        public Patch(long member_id, String title, String content, long questionId) {
-            this.memberId = member_id;
+        public Patch(String title, String content, long questionId) {
             this.title = title;
             this.content = content;
             this.questionId = questionId;
