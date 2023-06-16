@@ -21,7 +21,7 @@ public class MemberDto {
 
     @Getter
     @AllArgsConstructor
-    public static class Pacth {
+    public static class Patch {
 
         private Long memberId;
 
@@ -33,6 +33,7 @@ public class MemberDto {
     @Getter
     @AllArgsConstructor
     public static class Response {
+
 
     }
 }

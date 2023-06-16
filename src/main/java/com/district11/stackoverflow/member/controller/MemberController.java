@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/members")
 @Validated
@@ -23,28 +25,29 @@ public class MemberController {
         this.memberMapper = memberMapper;
     }
 
-    @PostMapping
-    public ResponseEntity postMember() {
-        return new ResponseEntity<>();
-    }
-
-    @PatchMapping("/{member-Id}")
-    public ResponseEntity patchMember(){
-        return new ResponseEntity<>();
-    }
-
-    @GetMapping
-    public ResponseEntity getMembers() {
-        return new ResponseEntity<>();
-    }
-
-    @GetMapping("/{member-id}")
-    public ResponseBody getMember() {
-        return new ResponseBody<>();
-    }
-
-    @DeleteMapping("/{member-id}")
-    public ResponseBody deleteMember() {
-        return new ResponseEntity<>();
-    }
+//    @PostMapping
+//    public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody) {
+//        Member member = memberMapper.memberPostDtotoMember(requestBody);
+//        return new ResponseEntity<>();
+//    }
+//
+//    @PatchMapping("/{member-Id}")
+//    public ResponseEntity patchMember(){
+//        return new ResponseEntity<>();
+//    }
+//
+//    @GetMapping
+//    public ResponseEntity getMembers() {
+//        return new ResponseEntity<>();
+//    }
+//
+//    @GetMapping("/{member-id}")
+//    public ResponseBody getMember() {
+//        return new ResponseEntity<>();
+//    }
+//
+//    @DeleteMapping("/{member-id}")
+//    public ResponseBody deleteMember() {
+//        return new ResponseEntity<>();
+//    }
 }

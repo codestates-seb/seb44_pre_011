@@ -1,5 +1,6 @@
 package com.district11.stackoverflow.member.entity;
 
+import com.district11.stackoverflow.audit.Auditable;
 import com.district11.stackoverflow.question.entity.Question;
 import lombok.Cleanup;
 import lombok.Getter;
@@ -14,7 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Member {
+public class Member extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
