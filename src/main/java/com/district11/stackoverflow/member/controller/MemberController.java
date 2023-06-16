@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/members")
 @Validated
@@ -24,7 +26,8 @@ public class MemberController {
     }
 
 //    @PostMapping
-//    public ResponseEntity postMember() {
+//    public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody) {
+//        Member member = memberMapper.memberPostDtotoMember(requestBody);
 //        return new ResponseEntity<>();
 //    }
 //
