@@ -1,4 +1,8 @@
 package com.district11.stackoverflow.answer.repository;
 
-public class AnswerRepository {
+import com.district11.stackoverflow.answer.entity.Answer;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface AnswerRepository extends JpaRepository<Answer, Long> {
+
 }
