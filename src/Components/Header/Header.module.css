@@ -1,13 +1,13 @@
 .headerContainer {
-    border-top: 4px solid orange;
+    border-top: 4px solid rgb(255, 140, 0);
     background : rgb(255, 255, 255);
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid rgb(205, 205, 205);
     width : 100%;
     height: 50px;
     display : flex;
     justify-content: center;
     align-items : center;
-    color : black;
+    color : rgb(63, 63, 63);
     /* padding : 10px;*/
 }
   .headerContainer > *{
@@ -16,15 +16,14 @@
   
   .headerContainer:hover > * {
     cursor: pointer;
-    background-color: gray;
   }
   .logo{
-    width: 150px;
-    height: 30px;
+    width: 10rem;
+    height: 2rem;
   }
   
   .SearchBarContainer{
-    width: 500px;
+    width: 30rem;
     height: 30px;
     border: 1px solid gray;
     border-radius: 3px;
@@ -32,14 +31,23 @@
     justify-content: left;
     align-items: center;
   }
-  .ssearchIcon{
+  .searchIcon{
     width: 25px;
     height: 25px;
-    margin: 5px;
+    margin: 0px 5px;
   }
   .searchBar{
+
     width: 100%;
     border-style: none;
     outline: none;
-    font-size: large;
+    font-size: 15px;
+    color : rgb(63, 63, 63);
+  }
+  .buttonBox{
+    display: flex;
+    position: relative;
+  }
+  .button{
+    width: 6rem;
   }
