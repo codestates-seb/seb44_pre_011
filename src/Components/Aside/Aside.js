@@ -1,9 +1,51 @@
-import React from 'react'
+import React from "react";
+import { Typography } from "@mui/material";
+import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import SettingsIcon from "@mui/icons-material/Settings";
+import { NavLink } from "react-router-dom";
+import "./aside.css";
 
 const Aside = () => {
   return (
-    <div>Aside</div>
-  )
-}
+    <div id="as">
+      <div id="Btns_aside">
+        <NavLink
+          to="/"
+          className="asideButton"
+          activeclassname="asideButton active"
+        >
+          <QuestionMarkIcon className="icon"/>
+          <Typography>Questions</Typography>
+        </NavLink>
+        <NavLink
+          to="/tags"
+          className="asideButton "
+          activeclassname="asideButton active"
+        >
+          <LocalOfferIcon />
+          <Typography>Tags</Typography>
+        </NavLink>
+        <NavLink
+          to="/users"
+          className="asideButton "
+          activeclassname="asideButton active"
+        >
+          <PeopleAltIcon />
+          <Typography>Users</Typography>
+        </NavLink>
+        <NavLink
+          to="about"
+          className="asideButton "
+          activeclassname="asideButton active"
+        >
+          <SettingsIcon />
+          <Typography>About</Typography>
+        </NavLink>
+      </div>
+    </div>
+  );
+};
 
-export default Aside
+export default Aside;
