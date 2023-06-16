@@ -12,10 +12,8 @@ public class QuestionDto {
     public static class Post {
         @NotNull
         private long memberId;
-
         @NotNull
         private String title;
-
         @NotNull
         private String content;
 
