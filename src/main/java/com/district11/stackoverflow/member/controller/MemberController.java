@@ -23,28 +23,28 @@ public class MemberController {
         this.memberMapper = memberMapper;
     }
 
-    @PostMapping
-    public ResponseEntity postMember() {
-        return new ResponseEntity<>();
-    }
-
-    @PatchMapping("/{member-Id}")
-    public ResponseEntity patchMember(){
-        return new ResponseEntity<>();
-    }
-
-    @GetMapping
-    public ResponseEntity getMembers() {
-        return new ResponseEntity<>();
-    }
-
-    @GetMapping("/{member-id}")
-    public ResponseBody getMember() {
-        return new ResponseBody<>();
-    }
-
-    @DeleteMapping("/{member-id}")
-    public ResponseBody deleteMember() {
-        return new ResponseEntity<>();
-    }
+//    @PostMapping
+//    public ResponseEntity postMember() {
+//        return new ResponseEntity<>();
+//    }
+//
+//    @PatchMapping("/{member-Id}")
+//    public ResponseEntity patchMember(){
+//        return new ResponseEntity<>();
+//    }
+//
+//    @GetMapping
+//    public ResponseEntity getMembers() {
+//        return new ResponseEntity<>();
+//    }
+//
+//    @GetMapping("/{member-id}")
+//    public ResponseBody getMember() {
+//        return new ResponseEntity<>();
+//    }
+//
+//    @DeleteMapping("/{member-id}")
+//    public ResponseBody deleteMember() {
+//        return new ResponseEntity<>();
+//    }
 }
