@@ -2,10 +2,12 @@ import Style from "./Header.module.css";
 import { Link } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import Button from "@mui/material/Button";
+import MenuIcon from "@mui/icons-material/Menu";
 
 const Header = () => {
   return (
     <header className={Style.headerContainer}>
+      {window.location.pathname === "/login" && <MenuIcon />}
       <Link to="/">
         <img
           className={Style.logo}
