@@ -1,6 +1,7 @@
 package com.district11.stackoverflow.member.controller;
 
 
+import com.district11.stackoverflow.dto.MultiResponseDto;
 import com.district11.stackoverflow.dto.SingleResponseDto;
 import com.district11.stackoverflow.member.dto.MemberDto;
 import com.district11.stackoverflow.member.entity.Member;
@@ -40,15 +41,22 @@ public class MemberController {
 
         return ResponseEntity.created(location).build();
     }
-//    @PatchMapping("/{member-Id}")
-//    public ResponseEntity patchMember(){
-//        return ResponseEntity<>();
-//    }
-//
-//    @GetMapping
-//    public ResponseEntity getMembers(@Positive @RequestParam int page, @Positive @RequestParam int size) {
-//        Page<Member> pageMembers = memberService.findMembers(page, size);
-//    }
+    @PatchMapping("/{member-Id}")
+    public ResponseEntity patchMember(@PathVariable @Positive long memberId,
+                                      @Valid @RequestBody MemberDto.Patch requestBody){
+        Member member = memberService.updateMember(requestBody);
+
+    }
+
+    @GetMapping
+    public ResponseEntity getMembers(@Positive @RequestParam int page,
+                                     @Positive @RequestParam int size) {
+        Page<Member> pageMembers = memberService.findMembers(page, size);
+        List<Member> members = pageMembers.getContent();
+        return new ResponseEntity(
+                new MultiResponseDto(memberMapper.membersToMemberResponseDtos(members),pageMembers),HttpStatus.OK
+        );
+    }
     @GetMapping("/{member-id}")
     public ResponseEntity getMember(@PathVariable("member-id") @Positive long memberId) {
         Member member = memberService.findMember(memberId);
