@@ -3,6 +3,8 @@ package com.district11.stackoverflow.question.controller;
 
 import com.district11.stackoverflow.dto.MultiResponseDto;
 import com.district11.stackoverflow.dto.SingleResponseDto;
+import com.district11.stackoverflow.member.entity.Member;
+import com.district11.stackoverflow.member.service.MemberService;
 import com.district11.stackoverflow.question.dto.QuestionDto;
 import com.district11.stackoverflow.question.entity.Question;
 import com.district11.stackoverflow.question.mapper.QuestionMapper;
@@ -29,14 +31,20 @@ public class QuestionController {
 
     private QuestionService questionService;
 
-    public QuestionController(QuestionMapper mapper, QuestionService questionService) {
+    private MemberService memberService;
+
+    public QuestionController(QuestionMapper mapper, QuestionService questionService, MemberService memberService) {
         this.mapper = mapper;
         this.questionService = questionService;
+        this.memberService = memberService;
     }
 
     @PostMapping
     public ResponseEntity postQuestion(@Valid @RequestBody QuestionDto.Post questionPostDto) {
+
+        Member member = memberService.findMember(questionPostDto.getMemberId());
         Question question = questionService.createQuestion(mapper.questionPostDtoToQuestion(questionPostDto));
+        question.setMember(member);
         URI location = UriCreator.createUri(QUESTION_DEFAULT_URL, question.getQuestionId());
 
         return ResponseEntity.created(location).build();

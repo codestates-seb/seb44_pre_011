@@ -25,6 +25,10 @@ public class Question extends Auditable {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
     public Question(String title, String content, Long memberId) {
         this.title = title;
         this.content = content;
