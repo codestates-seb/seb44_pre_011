@@ -34,5 +34,6 @@ public class MemberDto {
     @AllArgsConstructor
     public static class Response {
 
+
     }
 }
