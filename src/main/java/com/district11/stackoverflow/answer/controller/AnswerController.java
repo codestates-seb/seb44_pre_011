@@ -5,6 +5,7 @@ import com.district11.stackoverflow.answer.dto.AnswerPostDto;
 import com.district11.stackoverflow.answer.entity.Answer;
 import com.district11.stackoverflow.answer.mapper.AnswerMapper;
 import com.district11.stackoverflow.answer.service.AnswerService;
+import com.district11.stackoverflow.utils.UriCreator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -12,13 +13,14 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.net.URI;
 
 @RestController
 @RequestMapping("/answers")
 @Validated
 public class AnswerController {
 
-    private final static String ORDER_DEFAULT_URL = "/answers";
+    private final static String ANSWER_DEFAULT_URL = "/answers";
 
     private AnswerService answerService;
     private AnswerMapper answerMapper;
@@ -32,8 +34,9 @@ public class AnswerController {
     public ResponseEntity<?> postAnswer(@Valid @RequestBody AnswerPostDto answerPostDto) {
 
         Answer answer = answerService.createAnswer(answerMapper.AnswerPostDtoToAnswer(answerPostDto));
+        URI location = UriCreator.createUri(ANSWER_DEFAULT_URL, answer.getAnswerId());
 
-        return new ResponseEntity<>(answerMapper.AnswerToAnswerResponseDto(answer), HttpStatus.OK);
+        return ResponseEntity.created(location).build();
     }
 
     @PatchMapping("/{answer-id}")
