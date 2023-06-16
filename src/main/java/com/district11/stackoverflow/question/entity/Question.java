@@ -15,9 +15,9 @@ public class Question extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long questionId;
-    @Column
+    @Column(length = 30, nullable = false)
     private String title;
-    @Column
+    @Column(length = 2000, nullable = false)
     private String content;
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
