@@ -17,8 +17,8 @@ public class QuestionDto {
         @NotNull
         private String content;
 
-        public Post(long member_id, String title, String content) {
-            this.memberId = member_id;
+        public Post(long memberId, String title, String content) {
+            this.memberId = memberId;
             this.title = title;
             this.content = content;
         }
