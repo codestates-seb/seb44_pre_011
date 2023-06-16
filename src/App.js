@@ -4,6 +4,7 @@ import LoginPage from "./Pages/Login/LoginPage";
 import SignupPage from "./Pages/Signup/SignupPage";
 import UserProfilePage from "./Pages/UserProfile/UserProfilePage";
 import CreateQuestionPage from "./Pages/CreateQuestion/CreateQuestionPage";
+import "./App.module.css"
 
 function App() {
   return (
