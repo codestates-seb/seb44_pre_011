@@ -48,7 +48,6 @@ public class AnswerService {
         Answer findAnswer = findVerifyAnswer(answerId);
         findAnswer.setAnswerStatus(Answer.AnswerStatus.ANSWER_DELETE);
         answerRepository.delete(findAnswer);
-
     }
 
     // Answer 가 있는지 검증
@@ -66,10 +65,10 @@ public class AnswerService {
     private void VerifyAnswer(Answer answer) {
 
         // member가 존재하는지 확인
-        //memberService.findVerifiedMember(answer.getMember().getMemberId());
+        memberService.findMember(answer.getMember().getMemberId());
 
         // 질문이 존재하는지 확인
-        //questionService.findVerifiedQuestion(answer.getQuestion().getQuestionId());
+        questionService.findQuestion(answer.getQuestion().getQuestionId());
     }
 
 }

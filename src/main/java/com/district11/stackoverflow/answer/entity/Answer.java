@@ -48,4 +48,8 @@ public class Answer extends Auditable {
 
     }
 
+    public Answer(String content) {
+        this.content = content;
+    }
+
 }
