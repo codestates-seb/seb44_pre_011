@@ -5,6 +5,7 @@ import com.district11.stackoverflow.answer.dto.AnswerPostDto;
 import com.district11.stackoverflow.answer.entity.Answer;
 import com.district11.stackoverflow.answer.mapper.AnswerMapper;
 import com.district11.stackoverflow.answer.service.AnswerService;
+import com.district11.stackoverflow.dto.SingleResponseDto;
 import com.district11.stackoverflow.utils.UriCreator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +23,8 @@ public class AnswerController {
 
     private final static String ANSWER_DEFAULT_URL = "/answers";
 
-    private AnswerService answerService;
-    private AnswerMapper answerMapper;
+    private final AnswerService answerService;
+    private final AnswerMapper answerMapper;
 
     public AnswerController(AnswerService answerService, AnswerMapper answerMapper) {
         this.answerService = answerService;
@@ -46,7 +47,7 @@ public class AnswerController {
         answerPatchDto.setAnswerId(answerId);
         Answer answer = answerService.updateAnswer(answerMapper.AnswerPatchDtoToAnswer(answerPatchDto));
 
-        return new ResponseEntity<>(answerMapper.AnswerToAnswerResponseDto(answer), HttpStatus.OK);
+        return new ResponseEntity<>(new SingleResponseDto<>(answerMapper.AnswerToAnswerResponseDto(answer)), HttpStatus.OK);
     }
 
     @DeleteMapping("/{answer-id}")
