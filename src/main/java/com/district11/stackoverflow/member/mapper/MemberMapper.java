@@ -9,4 +9,6 @@ import org.mapstruct.Mapper;
 public interface MemberMapper {
     Member memberPostDtotoMember(MemberDto.Post requestBody);
     Member memberPatchDtotoMember(MemberDto.Patch requestBody);
+    MemberDto.Response memberToMemberResponseDto(Member member);
+
 }

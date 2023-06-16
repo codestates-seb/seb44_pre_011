@@ -33,7 +33,8 @@ public class MemberDto {
     @Getter
     @AllArgsConstructor
     public static class Response {
-
-
+        private long memberId;
+        private String email;
+        private String displayName;
     }
 }

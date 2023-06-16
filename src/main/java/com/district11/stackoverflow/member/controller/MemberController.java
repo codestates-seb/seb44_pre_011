@@ -1,21 +1,30 @@
 package com.district11.stackoverflow.member.controller;
 
 
+import com.district11.stackoverflow.dto.SingleResponseDto;
 import com.district11.stackoverflow.member.dto.MemberDto;
 import com.district11.stackoverflow.member.entity.Member;
 import com.district11.stackoverflow.member.mapper.MemberMapper;
 import com.district11.stackoverflow.member.service.MemberService;
+import com.district11.stackoverflow.utils.UriCreator;
+import com.sun.xml.bind.v2.TODO;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
+import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/members")
 @Validated
 @Slf4j
 public class MemberController {
+    private final static String MEMBER_DEFAULT_URL = "/members";
     private final MemberService memberService;
     private final MemberMapper memberMapper;
 
@@ -24,29 +33,32 @@ public class MemberController {
         this.memberMapper = memberMapper;
     }
 
-//    @PostMapping
-//    public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody) {
-//        Member member = memberMapper.memberPostDtotoMember(requestBody);
-//        return new ResponseEntity<>();
-//    }
-//
+    @PostMapping
+    public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody) {
+        Member member = memberService.createMember(memberMapper.memberPostDtotoMember(requestBody));
+        URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, member.getMemberId());
+
+        return ResponseEntity.created(location).build();
+    }
 //    @PatchMapping("/{member-Id}")
 //    public ResponseEntity patchMember(){
-//        return new ResponseEntity<>();
+//        return ResponseEntity<>();
 //    }
 //
 //    @GetMapping
-//    public ResponseEntity getMembers() {
-//        return new ResponseEntity<>();
+//    public ResponseEntity getMembers(@Positive @RequestParam int page, @Positive @RequestParam int size) {
+//        Page<Member> pageMembers = memberService.findMembers(page, size);
 //    }
-//
-//    @GetMapping("/{member-id}")
-//    public ResponseBody getMember() {
-//        return new ResponseEntity<>();
-//    }
+    @GetMapping("/{member-id}")
+    public ResponseEntity getMember(@PathVariable("member-id") @Positive long memberId) {
+        Member member = memberService.findMember(memberId);
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(memberMapper.memberToMemberResponseDto(member))
+                , HttpStatus.OK);
+    }
 //
 //    @DeleteMapping("/{member-id}")
 //    public ResponseBody deleteMember() {
-//        return new ResponseEntity<>();
+//        return ResponseEntity<>();
 //    }
 }
