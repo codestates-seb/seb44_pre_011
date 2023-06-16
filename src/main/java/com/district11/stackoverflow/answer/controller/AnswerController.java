@@ -31,16 +31,18 @@ public class AnswerController {
         this.answerMapper = answerMapper;
     }
 
-    @PostMapping
-    public ResponseEntity<?> postAnswer(@Valid @RequestBody AnswerPostDto answerPostDto) {
+    @PostMapping("/{question-id}")
+    public ResponseEntity<?> postAnswer(@Valid @RequestBody AnswerPostDto answerPostDto,
+                                        @Positive @PathVariable("question-id") long questionId) {
 
+        answerPostDto.setQuestionId(questionId);
         Answer answer = answerService.createAnswer(answerMapper.AnswerPostDtoToAnswer(answerPostDto));
         URI location = UriCreator.createUri(ANSWER_DEFAULT_URL, answer.getAnswerId());
 
         return ResponseEntity.created(location).build();
     }
 
-    @PatchMapping("/{answer-id}")
+    @PatchMapping("/{question-id}/{answer-id}")
     public ResponseEntity<?> patchAnswer(@PathVariable("answer-id") @Positive long answerId,
                                          @Valid @RequestBody AnswerPatchDto answerPatchDto) {
 
@@ -50,7 +52,7 @@ public class AnswerController {
         return new ResponseEntity<>(new SingleResponseDto<>(answerMapper.AnswerToAnswerResponseDto(answer)), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{answer-id}")
+    @DeleteMapping("/{question-id}/{answer-id}")
     public ResponseEntity<?> deleteAnswer(@PathVariable("answer-id") @Positive long answerId) {
 
         answerService.deleteAnswer(answerId);

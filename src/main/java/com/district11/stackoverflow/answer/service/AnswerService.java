@@ -47,10 +47,10 @@ public class AnswerService {
 
         Answer findAnswer = findVerifyAnswer(answerId);
         findAnswer.setAnswerStatus(Answer.AnswerStatus.ANSWER_DELETE);
-        answerRepository.delete(findAnswer);
+        answerRepository.save(findAnswer);
     }
 
-    // Answer 가 있는지 검증
+    // Answer를 수정하기 위해선 Answer가 있는지 검증
     public Answer findVerifyAnswer(long answerId) {
         Optional<Answer> optionalAnswer = answerRepository.findById(answerId);
 

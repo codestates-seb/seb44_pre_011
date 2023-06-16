@@ -3,6 +3,7 @@ package com.district11.stackoverflow.answer.entity;
 import com.district11.stackoverflow.audit.Auditable;
 import com.district11.stackoverflow.member.entity.Member;
 import com.district11.stackoverflow.question.entity.Question;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,6 +24,7 @@ public class Answer extends Auditable {
     private String content;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private AnswerStatus answerStatus = AnswerStatus.ANSWER_REGISTRATION;
 
     @ManyToOne
@@ -46,10 +48,6 @@ public class Answer extends Auditable {
             this.status = status;
         }
 
-    }
-
-    public Answer(String content) {
-        this.content = content;
     }
 
 }

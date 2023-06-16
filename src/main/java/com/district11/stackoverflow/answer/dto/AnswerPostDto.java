@@ -16,7 +16,7 @@ public class AnswerPostDto {
     @Setter
     private long questionId;
 
-    @NotBlank(message = "공백이 아니어야 합니다.")
+    @NotBlank(message = "내용을 작성해주세요.")
     private String content;
 
 }
