@@ -32,8 +32,6 @@ public class Member extends Auditable {
 
     private String profileImg;
 
-    @OneToMany(mappedBy = "member")
-    private List<Question> questions = new ArrayList<>();
 
     public Member(String email, String password, String displayName) {
         this.email = email;
