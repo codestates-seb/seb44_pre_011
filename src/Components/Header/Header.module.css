@@ -45,7 +45,7 @@
     color : rgb(63, 63, 63);
   }
 
-  .buttonBox{
+  .buttonContainer{
     display: flex;
     align-items: center;
   }
@@ -67,6 +67,20 @@
     border: 1px solid rgb(205, 205, 205);
     border-radius: 3px;
   }
+
+  /* 임시 */
+  .profileContainer{
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .defaultPicture{
+    border-radius: 100px;
+    height: 30px;
+    margin-right: 10px;
+  }
+
+
 
   @media (max-width: 600px) {
     .headerContainer {
