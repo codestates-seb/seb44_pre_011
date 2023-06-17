@@ -12,11 +12,15 @@ public class QuestionDto {
     public static class Post {
 
         @NotNull
+        private long memberId;
+        @NotNull
         private String title;
         @NotNull
         private String content;
 
-        public Post(String title, String content) {
+
+        public Post(long memberId, String title, String content) {
+            this.memberId = memberId;
             this.title = title;
             this.content = content;
         }

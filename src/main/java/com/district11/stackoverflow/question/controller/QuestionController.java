@@ -42,9 +42,8 @@ public class QuestionController {
     @PostMapping
     public ResponseEntity postQuestion(@Valid @RequestBody QuestionDto.Post questionPostDto) {
 
-       //Member member = memberService.findMember(questionPostDto.getMemberId());
+        memberService.findMember(questionPostDto.getMemberId());
         Question question = questionService.createQuestion(mapper.questionPostDtoToQuestion(questionPostDto));
-       //question.setMember(member);
         URI location = UriCreator.createUri(QUESTION_DEFAULT_URL, question.getQuestionId());
 
         return ResponseEntity.created(location).build();

@@ -11,7 +11,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Entity(name = "MEMBERS")
 @Getter
 @Setter
 @NoArgsConstructor
