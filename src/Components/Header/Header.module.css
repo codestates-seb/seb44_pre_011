@@ -1,4 +1,5 @@
-.headerContainer {
+
+  .headerContainer {
     position: fixed;
     border-top: 4px solid rgb(255, 140, 0);
     background : rgb(255, 255, 255);
@@ -9,8 +10,7 @@
     justify-content: center;
     align-items : center;
     color : rgb(63, 63, 63);
-    /* padding : 10px;*/
-}
+  }
   .headerContainer > *{
     margin: 0 20px;
   }
@@ -18,13 +18,15 @@
   .headerContainer:hover > * {
     cursor: pointer;
   }
-  .logo{
-    width: 10rem;
-    height: 2rem;
+
+  .logo {
+    display: block;
+    width: 150px;
+    height: 30px;
   }
-  
+
   .SearchBarContainer{
-    width: 30rem;
+    width: 450px;
     height: 30px;
     border: 1px solid gray;
     border-radius: 3px;
@@ -33,22 +35,46 @@
     align-items: center;
   }
   .searchIcon{
-    width: 25px;
-    height: 25px;
     margin: 0px 5px;
   }
   .searchBar{
-
     width: 100%;
     border-style: none;
     outline: none;
     font-size: 15px;
     color : rgb(63, 63, 63);
   }
+
   .buttonBox{
     display: flex;
-    position: relative;
+    align-items: center;
   }
-  .button{
-    width: 6rem;
+
+  .Container{
+    position: relative;
+    height: 100%;
+  }
+  
+  .dropdownContainer{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 100%;
+    left: 0;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    border: 1px solid rgb(205, 205, 205);
+    border-radius: 3px;
+  }
+
+  @media (max-width: 600px) {
+    .headerContainer {
+      max-width: 600px;
+      justify-content: flex-start;
+    }
+
+    .SearchBarContainer {
+      display: none;
+    }
   }

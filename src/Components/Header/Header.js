@@ -18,7 +18,10 @@ const Header = () => {
       <div className={Style.Container}>
         {(window.location.pathname === "/login" ||
           window.location.pathname === "/signup") && (
-          <MenuIcon onClick={toggleDropdown} />
+          <MenuIcon
+            onClick={toggleDropdown}
+            sx={{ display: "block", height: "100%", width: "25px" }}
+          />
         )}
         <div className={Style.dropdownContainer}>
           {view && <Aside className={Style.dropdown} />}
@@ -33,18 +36,33 @@ const Header = () => {
         ></img>
       </Link>
       <span className={Style.SearchBarContainer}>
-        <SearchIcon className={Style.searchIcon} />
+        <SearchIcon
+          className={Style.searchIcon}
+          sx={{ width: "25px", height: "100%" }}
+        />
         <input className={Style.searchBar} type="text" />
       </span>
       <span className={Style.buttonBox}>
         <Link to="/login">
-          <Button className={Style.button} variant="contained">
+          <Button
+            className={Style.button}
+            variant="contained"
+            sx={{
+              fontSize: "14px",
+              width: "93px",
+              height: "30px",
+            }}
+          >
             Log IN
           </Button>
         </Link>
 
         <Link>
-          <Button className={Style.button} variant="contained">
+          <Button
+            className={Style.button}
+            variant="contained"
+            sx={{ fontSize: "14px", width: "93px", height: "30px" }}
+          >
             Sign Up
           </Button>
         </Link>
