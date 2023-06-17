@@ -1,0 +1,72 @@
+* {
+  align-items: center;
+  margin: 0;
+}
+
+#main {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+#asdie {
+  position: sticky;
+  top: 0;
+  clear: both;
+  overflow: visible;
+}
+
+#question {
+  width: 50%;
+  border-left: 1px solid #ccc;
+  clear: both;
+  margin-left: 15px;
+}
+
+#nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  margin: 16px;
+}
+
+.button {
+  border: none;
+  border-radius: 8px;
+  padding: 8px;
+  margin: 0;
+  background: black;
+  color: white;
+  font-size: 1rem;
+}
+
+.button:hover {
+  background: tomato;
+  cursor: pointer;
+  transform: translateY(-2px);
+}
+
+.button:disabled {
+  background: grey;
+  cursor: revert;
+  transform: revert;
+}
+
+.buttonselect {
+  border: none;
+  border-radius: 8px;
+  padding: 8px;
+  margin: 0;
+  color: white;
+  font-size: 1rem;
+  background: deeppink;
+  font-weight: bold;
+  cursor: revert;
+  transform: revert;
+}
+
+#footer {
+  overflow-x: hidden;
+}
