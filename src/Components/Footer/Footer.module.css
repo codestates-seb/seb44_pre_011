@@ -1,0 +1,42 @@
+#footer {
+  display: flex;
+  width: 100vw;
+  height: 322px;
+  background-color: #232629;
+}
+#footerContainer {
+  display: flex;
+  width: 100%;
+  margin: 0px 100px;
+  padding: 32px 12px 12px;
+}
+.logo {
+  width: 80px;
+  height: 50px;
+  margin: -12px 0 32px;
+}
+.footerBtns {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+}
+.footerMSGS {
+  text-decoration: none;
+  color: #babfc4;
+  font-size: 15px;
+}
+ul {
+  margin-top: 12px;
+  list-style-type: none;
+}
+a {
+  display: flex;
+  color: #9199a1;
+  background-color: #232629;
+  font-size: 13px;
+  padding: 4px 0;
+  text-decoration: none;
+  height: 17px;
+  border: 0px;
+  cursor: pointer;
+}
