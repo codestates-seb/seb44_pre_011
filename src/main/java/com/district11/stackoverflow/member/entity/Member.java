@@ -1,15 +1,11 @@
 package com.district11.stackoverflow.member.entity;
 
 import com.district11.stackoverflow.audit.Auditable;
-import com.district11.stackoverflow.question.entity.Question;
-import lombok.Cleanup;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity(name = "MEMBERS")
 @Getter

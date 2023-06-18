@@ -6,7 +6,6 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-
 @Mapper(componentModel = "spring")
 public interface MemberMapper {
     Member memberPostDtotoMember(MemberDto.Post requestBody);
