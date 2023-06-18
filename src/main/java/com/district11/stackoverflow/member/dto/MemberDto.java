@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.time.LocalDateTime;
+
 public class MemberDto {
 
     @Getter
@@ -36,5 +38,7 @@ public class MemberDto {
         private long memberId;
         private String email;
         private String displayName;
+        private LocalDateTime createdAt;
+        private LocalDateTime modifiedAt;
     }
 }

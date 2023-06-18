@@ -30,8 +30,9 @@ public class Member extends Auditable {
     @Column(length = 10, nullable = false)
     private String displayName;
 
-    private String profileImg;
 
+
+    private String profileImg;
 
     public Member(String email, String password, String displayName) {
         this.email = email;
