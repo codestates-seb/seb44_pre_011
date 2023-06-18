@@ -3,12 +3,13 @@ package com.district11.stackoverflow.answer.entity;
 import com.district11.stackoverflow.audit.Auditable;
 import com.district11.stackoverflow.member.entity.Member;
 import com.district11.stackoverflow.question.entity.Question;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -35,6 +36,14 @@ public class Answer extends Auditable {
     @JoinColumn(name = "question_id")
     private Question question;
 
+    // 답변 투표
+    @OneToMany(mappedBy = "answer", cascade = {CascadeType.REMOVE})
+    private List<AnswerVote> answerVotes = new ArrayList<>();
+
+    public void addAnswerVote(AnswerVote answerVote) {
+        this.answerVotes.add(answerVote);
+        answerVote.setAnswer(this);
+    }
 
     // 답변 상태
     public enum AnswerStatus {

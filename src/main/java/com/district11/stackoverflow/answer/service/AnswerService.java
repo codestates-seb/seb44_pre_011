@@ -4,6 +4,7 @@ import com.district11.stackoverflow.answer.entity.Answer;
 import com.district11.stackoverflow.answer.repository.AnswerRepository;
 import com.district11.stackoverflow.exception.BusinessLogicException;
 import com.district11.stackoverflow.exception.ExceptionCode;
+import com.district11.stackoverflow.member.entity.Member;
 import com.district11.stackoverflow.member.service.MemberService;
 import com.district11.stackoverflow.question.service.QuestionService;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class AnswerService {
 
     public Answer createAnswer(Answer answer) {
 
-        VerifyAnswer(answer);       // 답변을 할 수 있는지 검증
+        //verifyAnswer(answer);       // 답변을 할 수 있는지 검증
 
         return answerRepository.save(answer);
     }
@@ -52,7 +53,7 @@ public class AnswerService {
 
     // Answer를 수정하기 위해선 Answer가 있는지 검증
     public Answer findVerifyAnswer(long answerId) {
-        Optional<Answer> optionalAnswer = answerRepository.findById(answerId);
+        Optional<Answer> optionalAnswer = answerRepository.findById(answerId);      // Optional : Null값 허용
 
         Answer findAnswer = optionalAnswer.orElseThrow(() ->
                         new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
@@ -62,13 +63,14 @@ public class AnswerService {
 
 
     // createAnswer 하기위해서 필요
-    private void VerifyAnswer(Answer answer) {
+    public void verifyAnswer(Answer answer) {
 
         // member가 존재하는지 확인
-        memberService.findMember(answer.getMember().getMemberId());
+        //Member member = memberService.findMember(answer.getMember().getMemberId());
+        //answer.setMember(member);
 
         // 질문이 존재하는지 확인
-        questionService.findQuestion(answer.getQuestion().getQuestionId());
+        //questionService.findQuestion(answer.getQuestion().getQuestionId());
     }
 
 }

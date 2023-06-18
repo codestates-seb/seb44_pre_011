@@ -2,9 +2,14 @@ package com.district11.stackoverflow.answer.controller;
 
 import com.district11.stackoverflow.answer.dto.AnswerPatchDto;
 import com.district11.stackoverflow.answer.dto.AnswerPostDto;
+import com.district11.stackoverflow.answer.dto.AnswerResponseDto;
+import com.district11.stackoverflow.answer.dto.AnswerVotePostDto;
 import com.district11.stackoverflow.answer.entity.Answer;
+import com.district11.stackoverflow.answer.entity.AnswerVote;
 import com.district11.stackoverflow.answer.mapper.AnswerMapper;
+import com.district11.stackoverflow.answer.mapper.AnswerVoteMapper;
 import com.district11.stackoverflow.answer.service.AnswerService;
+import com.district11.stackoverflow.answer.service.AnswerVoteService;
 import com.district11.stackoverflow.dto.SingleResponseDto;
 import com.district11.stackoverflow.utils.UriCreator;
 import org.springframework.http.HttpStatus;
@@ -26,23 +31,27 @@ public class AnswerController {
     private final AnswerService answerService;
     private final AnswerMapper answerMapper;
 
-    public AnswerController(AnswerService answerService, AnswerMapper answerMapper) {
+    private final AnswerVoteService answerVoteService;
+    private final AnswerVoteMapper answerVoteMapper;
+
+    public AnswerController(AnswerService answerService, AnswerMapper answerMapper,
+                            AnswerVoteService answerVoteService, AnswerVoteMapper answerVoteMapper) {
         this.answerService = answerService;
         this.answerMapper = answerMapper;
+        this.answerVoteService = answerVoteService;
+        this.answerVoteMapper = answerVoteMapper;
     }
 
-    @PostMapping("/{question-id}")
-    public ResponseEntity<?> postAnswer(@Valid @RequestBody AnswerPostDto answerPostDto,
-                                        @Positive @PathVariable("question-id") long questionId) {
+    @PostMapping        // 연습용 :     진짜 : /{question-id}/{answer-id}
+    public ResponseEntity<?> postAnswer(@Valid @RequestBody AnswerPostDto answerPostDto) {
 
-        answerPostDto.setQuestionId(questionId);
         Answer answer = answerService.createAnswer(answerMapper.AnswerPostDtoToAnswer(answerPostDto));
         URI location = UriCreator.createUri(ANSWER_DEFAULT_URL, answer.getAnswerId());
 
         return ResponseEntity.created(location).build();
     }
 
-    @PatchMapping("/{question-id}/{answer-id}")
+    @PatchMapping("/{answer-id}")     // 연습용 : /{answer-id}     진짜 : /{question-id}/{answer-id}
     public ResponseEntity<?> patchAnswer(@PathVariable("answer-id") @Positive long answerId,
                                          @Valid @RequestBody AnswerPatchDto answerPatchDto) {
 
@@ -52,12 +61,32 @@ public class AnswerController {
         return new ResponseEntity<>(new SingleResponseDto<>(answerMapper.AnswerToAnswerResponseDto(answer)), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{question-id}/{answer-id}")
+    @GetMapping("/{answer-id}")
+    public  ResponseEntity<?> getAnswer(@PathVariable("answer-id") @Positive long answerId,
+                                        @Valid @RequestBody AnswerResponseDto answerResponseDto) {
+
+        Answer answer = answerService.findVerifyAnswer(answerId);
+
+        return new ResponseEntity<>(new SingleResponseDto<>(answerMapper.AnswerToAnswerResponseDto(answer)), HttpStatus.OK);
+
+    }
+
+    @DeleteMapping("/{answer-id}")        // 연습용 : /{answer-id}     진짜 : /{question-id}/{answer-id}
     public ResponseEntity<?> deleteAnswer(@PathVariable("answer-id") @Positive long answerId) {
 
         answerService.deleteAnswer(answerId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    // AnswerVote
+    @PostMapping("/{answer-id}/votes")
+    public ResponseEntity<?> postAnswerVote(@PathVariable("answer-id") @Positive long answerId,
+                                            @Valid @RequestBody AnswerVotePostDto answerVotePostDto) {
+
+        AnswerVote answerVote = answerVoteMapper.AnswerVotePostDtoToAnswer(answerVotePostDto);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
