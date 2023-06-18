@@ -10,7 +10,7 @@ import ProfileDropdown from "./ProfileDropdown";
 const Header = () => {
   const [menuView, setMenuView] = useState(false);
 
-  const [isLogin] = useState(false);
+  const [isLogin] = useState(true);
 
   const toggleDropdown = () => {
     setMenuView(!menuView);
@@ -23,7 +23,7 @@ const Header = () => {
           window.location.pathname === "/signup") && (
           <MenuIcon
             onClick={toggleDropdown}
-            sx={{ display: "flex", height: "100%", width: "25px" }}
+            sx={{ display: "flex", height: "100%", width: "28px" }}
           />
         )}
         <div className={Style.dropdownContainer}>
@@ -41,7 +41,7 @@ const Header = () => {
       <span className={Style.SearchBarContainer}>
         <SearchIcon
           className={Style.searchIcon}
-          sx={{ width: "25px", height: "100%" }}
+          sx={{ width: "30px", height: "100%" }}
         />
         <input className={Style.searchBar} type="text" />
       </span>
@@ -68,8 +68,8 @@ const UserInfo = () => {
         alt="default_picture"
         onClick={Dropdown}
       ></img>
-      <div>
-          {menuView && <ProfileDropdown />}
+      <div className={Style.ProfileDropdowncontainer}>
+          {menuView && <ProfileDropdown className={Style.MenuItem} />}
       </div>
       <div>display name</div>
     </div>
@@ -84,19 +84,20 @@ const LinkButton = () => {
           className={Style.button}
           variant="contained"
           sx={{
-            fontSize: "14px",
-            width: "93px",
-            height: "30px",
+            fontSize: 14,
+            width: "80px",
+            height: "40px",
+            margin: "10px",
+            backgroundColor: "#e3ecf3",
           }}
-        >
-          Log IN
+        > Login
         </Button>
       </Link>
       <Link to="/signup">
         <Button
           className={Style.button}
           variant="contained"
-          sx={{ fontSize: 14, width: "93px", height: "30px" }}
+          sx={{ fontSize: 14, width: "93px", height: "40px" }}
         >
           Sign Up
         </Button>
