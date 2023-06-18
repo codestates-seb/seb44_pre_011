@@ -5,6 +5,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import Button from "@mui/material/Button";
 import MenuIcon from "@mui/icons-material/Menu";
 import Aside from "../Aside/Aside";
+import ProfileDropdown from "./ProfileDropdown";
 
 const Header = () => {
   const [menuView, setMenuView] = useState(false);
@@ -53,13 +54,23 @@ const Header = () => {
 export default Header;
 
 const UserInfo = () => {
+  const [menuView, setMenuView] = useState(false); //프로필 클릭시 드롭다운 생성
+
+  const Dropdown = () => {
+    setMenuView(!menuView);
+  };
+
   return (
     <div className={Style.profileContainer}>
       <img
         className={Style.defaultPicture}
         src={`${process.env.PUBLIC_URL}/img/test_img.jpg`}
         alt="default_picture"
+        onClick={Dropdown}
       ></img>
+      <div>
+          {menuView && <ProfileDropdown />}
+      </div>
       <div>display name</div>
     </div>
   );
