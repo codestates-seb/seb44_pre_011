@@ -83,18 +83,6 @@
   }
 
 
-
-  @media (max-width: 600px) {
-    .headerContainer {
-      max-width: 600px;
-      justify-content: flex-start;
-    }
-
-    .SearchBarContainer {
-      display: none;
-    }
-  }
-
   .ProfileDropdowncontainer{
     position: absolute;
     display: flex;
@@ -107,12 +95,13 @@
     border-radius: 3px;
   }
 
-  .MenuItem{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 200px;
-      height: 100px;
-      font-size: 18px;
-      margin: 30px;
+  @media (max-width: 600px) {
+    .headerContainer {
+      max-width: 600px;
+      justify-content: flex-start;
+    }
+
+    .SearchBarContainer {
+      display: none;
+    }
   }
