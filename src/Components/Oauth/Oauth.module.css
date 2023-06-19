@@ -1,0 +1,11 @@
+.btnContainer_Google{
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    width: 288px;
+    height: 37px;
+    background-color: white;
+    font-size: large;
+    /*위치값에 대한 것*/
+    margin: 200px 300px;
+}
