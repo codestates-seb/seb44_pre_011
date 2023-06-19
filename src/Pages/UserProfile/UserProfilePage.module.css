@@ -1,0 +1,12 @@
+#UserProfilePage {
+  display: flex;
+  flex-direction: column;
+}
+.profileBody {
+  display: flex;
+  margin-top: 70px;
+}
+#aside {
+  display: flex;
+  width: 202px;
+}
