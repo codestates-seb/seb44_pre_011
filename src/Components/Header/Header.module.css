@@ -28,7 +28,7 @@
 }
 
 .SearchBarContainer {
-  width: 35%;
+  width: 40%;
   height: 50%;
   border: 1px solid gray;
   border-radius: 3px;
@@ -73,6 +73,7 @@
 .profileContainer {
   display: flex;
   align-items: center;
+  width: 193px;
 }
 .defaultPicture {
   border-radius: 100%;
