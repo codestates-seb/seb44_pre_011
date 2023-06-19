@@ -9,6 +9,7 @@
   justify-content: center;
   align-items: center;
   color: rgb(63, 63, 63);
+  z-index: 2;
 }
 .headerContainer > * {
   margin: 0 10px;

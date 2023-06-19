@@ -53,36 +53,36 @@ const Footer = () => {
   const footerBtns = (arr) => {
     return arr.map((a, idx) => (
       <li key={`stackoverflowBtns${idx}`}>
-        <a href={a.href}>{a.name}</a>
+        <a href={a.href} className={styles.footerBtn}>
+          {a.name}
+        </a>
       </li>
     ));
   };
   return (
-    <div id={styles.footer}>
-      <div id={styles.footerContainer}>
-        <img
-          src={`${process.env.PUBLIC_URL}/img/Stack_Overflow-Icon-Logo.wine (1).png`}
-          alt="stackoverflow logo"
-          className={styles.logo}
-        />
-        <div className={styles.footerBtns}>
-          <Typography className={styles.footerMSGS}>STACK OVERFLOW</Typography>
-          <ul>{footerBtns(stackoverflow)}</ul>
-        </div>
-        <div className={styles.footerBtns}>
-          <Typography className={styles.footerMSGS}>RODUCTS</Typography>
-          <ul>{footerBtns(products)}</ul>
-        </div>
-        <div className={styles.footerBtns}>
-          <Typography className={styles.footerMSGS}>COMPANY</Typography>
-          <ul>{footerBtns(company)}</ul>
-        </div>
-        <div className={styles.footerBtns}>
-          <Typography className={styles.footerMSGS}>
-            STACK EXCHANGE NETWORK
-          </Typography>
-          <ul>{footerBtns(network)}</ul>
-        </div>
+    <div id={styles.footerContainer}>
+      <img
+        src={`${process.env.PUBLIC_URL}/img/Stack_Overflow-Icon-Logo.wine (1).png`}
+        alt="stackoverflow logo"
+        className={styles.logo}
+      />
+      <div className={styles.footerBtns}>
+        <Typography className={styles.footerMSGS}>STACK OVERFLOW</Typography>
+        <ul>{footerBtns(stackoverflow)}</ul>
+      </div>
+      <div className={styles.footerBtns}>
+        <Typography className={styles.footerMSGS}>RODUCTS</Typography>
+        <ul>{footerBtns(products)}</ul>
+      </div>
+      <div className={styles.footerBtns}>
+        <Typography className={styles.footerMSGS}>COMPANY</Typography>
+        <ul>{footerBtns(company)}</ul>
+      </div>
+      <div className={styles.footerBtns}>
+        <Typography className={styles.footerMSGS}>
+          STACK EXCHANGE NETWORK
+        </Typography>
+        <ul>{footerBtns(network)}</ul>
       </div>
     </div>
   );

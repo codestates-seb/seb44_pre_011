@@ -1,4 +1,5 @@
 #Btns_aside {
+  z-index: ;
   display: flex;
   width: 164px;
   flex-direction: column;
