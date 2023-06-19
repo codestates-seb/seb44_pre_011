@@ -34,13 +34,15 @@ public class SecurityConfiguration {
         this.jwtTokenizer = jwtTokenizer;
     }
 
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
         http
                 .headers().frameOptions().sameOrigin() // (1)
                 .and()
                 .csrf().disable()        // (2)
-                .cors(withDefaults())    // (3)
+                .cors().disable()    // (3)
                 .formLogin().disable()   // (4)
                 .httpBasic().disable()   // (5)
                 .apply(new CustomFilterConfigurer())   // (1)
