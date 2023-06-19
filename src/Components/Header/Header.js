@@ -11,7 +11,7 @@ import ProfileDropdown from "./ProfileDropdown";
 const Header = () => {
   const [menuView, setMenuView] = useState(false);
 
-  const [isLogin] = useState(true);
+  const [isLogin] = useState(false);
 
   const toggleDropdown = () => {
     setMenuView(!menuView);
@@ -44,7 +44,11 @@ const Header = () => {
           className={Style.searchIcon}
           sx={{ width: "30px", height: "100%" }}
         />
-        <input className={Style.searchBar} type="text" />
+        <input
+          className={Style.searchBar}
+          placeholder="Search..."
+          type="text"
+        />
       </span>
 
       {isLogin ? <UserInfo /> : <LinkButton />}
@@ -70,7 +74,7 @@ const UserInfo = () => {
         onClick={Dropdown}
       ></img>
       <div className={Style.ProfileDropdowncontainer}>
-          {menuView && <ProfileDropdown className={Style.MenuItem} />}
+        {menuView && <ProfileDropdown className={Style.MenuItem} />}
       </div>
       <div>display name</div>
     </div>
@@ -91,7 +95,9 @@ const LinkButton = () => {
             margin: "10px",
             backgroundColor: "#e3ecf3",
           }}
-        > Login
+        >
+          {" "}
+          Login
         </Button>
       </Link>
       <Link to="/signup">
