@@ -1,0 +1,55 @@
+#mainpage {
+  display: column;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+#main {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+#asdie {
+  position: sticky;
+  top: 69px;
+  margin-top: 69px;
+  clear: both;
+  overflow: visible;
+}
+
+#question {
+  width: 50%;
+}
+
+#title {
+  padding: 20px;
+  border-left: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  margin-top: 69px;
+}
+
+#h1 {
+  font-weight: lighter;
+  margin-bottom: 10px;
+}
+
+#contents {
+  padding: 20px;
+  border-left: 1px solid #ccc;
+}
+
+#login {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #c22e32;
+  color: white;
+  font-weight: bold;
+}
+
+#footer {
+  overflow-x: hidden;
+}
