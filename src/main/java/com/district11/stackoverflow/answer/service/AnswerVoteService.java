@@ -5,9 +5,11 @@ import com.district11.stackoverflow.answer.entity.AnswerVote;
 import com.district11.stackoverflow.answer.repository.AnswerVoteRepository;
 import com.district11.stackoverflow.exception.BusinessLogicException;
 import com.district11.stackoverflow.exception.ExceptionCode;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class AnswerVoteService {
 
     private final AnswerVoteRepository answerVoteRepository;

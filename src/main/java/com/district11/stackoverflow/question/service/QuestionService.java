@@ -20,6 +20,8 @@ public class QuestionService {
     }
 
     public Question createQuestion(Question question){
+        //todo: Tags 서비스 로직 추가해야함
+
         return questionRepository.save(question);
     }
 

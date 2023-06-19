@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,6 +26,8 @@ public class Question extends Auditable {
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    private List<QuestionTag> tags = new ArrayList<>();
 
     public void setMember(Member member) {
         this.member = member;
