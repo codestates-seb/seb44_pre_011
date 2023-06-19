@@ -1,14 +1,9 @@
-#footer {
-  display: flex;
-  width: 100vw;
-  height: 322px;
-  background-color: #232629;
-}
 #footerContainer {
   display: flex;
-  width: 100%;
-  margin: 0px 100px;
-  padding: 32px 12px 12px;
+  justify-content: center;
+  width: 100vw;
+  padding: 32px 0px 32px 0px;
+  background-color: #232629;
 }
 .logo {
   width: 80px;
@@ -29,7 +24,7 @@ ul {
   margin-top: 12px;
   list-style-type: none;
 }
-a {
+.footerBtn {
   display: flex;
   color: #9199a1;
   background-color: #232629;

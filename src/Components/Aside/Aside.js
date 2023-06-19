@@ -9,7 +9,6 @@ import "./aside.css";
 
 const Aside = () => {
   return (
-    <div id="as">
       <div id="Btns_aside">
         <NavLink
           to="/"
@@ -44,7 +43,6 @@ const Aside = () => {
           <Typography>About</Typography>
         </NavLink>
       </div>
-    </div>
   );
 };
 
