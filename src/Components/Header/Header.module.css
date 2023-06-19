@@ -99,10 +99,13 @@
   @media (max-width: 600px) {
     .headerContainer {
       max-width: 600px;
-      justify-content: flex-start;
+      justify-content: center;
     }
-
+    .Container {
+      margin-left: 0;
+    } 
     .SearchBarContainer {
       display: none;
     }
   }
+
