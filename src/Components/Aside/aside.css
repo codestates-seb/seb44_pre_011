@@ -1,6 +1,6 @@
 #Btns_aside {
   display: flex;
-  width: 164px;
+  width: 202px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -10,7 +10,7 @@
   align-items: center;
   border-right: 4px solid white;
   padding: 4px 4px 4px 30px;
-  width: 100%;
+  width: 164px;
   height: 34px;
   border: 0px;
   border-radius: 0px;
@@ -28,5 +28,5 @@
   border-right: 4px solid #ff5722;
 }
 .icon {
-  margin-right: 4px;
+  margin-right: 8px;
 }

@@ -9,41 +9,39 @@ import "./aside.css";
 
 const Aside = () => {
   return (
-    <div id="as">
-      <div id="Btns_aside">
-        <NavLink
-          to="/"
-          className="asideButton"
-          activeclassname="asideButton active"
-        >
-          <QuestionMarkIcon className="icon"/>
-          <Typography>Questions</Typography>
-        </NavLink>
-        <NavLink
-          to="/tags"
-          className="asideButton "
-          activeclassname="asideButton active"
-        >
-          <LocalOfferIcon />
-          <Typography>Tags</Typography>
-        </NavLink>
-        <NavLink
-          to="/users"
-          className="asideButton "
-          activeclassname="asideButton active"
-        >
-          <PeopleAltIcon />
-          <Typography>Users</Typography>
-        </NavLink>
-        <NavLink
-          to="about"
-          className="asideButton "
-          activeclassname="asideButton active"
-        >
-          <SettingsIcon />
-          <Typography>About</Typography>
-        </NavLink>
-      </div>
+    <div id="Btns_aside">
+      <NavLink
+        to="/"
+        className="asideButton"
+        activeclassname="asideButton active"
+      >
+        <QuestionMarkIcon className="icon" />
+        <Typography>Questions</Typography>
+      </NavLink>
+      <NavLink
+        to="/tags"
+        className="asideButton "
+        activeclassname="asideButton active"
+      >
+        <LocalOfferIcon className="icon" />
+        <Typography>Tags</Typography>
+      </NavLink>
+      <NavLink
+        to="/users"
+        className="asideButton "
+        activeclassname="asideButton active"
+      >
+        <PeopleAltIcon className="icon" />
+        <Typography>Users</Typography>
+      </NavLink>
+      <NavLink
+        to="about"
+        className="asideButton "
+        activeclassname="asideButton active"
+      >
+        <SettingsIcon className="icon" />
+        <Typography>About</Typography>
+      </NavLink>
     </div>
   );
 };
