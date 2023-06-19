@@ -5,12 +5,15 @@ import SearchIcon from "@mui/icons-material/Search";
 import Button from "@mui/material/Button";
 import MenuIcon from "@mui/icons-material/Menu";
 import Aside from "../Aside/Aside";
+import ProfileDropdown from "./ProfileDropdown";
 
 const Header = () => {
-  const [view, setView] = useState(false);
+  const [menuView, setMenuView] = useState(false);
+
+  const [isLogin] = useState(true);
 
   const toggleDropdown = () => {
-    setView(!view);
+    setMenuView(!menuView);
   };
 
   return (
@@ -20,11 +23,11 @@ const Header = () => {
           window.location.pathname === "/signup") && (
           <MenuIcon
             onClick={toggleDropdown}
-            sx={{ display: "block", height: "100%", width: "25px" }}
+            sx={{ display: "flex", height: "100%", width: "28px" }}
           />
         )}
         <div className={Style.dropdownContainer}>
-          {view && <Aside className={Style.dropdown} />}
+          {menuView && <Aside className={Style.dropdown} />}
         </div>
       </div>
 
@@ -38,37 +41,67 @@ const Header = () => {
       <span className={Style.SearchBarContainer}>
         <SearchIcon
           className={Style.searchIcon}
-          sx={{ width: "25px", height: "100%" }}
+          sx={{ width: "30px", height: "100%" }}
         />
         <input className={Style.searchBar} type="text" />
       </span>
-      <span className={Style.buttonBox}>
-        <Link to="/login">
-          <Button
-            className={Style.button}
-            variant="contained"
-            sx={{
-              fontSize: "14px",
-              width: "93px",
-              height: "30px",
-            }}
-          >
-            Log IN
-          </Button>
-        </Link>
 
-        <Link>
-          <Button
-            className={Style.button}
-            variant="contained"
-            sx={{ fontSize: "14px", width: "93px", height: "30px" }}
-          >
-            Sign Up
-          </Button>
-        </Link>
-      </span>
+      {isLogin ? <UserInfo /> : <LinkButton />}
     </header>
   );
 };
 
 export default Header;
+
+const UserInfo = () => {
+  const [menuView, setMenuView] = useState(false); //프로필 클릭시 드롭다운 생성
+
+  const Dropdown = () => {
+    setMenuView(!menuView);
+  };
+
+  return (
+    <div className={Style.profileContainer}>
+      <img
+        className={Style.defaultPicture}
+        src={`${process.env.PUBLIC_URL}/img/test_img.jpg`}
+        alt="default_picture"
+        onClick={Dropdown}
+      ></img>
+      <div className={Style.ProfileDropdowncontainer}>
+          {menuView && <ProfileDropdown className={Style.MenuItem} />}
+      </div>
+      <div>display name</div>
+    </div>
+  );
+};
+
+const LinkButton = () => {
+  return (
+    <span className={Style.buttonContainer}>
+      <Link to="/login">
+        <Button
+          className={Style.button}
+          variant="contained"
+          sx={{
+            fontSize: 14,
+            width: "80px",
+            height: "40px",
+            margin: "10px",
+            backgroundColor: "#e3ecf3",
+          }}
+        > Login
+        </Button>
+      </Link>
+      <Link to="/signup">
+        <Button
+          className={Style.button}
+          variant="contained"
+          sx={{ fontSize: 14, width: "93px", height: "40px" }}
+        >
+          Sign Up
+        </Button>
+      </Link>
+    </span>
+  );
+};
