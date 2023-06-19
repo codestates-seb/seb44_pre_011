@@ -40,6 +40,7 @@ public class MemberController {
 
         return ResponseEntity.created(location).build();
     }
+
     @PatchMapping("/{member-Id}")
     public ResponseEntity patchMember(@PathVariable @Positive long memberId,
                                       @Valid @RequestBody MemberDto.Patch requestBody){
@@ -60,6 +61,7 @@ public class MemberController {
                 new MultiResponseDto(memberMapper.membersToMemberResponseDtos(members),pageMembers),HttpStatus.OK
         );
     }
+
     @GetMapping("/{member-id}")
     public ResponseEntity getMember(@PathVariable("member-id") @Positive long memberId) {
         Member member = memberService.findMember(memberId);

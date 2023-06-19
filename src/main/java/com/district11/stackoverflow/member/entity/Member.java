@@ -4,8 +4,12 @@ import com.district11.stackoverflow.audit.Auditable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "MEMBERS")
 @Getter
@@ -29,6 +33,8 @@ public class Member extends Auditable {
 
 
     private String profileImg;
+
+
 
     public Member(String email, String password, String displayName) {
         this.email = email;

@@ -7,6 +7,8 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 
+import java.time.LocalDateTime;
+
 public class MemberDto {
 
     @Getter
@@ -18,6 +20,8 @@ public class MemberDto {
         private String password;
 
         private String displayName;
+        private LocalDateTime modifiedAt;
+        private LocalDateTime createdAt;
     }
 
     @Getter
