@@ -2,6 +2,8 @@ package com.district11.stackoverflow.config;
 
 import com.district11.stackoverflow.auth.JwtAuthenticationFilter;
 import com.district11.stackoverflow.auth.JwtTokenizer;
+import com.district11.stackoverflow.auth.MemberAuthenticationFailureHandler;
+import com.district11.stackoverflow.auth.MemberAuthenticationSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -55,37 +57,44 @@ public class SecurityConfiguration {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);  // (2-3)
 
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);  // (2-4)
-            jwtAuthenticationFilter.setFilterProcessesUrl("/v11/auth/login");          // (2-5)
+            jwtAuthenticationFilter.setFilterProcessesUrl("/auth/login");          // (2-5)
+            jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
+            jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
 
-            builder.addFilter(jwtAuthenticationFilter);  // (2-6)
+            builder.addFilter(jwtAuthenticationFilter);
         }
 
-        @Bean
-        public UserDetailsManager userDetailsService() {
-            UserDetails userDetails =
-                    User.withDefaultPasswordEncoder()
-                            .username("abc@gmail.com")
-                            .password("abc")
-                            .roles("USER")
-                            .build();
-
-            return new InMemoryUserDetailsManager(userDetails);
-        }
-
-        @Bean
-        public PasswordEncoder passwordEncoder() {
-            return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        }
-
-        @Bean
-        CorsConfigurationSource corsConfigurationSource() {
-            CorsConfiguration configuration = new CorsConfiguration();
-            configuration.setAllowedOrigins(Arrays.asList("*"));   // (8-1)
-            configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));  // (8-2)
-
-            UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();   // (8-3)
-            source.registerCorsConfiguration("/**", configuration);      // (8-4)
-            return source;
-        }
     }
+
+
+    @Bean
+    public UserDetailsManager userDetailsService() {
+        UserDetails userDetails =
+                User.withDefaultPasswordEncoder()
+                        .username("abc@gmail.com")
+                        .password("abc")
+                        .roles("USER")
+                        .build();
+
+        return new InMemoryUserDetailsManager(userDetails);
+    }
+
+
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));   // (8-1)
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));  // (8-2)
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();   // (8-3)
+        source.registerCorsConfiguration("/**", configuration);      // (8-4)
+        return source;
+    }
+
 }

@@ -14,7 +14,7 @@ spring:
       name: user
       password: 1234
 jwt:
-  key: ${JWT_SECRET_KEY}
+  key: kevin1234123412341234123412341234
   access-token-expiration-minutes: 30
   refresh-token-expiration-minutes: 420
 mail:
