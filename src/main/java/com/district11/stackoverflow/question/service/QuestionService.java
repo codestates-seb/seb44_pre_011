@@ -38,7 +38,6 @@ public class QuestionService {
         Question question = findQuestion(questionId);
         questionRepository.deleteById(questionId);
     }
-
     public Question findQuestion(long questionId){
         Optional<Question> optionalQuestion = questionRepository.findById(questionId);
         Question findQuestion = optionalQuestion.orElseThrow(()->new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));

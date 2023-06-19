@@ -11,6 +11,8 @@ import com.district11.stackoverflow.answer.mapper.AnswerVoteMapper;
 import com.district11.stackoverflow.answer.service.AnswerService;
 import com.district11.stackoverflow.answer.service.AnswerVoteService;
 import com.district11.stackoverflow.dto.SingleResponseDto;
+import com.district11.stackoverflow.member.service.MemberService;
+import com.district11.stackoverflow.question.service.QuestionService;
 import com.district11.stackoverflow.utils.UriCreator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,21 +32,26 @@ public class AnswerController {
 
     private final AnswerService answerService;
     private final AnswerMapper answerMapper;
+    private final MemberService memberService;
+    private final QuestionService questionService;
 
-    private final AnswerVoteService answerVoteService;
-    private final AnswerVoteMapper answerVoteMapper;
+    //private final AnswerVoteService answerVoteService;
+    //private final AnswerVoteMapper answerVoteMapper;
+
 
     public AnswerController(AnswerService answerService, AnswerMapper answerMapper,
-                            AnswerVoteService answerVoteService, AnswerVoteMapper answerVoteMapper) {
+                            MemberService memberService, QuestionService questionService) {
         this.answerService = answerService;
         this.answerMapper = answerMapper;
-        this.answerVoteService = answerVoteService;
-        this.answerVoteMapper = answerVoteMapper;
+        this.memberService = memberService;
+        this.questionService = questionService;
     }
 
     @PostMapping        // 연습용 :     진짜 : /{question-id}/{answer-id}
     public ResponseEntity<?> postAnswer(@Valid @RequestBody AnswerPostDto answerPostDto) {
 
+        memberService.findMember(answerPostDto.getMemberId());
+        questionService.findQuestion(answerPostDto.getQuestionId());
         Answer answer = answerService.createAnswer(answerMapper.AnswerPostDtoToAnswer(answerPostDto));
         URI location = UriCreator.createUri(ANSWER_DEFAULT_URL, answer.getAnswerId());
 
@@ -79,6 +86,7 @@ public class AnswerController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    /*
     // AnswerVote
     @PostMapping("/{answer-id}/votes")
     public ResponseEntity<?> postAnswerVote(@PathVariable("answer-id") @Positive long answerId,
@@ -88,5 +96,7 @@ public class AnswerController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+     */
 
 }

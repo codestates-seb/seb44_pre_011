@@ -5,12 +5,18 @@ import com.district11.stackoverflow.answer.dto.AnswerPostDto;
 import com.district11.stackoverflow.answer.dto.AnswerResponseDto;
 import com.district11.stackoverflow.answer.entity.Answer;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")      // @Mapper : mapper 자동으로 생성해줌
 public interface AnswerMapper {         // mapper : SQL을 호출하기 위한 인터페이스
 
+    @Mapping(source = "memberId", target = "member.memberId")
+    @Mapping(source = "questionId", target = "question.questionId")
     Answer AnswerPostDtoToAnswer(AnswerPostDto answerPostDto);
     Answer AnswerPatchDtoToAnswer(AnswerPatchDto answerPatchDto);
+
+    @Mapping(source = "member.memberId", target = "memberId")
+    @Mapping(source = "question.questionId", target = "questionId")
     AnswerResponseDto AnswerToAnswerResponseDto(Answer answer);
 
     // 만약에 답변의 댓글이 필요하면 List 추가

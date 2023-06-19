@@ -36,6 +36,7 @@ public class Answer extends Auditable {
     @JoinColumn(name = "question_id")
     private Question question;
 
+    /*
     // 답변 투표
     @OneToMany(mappedBy = "answer", cascade = {CascadeType.REMOVE})
     private List<AnswerVote> answerVotes = new ArrayList<>();
@@ -44,6 +45,7 @@ public class Answer extends Auditable {
         this.answerVotes.add(answerVote);
         answerVote.setAnswer(this);
     }
+     */
 
     // 답변 상태
     public enum AnswerStatus {

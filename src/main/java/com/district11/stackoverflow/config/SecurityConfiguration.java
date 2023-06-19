@@ -2,6 +2,7 @@ package com.district11.stackoverflow.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+/*
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -21,3 +22,5 @@ public class SecurityConfiguration {
         return new InMemoryUserDetailsManager(userDetails);
     }
 }
+
+ */
