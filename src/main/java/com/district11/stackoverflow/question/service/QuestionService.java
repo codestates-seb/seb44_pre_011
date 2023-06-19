@@ -4,19 +4,25 @@ import com.district11.stackoverflow.exception.BusinessLogicException;
 import com.district11.stackoverflow.exception.ExceptionCode;
 import com.district11.stackoverflow.member.entity.Member;
 import com.district11.stackoverflow.question.entity.Question;
+import com.district11.stackoverflow.question.mapper.QuestionMapper;
 import com.district11.stackoverflow.question.repository.QuestionRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 @Service
 public class QuestionService {
     private QuestionRepository questionRepository;
+    private QuestionMapper questionMapper;
 
-    public QuestionService(QuestionRepository questionRepository) {
+    public QuestionService(QuestionRepository questionRepository, QuestionMapper questionMapper) {
         this.questionRepository = questionRepository;
+        this.questionMapper = questionMapper;
     }
 
     public Question createQuestion(Question question){
@@ -49,4 +55,8 @@ public class QuestionService {
         return questionRepository.findAll(PageRequest.of(page,size, Sort.by("questionId").descending()));
     }
 
+
+    public List<Question> findQuestions() {
+        return questionRepository.findAll();
+    }
 }

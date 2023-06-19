@@ -22,13 +22,11 @@ public class MemberService {
 
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
-    private final MemberMapper memberMapper;
     private final CustomAuthorityUtils authorityUtils;
 
     public MemberService(PasswordEncoder passwordEncoder, MemberRepository memberRepository, MemberMapper memberMapper, CustomAuthorityUtils authorityUtils) {
         this.passwordEncoder = passwordEncoder;
         this.memberRepository = memberRepository;
-        this.memberMapper = memberMapper;
         this.authorityUtils = authorityUtils;
     }
 

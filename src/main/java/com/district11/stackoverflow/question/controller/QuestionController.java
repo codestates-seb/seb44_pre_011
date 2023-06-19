@@ -6,6 +6,7 @@ import com.district11.stackoverflow.dto.SingleResponseDto;
 import com.district11.stackoverflow.member.entity.Member;
 import com.district11.stackoverflow.member.service.MemberService;
 import com.district11.stackoverflow.question.dto.QuestionDto;
+import com.district11.stackoverflow.question.dto.QuestionResponseDto;
 import com.district11.stackoverflow.question.entity.Question;
 import com.district11.stackoverflow.question.mapper.QuestionMapper;
 import com.district11.stackoverflow.question.service.QuestionService;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/questions")
@@ -64,16 +66,28 @@ public class QuestionController {
 
         return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToQuestionResponseDto(question)),HttpStatus.OK);
     }
-
     @GetMapping
-    public ResponseEntity getQuestions(@RequestParam int page, @RequestParam int size){
+    public ResponseEntity getQuestions() {
+        List<Question> questions = questionService.findQuestions();
 
-        Page<Question> pageQuestions = questionService.findQuestions(page-1,size);
+        List<QuestionResponseDto> response =
+                questions.stream()
+                        .map(question -> mapper.questionToQuestionResponseDto(question))
+                        .collect(Collectors.toList());
 
-        List<Question> questions = pageQuestions.getContent();
-
-        return new ResponseEntity<>(new MultiResponseDto<>(mapper.questionToQuestionResponseDtos(questions),pageQuestions),HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+//
+//    @GetMapping
+//    public ResponseEntity getQuestions(@RequestParam int page, @RequestParam int size){
+//
+//        Page<Question> pageQuestions = questionService.findQuestions(page-1,size);
+//
+//        List<Question> questions = pageQuestions.getContent();
+//
+//        return new ResponseEntity<>(new MultiResponseDto<>(mapper.questionToQuestionResponseDtos(questions),pageQuestions),HttpStatus.OK);
+//    }
 
     @DeleteMapping("/{question-id}") //질문 삭제
     public ResponseEntity deleteQuestion(@PathVariable("question-id") long questionId) {

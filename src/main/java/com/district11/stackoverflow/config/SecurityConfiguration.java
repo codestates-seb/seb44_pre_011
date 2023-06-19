@@ -4,10 +4,12 @@ import com.district11.stackoverflow.auth.JwtAuthenticationFilter;
 import com.district11.stackoverflow.auth.JwtTokenizer;
 import com.district11.stackoverflow.auth.MemberAuthenticationFailureHandler;
 import com.district11.stackoverflow.auth.MemberAuthenticationSuccessHandler;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -69,24 +71,7 @@ public class SecurityConfiguration {
     }
 
 
-    @Bean
-    public UserDetailsManager userDetailsService() {
-        UserDetails userDetails =
-                User.withDefaultPasswordEncoder()
-                        .username("abc@gmail.com")
-                        .password("abc")
-                        .roles("USER")
-                        .build();
 
-        return new InMemoryUserDetailsManager(userDetails);
-    }
-
-
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {

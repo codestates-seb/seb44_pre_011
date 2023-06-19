@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @MappedSuperclass
@@ -21,4 +22,14 @@ public abstract class Auditable {
     @LastModifiedDate
     @Column(name = "LAST_MODIFIED_AT")
     private LocalDateTime modifiedAt;
+
+    public String formatCreatedAt() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return createdAt.format(formatter);
+    }
+
+    public String formatModifiedAt() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return modifiedAt.format(formatter);
+    }
 }
