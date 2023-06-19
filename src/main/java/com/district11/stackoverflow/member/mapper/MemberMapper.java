@@ -9,8 +9,11 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface MemberMapper {
     Member memberPostDtotoMember(MemberDto.Post requestBody);
+
     Member memberPatchDtotoMember(MemberDto.Patch requestBody);
+
     MemberDto.Response memberToMemberResponseDto(Member member);
+
     List<MemberDto.Response> membersToMemberResponseDtos(List<Member> members);
 
 }
