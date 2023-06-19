@@ -3,6 +3,13 @@
   margin: 0;
 }
 
+#mainpage {
+  display: column;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+}
+
 #main {
   display: flex;
   flex-direction: row;
@@ -12,7 +19,7 @@
 
 #asdie {
   position: sticky;
-  top: 0;
+  top: 69px;
   clear: both;
   overflow: visible;
 }
@@ -21,6 +28,7 @@
   width: 50%;
   border-left: 1px solid #ccc;
   clear: both;
+  margin-top: 69px;
   margin-left: 15px;
 }
 

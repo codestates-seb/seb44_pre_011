@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import Header from "../../Components/Header/Header";
 import Aside from "../../Components/Aside/Aside";
 import Footer from "../../Components/Footer/Footer";
 import Questions from "../../Components/Questions/Questions";
@@ -14,6 +15,7 @@ const MainPage = () => {
 
   return (
     <div>
+      <Header />
       <div id={style.main}>
         <div id={style.asdie}>
           <Aside />
