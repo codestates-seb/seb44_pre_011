@@ -95,13 +95,16 @@
   text-decoration: none;
 }
 
-@media (max-width: 600px) {
-  .headerContainer {
-    max-width: 600px;
-    justify-content: flex-start;
+  @media (max-width: 600px) {
+    .headerContainer {
+      max-width: 600px;
+      justify-content: center;
+    }
+    .Container {
+      margin-left: 0;
+    } 
+    .SearchBarContainer {
+      display: none;
+    }
   }
 
-  .SearchBarContainer {
-    display: none;
-  }
-}
