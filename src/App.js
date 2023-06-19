@@ -8,12 +8,13 @@ import CreateQuestionPage from "./Pages/CreateQuestion/CreateQuestionPage";
 import "./App.module.css";
 
 function App() {
+  
   return (
     <Routes>
       <Route element={<MainPage />} path="/" />
       <Route element={<LoginPage />} path="/login" />
       <Route element={<SignupPage />} path="/signup" />
-      <Route element={<UserProfilePage />} />
+      <Route element={<UserProfilePage />} path="/users" />
       <Route element={<CreateQuestionPage />} />
     </Routes>
   );
