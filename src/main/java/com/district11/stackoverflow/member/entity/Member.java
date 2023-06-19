@@ -20,7 +20,7 @@ public class Member extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberId;
 
-    @Column(length = 100, nullable = false,unique = true)
+    @Column(length = 100, nullable = false, unique = true)
     private String email;
 
     @Column(length = 100, nullable = false)
@@ -33,7 +33,6 @@ public class Member extends Auditable {
     private List<String> roles = new ArrayList<>();
 
     private String profileImg;
-
 
 
     public Member(String email, String password, String displayName) {

@@ -46,7 +46,7 @@ public class MemberService {
 
     public Member updateMember(Member member) {
         Member findMember = findMember(member.getMemberId());
-        return memberRepository.save(member );
+        return memberRepository.save(member);
     }
 
     public Member findMember(long memberId) {
@@ -54,7 +54,7 @@ public class MemberService {
         return findMember;
     }
 
-    public Page<Member> findMembers(int page,int size) {
+    public Page<Member> findMembers(int page, int size) {
         return memberRepository.findAll(PageRequest.of(page, size, Sort.by("memberId").descending()));
     }
 
@@ -62,7 +62,6 @@ public class MemberService {
         Member findMember = findMember(memberId);
         memberRepository.deleteById(memberId);
     }
-
 
 
     private void verifyExistsEmail(String email) {

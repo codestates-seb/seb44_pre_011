@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
@@ -43,22 +44,22 @@ public class MemberController {
 
     @PatchMapping("/{member-Id}")
     public ResponseEntity patchMember(@PathVariable @Positive long memberId,
-                                      @Valid @RequestBody MemberDto.Patch requestBody){
+                                      @Valid @RequestBody MemberDto.Patch requestBody) {
         Member member = memberService.updateMember(memberMapper.memberPatchDtotoMember(requestBody));
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(memberMapper.memberToMemberResponseDto(member))
-                ,HttpStatus.OK
+                , HttpStatus.OK
         );
     }
 
     @GetMapping
     public ResponseEntity getMembers(@Positive @RequestParam int page,
                                      @Positive @RequestParam int size) {
-        Page<Member> pageMembers = memberService.findMembers(page-1, size);
+        Page<Member> pageMembers = memberService.findMembers(page - 1, size);
         List<Member> members = pageMembers.getContent();
         return new ResponseEntity(
-                new MultiResponseDto(memberMapper.membersToMemberResponseDtos(members),pageMembers),HttpStatus.OK
+                new MultiResponseDto(memberMapper.membersToMemberResponseDtos(members), pageMembers), HttpStatus.OK
         );
     }
 
