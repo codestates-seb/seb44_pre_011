@@ -1,8 +1,12 @@
 package com.district11.stackoverflow.config;
 
+import com.district11.stackoverflow.auth.JwtAuthenticationFilter;
+import com.district11.stackoverflow.auth.JwtTokenizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -21,6 +25,13 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 public class SecurityConfiguration {
 
+
+    private final JwtTokenizer jwtTokenizer;
+
+    public SecurityConfiguration(JwtTokenizer jwtTokenizer) {
+        this.jwtTokenizer = jwtTokenizer;
+    }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -30,37 +41,51 @@ public class SecurityConfiguration {
                 .cors(withDefaults())    // (3)
                 .formLogin().disable()   // (4)
                 .httpBasic().disable()   // (5)
+                .apply(new CustomFilterConfigurer())   // (1)
+                .and()
                 .authorizeHttpRequests(authorize -> authorize
                         .anyRequest().permitAll()                // (6)
                 );
         return http.build();
     }
 
-    @Bean
-    public UserDetailsManager userDetailsService() {
-        UserDetails userDetails =
-                User.withDefaultPasswordEncoder()
-                        .username("abc@gmail.com")
-                        .password("abc")
-                        .roles("USER")
-                        .build();
+    public class CustomFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity> {  // (2-1)
+        @Override
+        public void configure(HttpSecurity builder) throws Exception {  // (2-2)
+            AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);  // (2-3)
 
-        return new InMemoryUserDetailsManager(userDetails);
-    }
+            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);  // (2-4)
+            jwtAuthenticationFilter.setFilterProcessesUrl("/v11/auth/login");          // (2-5)
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
+            builder.addFilter(jwtAuthenticationFilter);  // (2-6)
+        }
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));   // (8-1)
-        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PATCH", "DELETE"));  // (8-2)
+        @Bean
+        public UserDetailsManager userDetailsService() {
+            UserDetails userDetails =
+                    User.withDefaultPasswordEncoder()
+                            .username("abc@gmail.com")
+                            .password("abc")
+                            .roles("USER")
+                            .build();
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();   // (8-3)
-        source.registerCorsConfiguration("/**", configuration);      // (8-4)
-        return source;
+            return new InMemoryUserDetailsManager(userDetails);
+        }
+
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+            return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        }
+
+        @Bean
+        CorsConfigurationSource corsConfigurationSource() {
+            CorsConfiguration configuration = new CorsConfiguration();
+            configuration.setAllowedOrigins(Arrays.asList("*"));   // (8-1)
+            configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));  // (8-2)
+
+            UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();   // (8-3)
+            source.registerCorsConfiguration("/**", configuration);      // (8-4)
+            return source;
+        }
     }
 }
