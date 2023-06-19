@@ -93,6 +93,7 @@
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     border: 1px solid rgb(205, 205, 205);
     border-radius: 3px;
+    text-decoration: none;
   }
 
   @media (max-width: 600px) {
