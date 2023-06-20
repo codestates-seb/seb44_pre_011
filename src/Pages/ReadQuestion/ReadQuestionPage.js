@@ -22,10 +22,27 @@ const ReadQuestionPage = () => {
             Asked 2023/06/16 at 12:00
           </div>
           <div id={style.contents}>
-            <div>test</div>
+            <div>
+              Chrome/Firefox is not displaying maths equations and some websites
+              correctly as follows.
+              <br />
+              enter image description here
+              <br />
+              enter image description here
+              <br />
+              Is it the issue of the site or the browser or some plugins ?
+              <br />
+              Thanks and Regards Karthy
+              <br />
+              Tried different plugins and different browsers
+              <div id={style.taglist}>
+                <div className={style.tag}>tag1</div>
+                <div className={style.tag}>tag2</div>
+                <div className={style.tag}>tag3</div>
+              </div>
+            </div>
             <div id={style.login}>
-              To answer a question, you must either sign up for an account or
-              post as a guest
+              To answer a question, you must either sign up for an account
             </div>
             <div>
               <span className={style.buttonContainer}>

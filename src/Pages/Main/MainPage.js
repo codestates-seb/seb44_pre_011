@@ -1,9 +1,11 @@
 import React from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Header from "../../Components/Header/Header";
 import Aside from "../../Components/Aside/Aside";
 import Footer from "../../Components/Footer/Footer";
 import Questions from "../../Components/Questions/Questions";
+import Button from "@mui/material/Button";
 import style from "./MainPage.module.css";
 
 const MainPage = () => {
@@ -21,6 +23,26 @@ const MainPage = () => {
           <Aside />
         </div>
         <div id={style.question}>
+          <div id={style.questionHead}>
+            <div id={style.questionHeadTitle}>
+              <h1>All Questions</h1>
+              <Link to="/questions/ask">
+                <Button
+                  variant="contained"
+                  sx={{
+                    fontSize: 13,
+                    width: "140px",
+                    height: "50px",
+                    marginTop: "10px",
+                    marginLeft: "10px",
+                  }}
+                >
+                  Ask Question
+                </Button>
+              </Link>
+            </div>
+            {array.length} questions
+          </div>
           {array.slice(offset, offset + 15).map((index) => (
             <Questions key={index} />
           ))}

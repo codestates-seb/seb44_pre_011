@@ -50,6 +50,19 @@
   font-weight: bold;
 }
 
+#taglist {
+  display: flex;
+  flex-direction: row;
+}
+
+.tag {
+  background-color: #e1ecf4;
+  color: #39739d;
+  border-radius: 5px;
+  padding: 3px 7px;
+  margin-right: 10px;
+}
+
 #footer {
   overflow-x: hidden;
 }
