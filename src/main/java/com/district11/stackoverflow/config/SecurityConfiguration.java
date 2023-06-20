@@ -34,7 +34,7 @@ public class SecurityConfiguration {
     private final CustomAuthorityUtils authorityUtils; // 추가
     private final MemberService memberService;
 
-    public SecurityConfiguration(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils,@Lazy MemberService memberService) {
+    public SecurityConfiguration(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils, @Lazy MemberService memberService) {
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils = authorityUtils;
         this.memberService = memberService;
@@ -124,7 +124,6 @@ public class SecurityConfiguration {
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
-
 
 
     @Bean
