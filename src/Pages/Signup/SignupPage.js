@@ -9,8 +9,10 @@ const SignupPage = () => {
     <>
       <Header />
       <div id={Style.signUpContainer}>
-        <HeadLine />
-        <div id={Style.form}>
+        <div className={Style.Container}>
+          <HeadLine/>
+        </div>
+        <div className={Style.Container}>
           <Oauth />
           <SignUpForm />
         </div>

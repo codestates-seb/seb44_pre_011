@@ -1,13 +1,15 @@
-
 #signUpContainer{
     background-color: rgb(234, 234, 234);
     display: flex; 
     justify-content: center;
+    flex-direction: row;
     align-items: center;
+    height: 100vh;
 }
-#signUpContainer> *{
-    margin-top: 100px;
+.Container{
+   margin-right: 50px;
 }
+
 #form{
     display: flex;
     flex-direction: column;
