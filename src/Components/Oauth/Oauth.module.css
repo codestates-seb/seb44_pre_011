@@ -1,13 +1,12 @@
 .btnContainer_Google{
     display: flex;
-    position: relative;
     align-items: center;
     justify-content: center;
     width: 288px;
     height: 38px;
     background-color: white;
     font-size: small;
-    border-color: rgb(221, 224, 225);
     border-radius: 5px;
-    border-width: 1.5px;
+    border-style: none;
+    box-shadow: 1px 1px 1px 1px  rgba(0, 0, 0, 0.16);
 }
