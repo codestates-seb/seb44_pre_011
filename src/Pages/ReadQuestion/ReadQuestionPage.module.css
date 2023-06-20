@@ -21,7 +21,7 @@
 }
 
 #question {
-  width: 50%;
+  width: 51.5%;
 }
 
 #title {
@@ -50,9 +50,20 @@
   font-weight: bold;
 }
 
+#answer {
+  display: flex;
+  flex-direction: column;
+}
+
+#textarea {
+  width: 70%;
+  height: 300px;
+}
+
 #taglist {
   display: flex;
   flex-direction: row;
+  margin-top: 10px;
 }
 
 .tag {

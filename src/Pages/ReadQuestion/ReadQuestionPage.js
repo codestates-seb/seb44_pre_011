@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../Components/Header/Header";
 import Aside from "../../Components/Aside/Aside";
@@ -6,7 +6,75 @@ import Footer from "../../Components/Footer/Footer";
 import Button from "@mui/material/Button";
 import style from "./ReadQuestionPage.module.css";
 
+const Login = () => {
+  return (
+    <>
+      <div id={style.login}>
+        To answer a question, you must either sign up for an account
+      </div>
+      <div>
+        <span className={style.buttonContainer}>
+          <Link to="/login">
+            <Button
+              variant="contained"
+              sx={{
+                fontSize: 20,
+                width: "200px",
+                height: "50px",
+                marginTop: "10px",
+                backgroundColor: "#e3ecf3",
+                color: "#1976D2",
+                ":hover": {
+                  color: "#e3ecf3",
+                },
+              }}
+            >
+              Login
+            </Button>
+          </Link>
+          <Link to="/signup">
+            <Button
+              variant="contained"
+              sx={{
+                fontSize: 20,
+                width: "200px",
+                height: "50px",
+                marginTop: "10px",
+                marginLeft: "10px",
+              }}
+            >
+              Sign Up
+            </Button>
+          </Link>
+        </span>
+      </div>
+    </>
+  );
+};
+
+const Answer = () => {
+  return (
+    <div id={style.answer}>
+      <span>Your Answer</span>
+      <textarea id={style.textarea}>text</textarea>
+      <Link to="/">
+        <Button
+          variant="contained"
+          sx={{
+            fontSize: 12,
+            width: "165px",
+            height: "40px",
+          }}
+        >
+          Post Your Answer
+        </Button>
+      </Link>
+    </div>
+  );
+};
+
 const ReadQuestionPage = () => {
+  const [login, setLogin] = useState(false);
   return (
     <div>
       <Header />
@@ -41,45 +109,7 @@ const ReadQuestionPage = () => {
                 <div className={style.tag}>tag3</div>
               </div>
             </div>
-            <div id={style.login}>
-              To answer a question, you must either sign up for an account
-            </div>
-            <div>
-              <span className={style.buttonContainer}>
-                <Link to="/login">
-                  <Button
-                    variant="contained"
-                    sx={{
-                      fontSize: 20,
-                      width: "200px",
-                      height: "50px",
-                      marginTop: "10px",
-                      backgroundColor: "#e3ecf3",
-                      color: "#1976D2",
-                      ":hover": {
-                        color: "#e3ecf3",
-                      },
-                    }}
-                  >
-                    Login
-                  </Button>
-                </Link>
-                <Link to="/signup">
-                  <Button
-                    variant="contained"
-                    sx={{
-                      fontSize: 20,
-                      width: "200px",
-                      height: "50px",
-                      marginTop: "10px",
-                      marginLeft: "10px",
-                    }}
-                  >
-                    Sign Up
-                  </Button>
-                </Link>
-              </span>
-            </div>
+            {login ? <Login /> : <Answer />}
           </div>
         </div>
       </div>
