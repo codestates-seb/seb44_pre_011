@@ -41,4 +41,9 @@ public class Member extends Auditable {
         this.password = password;
         this.displayName = displayName;
     }
+
+    // OAuth 추가
+    public Member(String email) {
+        this.email = email;
+    }
 }

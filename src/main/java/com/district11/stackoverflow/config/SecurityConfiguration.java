@@ -1,5 +1,6 @@
 package com.district11.stackoverflow.config;
 
+import com.district11.stackoverflow.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Value;
 import com.district11.stackoverflow.auth.*;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -29,18 +31,25 @@ public class SecurityConfiguration {
 
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils; // 추가
+    private final MemberService memberService;
 
-    public SecurityConfiguration(JwtTokenizer jwtTokenizer,
-                                   CustomAuthorityUtils authorityUtils) {
+    public SecurityConfiguration(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils, MemberService memberService) {
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils = authorityUtils;
+        this.memberService = memberService;
     }
 
+    /*
     @Value("${spring.security.oauth2.client.registration.google.clientId}")  // (1)
     private String clientId;
 
     @Value("${spring.security.oauth2.client.registration.google.clientSecret}") // (2)
     private String clientSecret;
+
+
+     */
+
+    /*
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -53,36 +62,41 @@ public class SecurityConfiguration {
                 .oauth2Login(withDefaults());    // (2)
         return http.build();
     }
-//
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http
-//                .headers().frameOptions().sameOrigin()
-//                .and()
-//                .csrf().disable()
-//                .cors(withDefaults())
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .formLogin().disable()
-//                .httpBasic().disable()
-//                .exceptionHandling()
-//                .authenticationEntryPoint(new MemberAuthenticationEntryPoint())  // 추가
-//                .accessDeniedHandler(new MemberAccessDeniedHandler())            // 추가
-//                .and()
-//                .apply(new CustomFilterConfigurer())
-//                .and()
-//                .authorizeHttpRequests(authorize -> authorize
+
+     */
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .headers().frameOptions().sameOrigin()
+                .and()
+                .csrf().disable()
+                .cors(withDefaults())
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .formLogin().disable()
+                .httpBasic().disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(new MemberAuthenticationEntryPoint())  // 추가
+                .accessDeniedHandler(new MemberAccessDeniedHandler())            // 추가
+                .and()
+                .apply(new CustomFilterConfigurer())
+                .and()
+                .authorizeHttpRequests(authorize -> authorize
 //                                .antMatchers(HttpMethod.POST, "/*/members").permitAll()
 //                                .antMatchers(HttpMethod.PATCH, "/*/members/**").hasRole("USER")
 //                                .antMatchers(HttpMethod.GET, "/*/members").hasRole("ADMIN")
 //                                .antMatchers(HttpMethod.GET, "/*/members/**").hasAnyRole("USER", "ADMIN")
 //                                .antMatchers(HttpMethod.DELETE, "/*/members/**").hasRole("USER")
-//                                .anyRequest().permitAll()
-//                )
-//                .oauth2Login(withDefaults());
-//        return http.build();
-//    }
+                                .anyRequest().permitAll()
+                )
+                .oauth2Login(oauth2 -> oauth2
+                        .successHandler(new OAuth2MemberSuccessHandler(jwtTokenizer, authorityUtils, memberService))
+                );
+        return http.build();
+    }
 
+    /*
     @Bean
     public ClientRegistrationRepository clientRegistrationRepository() {
         var clientRegistration = clientRegistration();    // (3-1)
@@ -101,10 +115,16 @@ public class SecurityConfiguration {
                 .build();
     }
 
+
+     */
+
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
+
+
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
@@ -116,7 +136,7 @@ public class SecurityConfiguration {
         return source;
     }
 
-
+    /*
     public class CustomFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity> {
         @Override
         public void configure(HttpSecurity builder) throws Exception {
@@ -135,5 +155,17 @@ public class SecurityConfiguration {
                     .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
         }
     }
+
+     */
+    // 추가
+    public class CustomFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity> {
+        @Override
+        public void configure(HttpSecurity builder) throws Exception {
+            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
+
+            builder.addFilterAfter(jwtVerificationFilter, OAuth2LoginAuthenticationFilter.class); // (2)
+        }
+    }
+
 
 }

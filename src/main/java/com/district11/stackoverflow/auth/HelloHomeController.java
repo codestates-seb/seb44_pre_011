@@ -16,22 +16,20 @@ public class HelloHomeController {
 
     private final OAuth2AuthorizedClientService authorizedClientService;
 
-    // (1)
     public HelloHomeController(OAuth2AuthorizedClientService authorizedClientService) {
         this.authorizedClientService = authorizedClientService;
     }
 
     @GetMapping("/hello-oauth2")
     public String home(Authentication authentication) {
-        var authorizedClient = authorizedClientService.loadAuthorizedClient("google", authentication.getName()); // (2)
+        var authorizedClient = authorizedClientService.loadAuthorizedClient("google", authentication.getName());
 
-        // (3)
         OAuth2AccessToken accessToken = authorizedClient.getAccessToken();
-        System.out.println("Access Token Value: " + accessToken.getTokenValue());  // (3-1)
-        System.out.println("Access Token Type: " + accessToken.getTokenType().getValue());  // (3-2)
-        System.out.println("Access Token Scopes: " + accessToken.getScopes());       // (3-3)
-        System.out.println("Access Token Issued At: " + accessToken.getIssuedAt());    // (3-4)
-        System.out.println("Access Token Expires At: " + accessToken.getExpiresAt());  // (3-5)
+        System.out.println("Access Token Value: " + accessToken.getTokenValue());
+        System.out.println("Access Token Type: " + accessToken.getTokenType().getValue());
+        System.out.println("Access Token Scopes: " + accessToken.getScopes());
+        System.out.println("Access Token Issued At: " + accessToken.getIssuedAt());
+        System.out.println("Access Token Expires At: " + accessToken.getExpiresAt());
 
         return "hello-oauth2";
     }

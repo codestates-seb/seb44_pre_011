@@ -39,15 +39,15 @@ public class JwtTokenizer {
                                       String subject,
                                       Date expiration,
                                       String base64EncodedSecretKey) {
-        Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey); // (2-1)
+        Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
 
         return Jwts.builder()
-                .setClaims(claims)          // (2-2)
-                .setSubject(subject)        // (2-3)
-                .setIssuedAt(Calendar.getInstance().getTime())   // (2-4)
-                .setExpiration(expiration)  // (2-5)
-                .signWith(key)              // (2-6)
-                .compact();                 // (2-7)
+                .setClaims(claims)
+                .setSubject(subject)
+                .setIssuedAt(Calendar.getInstance().getTime())
+                .setExpiration(expiration)
+                .signWith(key)
+                .compact();
     }
 
     public String generateRefreshToken(String subject, Date expiration, String base64EncodedSecretKey) {
@@ -61,7 +61,7 @@ public class JwtTokenizer {
                 .compact();
     }
 
-    // 추가
+    // 검증 후, Claims을 반환하는 용도
     public Jws<Claims> getClaims(String jws, String base64EncodedSecretKey) {
         Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
 
@@ -72,13 +72,14 @@ public class JwtTokenizer {
         return claims;
     }
 
+    // 단순히 검증만 하는 용도로 쓰일 경우
     public void verifySignature(String jws, String base64EncodedSecretKey) {
         Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
 
         Jwts.parserBuilder()
-                .setSigningKey(key)     // (1)
+                .setSigningKey(key)
                 .build()
-                .parseClaimsJws(jws);   // (2)
+                .parseClaimsJws(jws);
     }
 
     public Date getTokenExpiration(int expirationMinutes) {
@@ -90,8 +91,8 @@ public class JwtTokenizer {
     }
 
     private Key getKeyFromBase64EncodedKey(String base64EncodedSecretKey) {
-        byte[] keyBytes = Decoders.BASE64.decode(base64EncodedSecretKey);  // (4-1)
-        Key key = Keys.hmacShaKeyFor(keyBytes);    // (4-2)
+        byte[] keyBytes = Decoders.BASE64.decode(base64EncodedSecretKey);
+        Key key = Keys.hmacShaKeyFor(keyBytes);
 
         return key;
     }
