@@ -1,13 +1,18 @@
 
-#SignUpContainer{
+#signUpContainer{
     background-color: rgb(234, 234, 234);
     display: flex; 
     justify-content: center;
     align-items: center;
-    height: 100vh;
 }
-#SignUpContainer> *{
+#signUpContainer> *{
     margin-top: 100px;
+}
+#form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .HeadLineContainer{
@@ -40,12 +45,8 @@
 /* sign up form */
 
 .formContainer{
-    height: 500px;
     width: 300px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    margin: 20px 0;
     border-radius: 7px;
     background-color: #fff;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
@@ -53,11 +54,18 @@
 .form{
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 30px 20px;
+}
+
+.form> *{
+width: 100%;
+margin: 10px 0;
 }
 .title{
 display: flex;
 flex-direction: column;
-margin-bottom: 20px;
 font-weight: bold;
 }
 .input{
@@ -68,20 +76,24 @@ font-weight: bold;
     border: 1px solid rgb(180, 180, 180);
     border-radius: 5px;
     height: 35px;
-    width: 250px;
 }
 
-p{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 260px;
-    font-size: 13px;
-    margin-bottom: 10px;
-}
+
 
 .checkBox{
     display: flex;
     justify-content: flex-start;    
     flex-direction: column;
+}
+.checkBox p{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    margin: 5px 0;
+
+}
+.note{
+    font-size: 13px;
+    /* margin-top: 20px; */
 }

@@ -2,15 +2,18 @@ import React from "react";
 import Header from "../../Components/Header/Header";
 import Style from "./SignupPage.module.css";
 import Button from "@mui/material/Button";
-import { StepLabel } from "@mui/material";
+import Oauth from "../../Components/Oauth/Oauth";
 
 const SignupPage = () => {
   return (
     <>
       <Header />
-      <div id={Style.SignUpContainer}>
+      <div id={Style.signUpContainer}>
         <HeadLine />
-        <SignUpForm />
+        <div id={Style.form}>
+          <Oauth />
+          <SignUpForm />
+        </div>
       </div>
     </>
   );
