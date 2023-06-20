@@ -1,5 +1,6 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import Header from "../../Components/Header/Header";
 import Aside from "../../Components/Aside/Aside";
 import Footer from "../../Components/Footer/Footer";
@@ -10,8 +11,25 @@ const MainPage = () => {
   const [page, setPage] = useState(1);
   const offset = (page - 1) * 15;
 
-  const array = Array(50).fill();
-  const numPages = Math.ceil(array.length / 15);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("/questions", {
+        headers: {
+          "Content-Type": `application/json`,
+          "ngrok-skip-browser-warning": "69420",
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        const { data } = response;
+        console.log(data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  const numPages = Math.ceil(data.length / 15);
 
   return (
     <div>
@@ -21,8 +39,12 @@ const MainPage = () => {
           <Aside />
         </div>
         <div id={style.question}>
-          {array.slice(offset, offset + 15).map((index) => (
-            <Questions key={index} />
+          {data.slice(offset, offset + 15).map((obj) => (
+            <Questions
+              key={obj.questionId}
+              title={obj.title}
+              content={obj.content}
+            />
           ))}
         </div>
       </div>
