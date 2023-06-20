@@ -16,7 +16,6 @@ public class MemberDto {
     @Getter
     @AllArgsConstructor
     public static class Post {
-
         @NotBlank
         @Email
         private String email;

@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/questions")
 @Validated
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class QuestionController {
 
     private final static String QUESTION_DEFAULT_URL = "/questions";
@@ -78,7 +79,6 @@ public class QuestionController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-//
 //    @GetMapping
 //    public ResponseEntity getQuestions(@RequestParam int page, @RequestParam int size){
 //

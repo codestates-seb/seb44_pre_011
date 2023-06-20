@@ -1,5 +1,6 @@
 package com.district11.stackoverflow.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import com.district11.stackoverflow.auth.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,8 +9,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -31,32 +36,69 @@ public class SecurityConfiguration {
         this.authorityUtils = authorityUtils;
     }
 
+    @Value("${spring.security.oauth2.client.registration.google.clientId}")  // (1)
+    private String clientId;
+
+    @Value("${spring.security.oauth2.client.registration.google.clientSecret}") // (2)
+    private String clientSecret;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .headers().frameOptions().sameOrigin()
-                .and()
                 .csrf().disable()
-                .cors(withDefaults())
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
                 .formLogin().disable()
                 .httpBasic().disable()
-                .exceptionHandling()
-                .authenticationEntryPoint(new MemberAuthenticationEntryPoint())  // 추가
-                .accessDeniedHandler(new MemberAccessDeniedHandler())            // 추가
-                .and()
-                .apply(new CustomFilterConfigurer())
-                .and()
-                .authorizeHttpRequests(authorize -> authorize
-                                .antMatchers(HttpMethod.POST, "/*/members").permitAll()
-                                .antMatchers(HttpMethod.PATCH, "/*/members/**").hasRole("USER")
-                                .antMatchers(HttpMethod.GET, "/*/members").hasRole("ADMIN")
-                                .antMatchers(HttpMethod.GET, "/*/members/**").hasAnyRole("USER", "ADMIN")
-                                .antMatchers(HttpMethod.DELETE, "/*/members/**").hasRole("USER")
-                                .anyRequest().permitAll()
-                );
+                .authorizeHttpRequests(authorize -> authorize    // (1)
+                        .anyRequest().authenticated()
+                )
+                .oauth2Login(withDefaults());    // (2)
         return http.build();
+    }
+//
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        http
+//                .headers().frameOptions().sameOrigin()
+//                .and()
+//                .csrf().disable()
+//                .cors(withDefaults())
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .formLogin().disable()
+//                .httpBasic().disable()
+//                .exceptionHandling()
+//                .authenticationEntryPoint(new MemberAuthenticationEntryPoint())  // 추가
+//                .accessDeniedHandler(new MemberAccessDeniedHandler())            // 추가
+//                .and()
+//                .apply(new CustomFilterConfigurer())
+//                .and()
+//                .authorizeHttpRequests(authorize -> authorize
+//                                .antMatchers(HttpMethod.POST, "/*/members").permitAll()
+//                                .antMatchers(HttpMethod.PATCH, "/*/members/**").hasRole("USER")
+//                                .antMatchers(HttpMethod.GET, "/*/members").hasRole("ADMIN")
+//                                .antMatchers(HttpMethod.GET, "/*/members/**").hasAnyRole("USER", "ADMIN")
+//                                .antMatchers(HttpMethod.DELETE, "/*/members/**").hasRole("USER")
+//                                .anyRequest().permitAll()
+//                )
+//                .oauth2Login(withDefaults());
+//        return http.build();
+//    }
+
+    @Bean
+    public ClientRegistrationRepository clientRegistrationRepository() {
+        var clientRegistration = clientRegistration();    // (3-1)
+
+        return new InMemoryClientRegistrationRepository(clientRegistration);   // (3-2)
+    }
+
+    // (4)
+    private ClientRegistration clientRegistration() {
+        // (4-1)
+        return CommonOAuth2Provider
+                .GOOGLE
+                .getBuilder("google")
+                .clientId(clientId)
+                .clientSecret(clientSecret)
+                .build();
     }
 
     @Bean
