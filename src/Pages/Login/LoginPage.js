@@ -8,8 +8,18 @@ const LoginPage = () => {
     <>
       <Header />
       <div className={style.AllContainer}>
-        <img src={`${process.env.PUBLIC_URL}/img/StackOverFlow_logo.svg`} className={style.logoimg}/>
-        <Oauth />
+        <div>
+          <img src={`${process.env.PUBLIC_URL}/img/StackOverFlow_logo.svg`}></img>
+        </div>
+        <div>
+          <Oauth/>
+        </div>
+        <div>
+          3
+        </div>
+        <div>
+          4
+        </div>
       </div>
     </>
   );
