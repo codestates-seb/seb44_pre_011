@@ -3,16 +3,17 @@ import Header from "../../Components/Header/Header";
 import Style from "./SignupPage.module.css";
 import Button from "@mui/material/Button";
 import Oauth from "../../Components/Oauth/Oauth";
+import axios from "axios";
 
 const SignupPage = () => {
   return (
     <>
       <Header />
-      <div id={Style.signUpContainer}>
-        <div id={Style.HeadLine}>
+      <div className={Style.signUpContainer}>
+        <div className={Style.HeadLine}>
           <HeadLine />
         </div>
-        <div id={Style.SignUpForm}>
+        <div className={Style.SignUpForm}>
           <Oauth />
           <SignUpForm />
           <p>
@@ -86,7 +87,7 @@ const SignUpForm = () => {
 
   return (
     <div className={Style.formContainer}>
-      <form className={Style.form} onSubmit={handleSubmit}>
+      <form className={Style.form}>
         <label className={Style.title}>
           Display Name
           <input className={Style.input} type="text" />
@@ -116,6 +117,7 @@ const SignUpForm = () => {
           className={Style.button}
           variant="contained"
           sx={{ fontSize: 14, width: "100%", height: "40px" }}
+          onClick={handleSubmit}
         >
           Sign Up
         </Button>
