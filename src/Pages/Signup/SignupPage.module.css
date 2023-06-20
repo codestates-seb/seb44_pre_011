@@ -1,28 +1,19 @@
+
 #signUpContainer{
-    background-color: rgb(234, 234, 234);
+    background-color: rgb(228, 228, 228);
     display: flex; 
     justify-content: center;
     flex-direction: row;
     align-items: center;
     height: 100vh;
 }
-.Container{
-   margin-right: 50px;
-}
-
-#form{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
 .HeadLineContainer{
     display: flex;
     flex-direction: column;
     justify-content: center;
     height: 500px;
     width: 400px;
+    margin-right: 20px;
 }
 .HeadLineTitle{
     font-size: 24px;
@@ -84,7 +75,7 @@ font-weight: bold;
 
 .checkBox{
     display: flex;
-    justify-content: flex-start;    
+    justify-content: flex-start;
     flex-direction: column;
 }
 .checkBox p{
@@ -93,9 +84,9 @@ font-weight: bold;
     align-items: center;
     font-size: 13px;
     margin: 5px 0;
-
+    line-height:1.3rem;
 }
 .note{
     font-size: 13px;
-    /* margin-top: 20px; */
+    line-height:1.2rem;
 }

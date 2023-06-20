@@ -9,12 +9,22 @@ const SignupPage = () => {
     <>
       <Header />
       <div id={Style.signUpContainer}>
-        <div className={Style.Container}>
-          <HeadLine/>
+        <div id={Style.HeadLine}>
+          <HeadLine />
         </div>
-        <div className={Style.Container}>
+        <div id={Style.SignUpForm}>
           <Oauth />
           <SignUpForm />
+          <p>
+            Already have an account?
+            <a href="http://localhost:3000/login">Log in</a>
+          </p>
+          <p>
+            Are you an employer?
+            <a href="https://talent.stackoverflow.com/users/login">
+              Sign up on Talent
+            </a>
+          </p>
         </div>
       </div>
     </>
@@ -110,25 +120,27 @@ const SignUpForm = () => {
           Sign Up
         </Button>
         <p className={Style.note}>
-          By clicking “Sign up”, you agree to our
+          By clicking “Sign up”, you agree to our{" "}
           <a
             href="https://stackoverflow.com/legal/terms-of-service/public"
             target="_blank"
             rel="noreferrer"
           >
+            {" "}
             terms of
             <br />
             service
-          </a>
-          and acknowledge that you have read and understand our
+          </a>{" "}
+          and acknowledge that you have read and understand our{" "}
           <a
             href="https://stackoverflow.com/legal/privacy-policy"
             target="_blank"
             rel="noreferrer"
           >
+            {" "}
             privacy policy
-          </a>
-          and
+          </a>{" "}
+          and{" "}
           <a
             href="https://stackoverflow.com/conduct"
             target="_blank"
