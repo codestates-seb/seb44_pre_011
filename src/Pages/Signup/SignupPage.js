@@ -83,6 +83,18 @@ const HeadLine = () => {
 const SignUpForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    axios({
+      url: "https://c719-222-109-90-233.ngrok-free.app/members",
+      method: "post",
+      data: {
+        email: "",
+        password: "",
+        displayName: "",
+      },
+    })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
 
   return (
