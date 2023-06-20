@@ -3,13 +3,9 @@ package com.district11.stackoverflow.answer.controller;
 import com.district11.stackoverflow.answer.dto.AnswerPatchDto;
 import com.district11.stackoverflow.answer.dto.AnswerPostDto;
 import com.district11.stackoverflow.answer.dto.AnswerResponseDto;
-import com.district11.stackoverflow.answer.dto.AnswerVotePostDto;
 import com.district11.stackoverflow.answer.entity.Answer;
-import com.district11.stackoverflow.answer.entity.AnswerVote;
 import com.district11.stackoverflow.answer.mapper.AnswerMapper;
-import com.district11.stackoverflow.answer.mapper.AnswerVoteMapper;
 import com.district11.stackoverflow.answer.service.AnswerService;
-import com.district11.stackoverflow.answer.service.AnswerVoteService;
 import com.district11.stackoverflow.dto.SingleResponseDto;
 import com.district11.stackoverflow.member.service.MemberService;
 import com.district11.stackoverflow.question.service.QuestionService;
@@ -34,10 +30,6 @@ public class AnswerController {
     private final AnswerMapper answerMapper;
     private final MemberService memberService;
     private final QuestionService questionService;
-
-    //private final AnswerVoteService answerVoteService;
-    //private final AnswerVoteMapper answerVoteMapper;
-
 
     public AnswerController(AnswerService answerService, AnswerMapper answerMapper,
                             MemberService memberService, QuestionService questionService) {
@@ -85,18 +77,5 @@ public class AnswerController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-    /*
-    // AnswerVote
-    @PostMapping("/{answer-id}/votes")
-    public ResponseEntity<?> postAnswerVote(@PathVariable("answer-id") @Positive long answerId,
-                                            @Valid @RequestBody AnswerVotePostDto answerVotePostDto) {
-
-        AnswerVote answerVote = answerVoteMapper.AnswerVotePostDtoToAnswer(answerVotePostDto);
-
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-     */
 
 }
