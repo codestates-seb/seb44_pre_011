@@ -1,5 +1,6 @@
 .headerContainer {
-  position: fixed;
+  position: sticky;
+  top: 0;
   border-top: 4px solid rgb(255, 140, 0);
   background: rgb(255, 255, 255);
   border-bottom: 1px solid rgb(205, 205, 205);
@@ -95,13 +96,12 @@
   text-decoration: none;
 }
 
-  @media (max-width: 600px) {
-    .headerContainer {
-      max-width: 600px;
-      justify-content: center;
-    }
-    .SearchBarContainer {
-      display: none;
-    }
+@media (max-width: 600px) {
+  .headerContainer {
+    max-width: 600px;
+    justify-content: center;
   }
-
+  .SearchBarContainer {
+    display: none;
+  }
+}

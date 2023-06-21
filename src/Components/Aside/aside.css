@@ -18,12 +18,10 @@
   color: #525960;
 }
 .asideButton:hover {
-  font-weight: bold;
   color: black;
 }
 .active {
   color: black;
-  font-weight: bold;
   background-color: #f0f2f4;
   border-right: 4px solid #ff5722;
 }

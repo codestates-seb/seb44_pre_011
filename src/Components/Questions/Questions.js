@@ -1,5 +1,7 @@
 import React from "react";
 import style from "./Questions.module.css";
+import { useNavigate } from "react-router";
+
 
 const Questions = ({ key, title, content }) => {
   return (
