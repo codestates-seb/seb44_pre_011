@@ -14,7 +14,7 @@ const SignupPage = () => {
           <HeadLine />
         </div>
         <div className={Style.SignUpForm}>
-          <Oauth />
+          <Oauth value="Sign up with Google" />
           <SignUpForm />
           <p>
             Already have an account?
@@ -105,7 +105,6 @@ const SignUpForm = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
     if (memberData.email === "") {
       setEmailErrMsg("이메일을 입력해주세요.");
     } else {
