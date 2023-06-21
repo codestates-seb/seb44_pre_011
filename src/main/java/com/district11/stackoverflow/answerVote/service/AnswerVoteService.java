@@ -1,8 +1,9 @@
-package com.district11.stackoverflow.answer.service;
+package com.district11.stackoverflow.answerVote.service;
 
 import com.district11.stackoverflow.answer.entity.Answer;
-import com.district11.stackoverflow.answer.entity.AnswerVote;
-import com.district11.stackoverflow.answer.repository.AnswerVoteRepository;
+import com.district11.stackoverflow.answer.service.AnswerService;
+import com.district11.stackoverflow.answerVote.entity.AnswerVote;
+import com.district11.stackoverflow.answerVote.repository.AnswerVoteRepository;
 import com.district11.stackoverflow.exception.BusinessLogicException;
 import com.district11.stackoverflow.exception.ExceptionCode;
 import com.district11.stackoverflow.member.entity.Member;
@@ -57,11 +58,11 @@ public class AnswerVoteService {
 
     public void verifyAnswerVote(AnswerVote answerVote) {
 
-        // member가 존재하는지 확인
+        // member 존재하는지 확인
         Member member = memberService.findMember(answerVote.getMember().getMemberId());
         answerVote.setMember(member);
 
-        // Answer가 존재하는지 확인
+        // Answer 존재하는지 확인
         Answer answer = answerService.findVerifyAnswer(answerVote.getAnswer().getAnswerId());
         answerVote.setAnswer(answer);
     }

@@ -1,5 +1,6 @@
-package com.district11.stackoverflow.answer.entity;
+package com.district11.stackoverflow.answerVote.entity;
 
+import com.district11.stackoverflow.answer.entity.Answer;
 import com.district11.stackoverflow.audit.Auditable;
 import com.district11.stackoverflow.member.entity.Member;
 import com.district11.stackoverflow.question.entity.Question;
@@ -35,7 +36,8 @@ public class AnswerVote extends Auditable {
     // 답변 vote 상태
     public enum AnswerVoteStatus {
         VOTE_NONE("VOTE_NONE"),
-        VOTE_OK("VOTE_OK");
+        VOTE_UP("VOTE_OK"),
+        VOTE_DOWN("VOTE_DOWN");
 
         @Getter
         private String status;
