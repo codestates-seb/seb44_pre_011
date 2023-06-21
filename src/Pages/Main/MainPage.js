@@ -1,6 +1,6 @@
 import React from "react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import Header from "../../Components/Header/Header";
 import Aside from "../../Components/Aside/Aside";
 import Footer from "../../Components/Footer/Footer";
@@ -12,8 +12,21 @@ const MainPage = () => {
   const [page, setPage] = useState(1);
   const offset = (page - 1) * 15;
 
-  const array = Array(50).fill();
-  const numPages = Math.ceil(array.length / 15);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    axios({
+      url: "https://2a0e-119-66-103-226.ngrok-free.app/questions",
+      method: "get",
+      headers: {
+        "ngrok-skip-browser-warning": "skip",
+      },
+    })
+      .then((response) => setData(response.data))
+      .catch((err) => console.log(err));
+  }, []);
+
+  const numPages = Math.ceil(data.length / 15);
 
   return (
     <div>
@@ -43,8 +56,12 @@ const MainPage = () => {
             </div>
             {array.length} questions
           </div>
-          {array.slice(offset, offset + 15).map((index) => (
-            <Questions key={index} />
+          {data.slice(offset, offset + 15).map((obj) => (
+            <Questions
+              key={obj.questionId}
+              title={obj.title}
+              content={obj.content}
+            />
           ))}
         </div>
       </div>
