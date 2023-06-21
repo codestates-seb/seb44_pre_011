@@ -16,10 +16,9 @@ const MainPage = () => {
   axios({
     url: "https://c719-222-109-90-233.ngrok-free.app/questions",
     method: "get",
-    data: {
-      memberId: 1,
-      title: "post",
-      content: "test",
+    headers: {
+      key: "ngrok-skip-browser-warning",
+      value: true,
     },
   })
     .then((response) => console.log(response))
