@@ -13,16 +13,17 @@ const MainPage = () => {
 
   const [data, setData] = useState([]);
 
-  axios({
-    url: "https://c719-222-109-90-233.ngrok-free.app/questions",
-    method: "get",
-    headers: {
-      key: "ngrok-skip-browser-warning",
-      value: true,
-    },
-  })
-    .then((response) => console.log(response))
-    .catch((err) => console.log(err));
+  useEffect(() => {
+    axios({
+      url: "https://2a0e-119-66-103-226.ngrok-free.app/questions",
+      method: "get",
+      headers: {
+        "ngrok-skip-browser-warning": "skip",
+      },
+    })
+      .then((response) => setData(response.data))
+      .catch((err) => console.log(err));
+  }, []);
 
   const numPages = Math.ceil(data.length / 15);
 
