@@ -6,6 +6,7 @@ import com.district11.stackoverflow.exception.BusinessLogicException;
 import com.district11.stackoverflow.exception.ExceptionCode;
 import com.district11.stackoverflow.member.entity.Member;
 import com.district11.stackoverflow.member.service.MemberService;
+import com.district11.stackoverflow.question.entity.Question;
 import com.district11.stackoverflow.question.service.QuestionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +29,8 @@ public class AnswerService {
 
     public Answer createAnswer(Answer answer) {
 
-        //verifyAnswer(answer);       // 답변을 할 수 있는지 검증
+        // 답변을 할 수 있는지 검증
+        verifyAnswer(answer);
 
         return answerRepository.save(answer);
     }
@@ -66,11 +68,12 @@ public class AnswerService {
     public void verifyAnswer(Answer answer) {
 
         // member가 존재하는지 확인
-        //Member member = memberService.findMember(answer.getMember().getMemberId());
-        //answer.setMember(member);
+        Member member = memberService.findMember(answer.getMember().getMemberId());
+        answer.setMember(member);
 
         // 질문이 존재하는지 확인
-        //questionService.findQuestion(answer.getQuestion().getQuestionId());
+        Question question = questionService.findQuestion(answer.getQuestion().getQuestionId());
+        answer.setQuestion(question);
     }
 
 }

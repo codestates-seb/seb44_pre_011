@@ -17,6 +17,8 @@ public class AnswerResponseDto {
 
     private long answerId;
 
+    //displayname 추가
+    private String displayName;
     private Answer.AnswerStatus answerStatus;
 
     private String content;
