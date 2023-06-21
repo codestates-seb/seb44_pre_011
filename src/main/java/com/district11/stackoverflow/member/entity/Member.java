@@ -46,4 +46,6 @@ public class Member extends Auditable {
     public Member(String email) {
         this.email = email;
     }
+
+
 }

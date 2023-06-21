@@ -12,6 +12,7 @@ import com.district11.stackoverflow.question.mapper.QuestionMapper;
 import com.district11.stackoverflow.question.service.QuestionService;
 import com.district11.stackoverflow.utils.UriCreator;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/questions")
 @Validated
+@Slf4j
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class QuestionController {
 
