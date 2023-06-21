@@ -1,9 +1,15 @@
 import React from "react";
 import style from "./Questions.module.css";
+import { useNavigate } from "react-router";
 
 const Questions = () => {
+  const navigate = useNavigate();
+  const ReadQuestion = () => {
+    navigate("/questions/read");
+  };
+
   return (
-    <div id={style.container}>
+    <div id={style.container} onClick={ReadQuestion}>
       <h3>What is the fastest way to get the value of π?</h3>
       <div id={style.text}>
         'm looking for the fastest way to obtain the value of π, as a personal
