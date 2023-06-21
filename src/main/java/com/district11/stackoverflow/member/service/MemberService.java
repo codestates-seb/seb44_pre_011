@@ -36,6 +36,7 @@ public class MemberService {
 
     public Member createMember(Member member) {
         verifyExistsEmail(member.getEmail());
+        verifyExistsDisplayName(member.getDisplayName());
 
         // 추가: Password 암호화
         String encryptedPassword = passwordEncoder.encode(member.getPassword());
@@ -78,6 +79,10 @@ public class MemberService {
         memberRepository.deleteById(memberId);
     }
 
+    private void verifyExistsDisplayName(String displayName) {
+        Optional<Member> member = memberRepository.findByDisplayName(displayName);
+        if (member.isPresent()) throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+    }
 
     private void verifyExistsEmail(String email) {
         Optional<Member> member = memberRepository.findByEmail(email);
