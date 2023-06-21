@@ -1,21 +1,18 @@
-package com.district11.stackoverflow.answer.dto;
+package com.district11.stackoverflow.answerVote.dto;
 
-import com.district11.stackoverflow.answer.entity.AnswerVote;
+import com.district11.stackoverflow.answerVote.entity.AnswerVote;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.Positive;
-
 @Getter
+@Setter
 @AllArgsConstructor
-public class AnswerVotePostDto {
+public class AnswerVoteResponseDto {
 
-    @Positive
     private long memberId;
-
-    @Setter
     private long answerId;
+    private long answerVoteId;
 
     private AnswerVote.AnswerVoteStatus answerVoteStatus;
 

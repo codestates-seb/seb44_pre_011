@@ -39,31 +39,6 @@ public class SecurityConfiguration {
         this.memberRepository = memberRepository;
     }
 
-    /*
-    @Value("${spring.security.oauth2.client.registration.google.clientId}")  // (1)
-    private String clientId;
-
-    @Value("${spring.security.oauth2.client.registration.google.clientSecret}") // (2)
-    private String clientSecret;
-
-
-     */
-
-    /*
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
-                .formLogin().disable()
-                .httpBasic().disable()
-                .authorizeHttpRequests(authorize -> authorize    // (1)
-                        .anyRequest().authenticated()
-                )
-                .oauth2Login(withDefaults());    // (2)
-        return http.build();
-    }
-
-     */
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -95,28 +70,6 @@ public class SecurityConfiguration {
                 );
         return http.build();
     }
-
-    /*
-    @Bean
-    public ClientRegistrationRepository clientRegistrationRepository() {
-        var clientRegistration = clientRegistration();    // (3-1)
-
-        return new InMemoryClientRegistrationRepository(clientRegistration);   // (3-2)
-    }
-
-    // (4)
-    private ClientRegistration clientRegistration() {
-        // (4-1)
-        return CommonOAuth2Provider
-                .GOOGLE
-                .getBuilder("google")
-                .clientId(clientId)
-                .clientSecret(clientSecret)
-                .build();
-    }
-
-
-     */
 
 
     @Bean
@@ -160,16 +113,4 @@ public class SecurityConfiguration {
         }
     }
 
-
-    /*
-    public class CustomFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity> {
-        @Override
-        public void configure(HttpSecurity builder) throws Exception {
-            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
-
-            builder.addFilterAfter(jwtVerificationFilter, OAuth2LoginAuthenticationFilter.class); // (2)
-        }
-    }
-
-     */
 }

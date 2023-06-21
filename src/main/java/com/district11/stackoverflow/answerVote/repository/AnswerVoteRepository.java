@@ -1,6 +1,6 @@
-package com.district11.stackoverflow.answer.repository;
+package com.district11.stackoverflow.answerVote.repository;
 
-import com.district11.stackoverflow.answer.entity.AnswerVote;
+import com.district11.stackoverflow.answerVote.entity.AnswerVote;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AnswerVoteRepository extends JpaRepository<AnswerVote, Long> {

@@ -1,5 +1,6 @@
 package com.district11.stackoverflow.answer.entity;
 
+import com.district11.stackoverflow.answerVote.entity.AnswerVote;
 import com.district11.stackoverflow.audit.Auditable;
 import com.district11.stackoverflow.member.entity.Member;
 import com.district11.stackoverflow.question.entity.Question;
@@ -38,6 +39,9 @@ public class Answer extends Auditable {
 
 
     // 답변 투표
+    @Column
+    private long voteCount;
+
     @OneToMany(mappedBy = "answer", cascade = {CascadeType.REMOVE})
     private List<AnswerVote> answerVotes = new ArrayList<>();
 
@@ -63,4 +67,16 @@ public class Answer extends Auditable {
 
     }
 
+    /*
+    public void voteScore() {
+        long score = 0;
+
+        for(AnswerVote answerVote : answerVotes) {
+            if(answerVote.getAnswerVoteStatus() == AnswerVote.AnswerVoteStatus.VOTE_OK) {
+                score++;
+            }
+        }
+    }
+
+     */
 }
