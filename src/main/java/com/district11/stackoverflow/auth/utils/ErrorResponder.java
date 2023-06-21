@@ -1,4 +1,4 @@
-package com.district11.stackoverflow.auth;
+package com.district11.stackoverflow.auth.utils;
 
 import com.district11.stackoverflow.response.ErrorResponse;
 import com.google.gson.Gson;

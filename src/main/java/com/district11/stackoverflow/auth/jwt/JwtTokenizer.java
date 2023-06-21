@@ -1,4 +1,4 @@
-package com.district11.stackoverflow.auth;
+package com.district11.stackoverflow.auth.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

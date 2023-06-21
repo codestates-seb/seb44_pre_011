@@ -1,4 +1,4 @@
-package com.district11.stackoverflow.auth;
+package com.district11.stackoverflow.auth.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;

@@ -1,6 +1,6 @@
 package com.district11.stackoverflow.member.service;
 
-import com.district11.stackoverflow.auth.CustomAuthorityUtils;
+import com.district11.stackoverflow.auth.utils.CustomAuthorityUtils;
 import com.district11.stackoverflow.exception.BusinessLogicException;
 import com.district11.stackoverflow.exception.ExceptionCode;
 import com.district11.stackoverflow.member.entity.Member;

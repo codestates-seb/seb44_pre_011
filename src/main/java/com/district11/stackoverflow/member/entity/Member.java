@@ -23,16 +23,16 @@ public class Member extends Auditable {
     @Column(length = 100, nullable = false,unique = true)
     private String email;
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 100)
     private String password;
 
-    @Column(length = 10, nullable = false)
+    @Column(length = 100, nullable = false)
     private String displayName;
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
-    private String profileImg;
+    //private String profileImg;
 
 
 

@@ -1,4 +1,4 @@
-package com.district11.stackoverflow.auth;
+package com.district11.stackoverflow.auth.utils;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;

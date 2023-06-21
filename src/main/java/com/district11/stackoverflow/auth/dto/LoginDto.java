@@ -1,4 +1,4 @@
-package com.district11.stackoverflow.auth;
+package com.district11.stackoverflow.auth.dto;
 
 import lombok.Getter;
 

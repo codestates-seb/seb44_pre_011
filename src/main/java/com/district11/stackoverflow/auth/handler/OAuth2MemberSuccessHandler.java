@@ -1,12 +1,12 @@
-package com.district11.stackoverflow.auth;
+package com.district11.stackoverflow.auth.handler;
 
+import com.district11.stackoverflow.auth.jwt.JwtTokenizer;
+import com.district11.stackoverflow.auth.utils.CustomAuthorityUtils;
 import com.district11.stackoverflow.exception.BusinessLogicException;
 import com.district11.stackoverflow.exception.ExceptionCode;
 import com.district11.stackoverflow.member.dto.CustomMemberDto;
-import com.district11.stackoverflow.member.dto.MemberDto;
 import com.district11.stackoverflow.member.entity.Member;
 import com.district11.stackoverflow.member.repository.MemberRepository;
-import com.district11.stackoverflow.member.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -94,7 +94,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
     private String delegateAccessToken(Member member, List<String> authorities) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("memberEmail", member.getEmail());
-        claims.put("memberNickName", member.getDisplayName());
+        claims.put("memberDisplayName", member.getDisplayName());
         claims.put("roles", authorities);
 
         String subject = member.getEmail();
@@ -128,6 +128,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
                 .scheme("http")
                 .host("localhost") // Todo 리액트 서버 도메인 주소 입력
 //                .port(3000) // Todo 포트번호 변경 주의
+                .path("/receive-token.html")        // test 용
                 .queryParams(queryParams)
                 .build()
                 .toUri();

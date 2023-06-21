@@ -1,5 +1,6 @@
-package com.district11.stackoverflow.auth;
+package com.district11.stackoverflow.auth.handler;
 
+import com.district11.stackoverflow.auth.utils.ErrorResponder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
