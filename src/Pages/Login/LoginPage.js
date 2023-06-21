@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../../Components/Header/Header";
 import Oauth from "../../Components/Oauth/Oauth";
-import style from "./LoginPage.module.css"
+import style from "./LoginPage.module.css";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 
@@ -11,17 +11,20 @@ const LoginPage = () => {
       <Header />
       <div className={style.AllContainer}>
         <div className={style.Container}>
-          <img src={`${process.env.PUBLIC_URL}/img/StackOverFlow_logo.svg`} className={style.logoimg}></img>
+          <img
+            src={`${process.env.PUBLIC_URL}/img/StackOverFlow_logo.svg`}
+            className={style.logoimg}
+          ></img>
         </div>
         <div className={style.Container}>
-          <Oauth/>
+          <Oauth value="Log in with Google" />
         </div>
         <div className={style.Container}>
           <SignUpForm />
         </div>
         <div className={style.Container}>
           <p>Don’t have an account? &nbsp;</p>
-          <Link to='/signup'>Sign up</Link>  
+          <Link to="/signup">Sign up</Link>
         </div>
       </div>
     </>
