@@ -47,10 +47,7 @@ const UserProfilePage = ({ memberId }) => {
   return (
     <div className={styles.flex_column}>
       <Header />
-      <div
-        id={styles.profileBody}
-        className={`${styles.flex_row} ${styles.justify_center}`}
-      >
+      <div className={`${styles.flex_row} ${styles.justify_center}`}>
         <div id={styles.aside}>
           <Aside />
         </div>
@@ -118,7 +115,7 @@ const UserProfilePage = ({ memberId }) => {
                 Answers
               </Button>
             </div>
-            <div>
+            <div style={{ flexGrow: 1 }}>
               <Typography sx={{ fontSize: "24px", marginBottom: "16px" }}>
                 {`${
                   nav === "Questions" ? questions.length : answers.length

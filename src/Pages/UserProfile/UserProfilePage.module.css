@@ -31,11 +31,8 @@
   border-radius: 16px !important;
   margin-bottom: 8px;
 }
-#profileBody {
-  margin-top: 70px;
-}
 #content {
-  width: 70vw;
+  width: 60vw;
   max-width: 1000px;
   border-left: 1px solid #ccc;
   padding: 24px;
