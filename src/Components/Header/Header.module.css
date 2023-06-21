@@ -95,13 +95,12 @@
   text-decoration: none;
 }
 
-  @media (max-width: 600px) {
-    .headerContainer {
-      max-width: 600px;
-      justify-content: center;
-    }
-    .SearchBarContainer {
-      display: none;
-    }
+@media (max-width: 600px) {
+  .headerContainer {
+    max-width: 600px;
+    justify-content: center;
   }
-
+  .SearchBarContainer {
+    display: none;
+  }
+}
