@@ -93,6 +93,10 @@ const LinkButton = () => {
             height: "40px",
             margin: "10px",
             backgroundColor: "#e3ecf3",
+            color: "#1976D2",
+            ":hover": {
+              color: "#e3ecf3",
+            },
           }}
         >
           {" "}
