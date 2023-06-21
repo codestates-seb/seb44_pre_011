@@ -54,14 +54,22 @@ public class MemberController {
         );
     }
 
+//    @GetMapping
+//    public ResponseEntity getMembers(@Positive @RequestParam int page,
+//                                     @Positive @RequestParam int size) {
+//        Page<Member> pageMembers = memberService.findMembers(page - 1, size);
+//        List<Member> members = pageMembers.getContent();
+//        return new ResponseEntity(
+//                new MultiResponseDto(memberMapper.membersToMemberResponseDtos(members), pageMembers), HttpStatus.OK
+//        );
+//    }
+
     @GetMapping
-    public ResponseEntity getMembers(@Positive @RequestParam int page,
-                                     @Positive @RequestParam int size) {
-        Page<Member> pageMembers = memberService.findMembers(page - 1, size);
-        List<Member> members = pageMembers.getContent();
-        return new ResponseEntity(
-                new MultiResponseDto(memberMapper.membersToMemberResponseDtos(members), pageMembers), HttpStatus.OK
-        );
+    public ResponseEntity getMembers() {
+        List<MemberDto.Response> members = memberService.findMembers();
+
+
+        return new ResponseEntity<>(members, HttpStatus.OK);
     }
 
     @GetMapping("/{member-id}")

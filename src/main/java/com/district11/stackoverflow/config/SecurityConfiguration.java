@@ -132,8 +132,8 @@ public class SecurityConfiguration {
         configuration.setAllowedOriginPatterns(Arrays.asList("*"));
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "OPTIONS"));
-        configuration.setAllowCredentials(true);// 추가
-        configuration.addAllowedHeader("*"); // 추가
+        configuration.setAllowCredentials(true);
+        configuration.addAllowedHeader("*");
         configuration.setExposedHeaders(Arrays.asList("*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

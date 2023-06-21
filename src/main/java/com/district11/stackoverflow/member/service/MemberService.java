@@ -3,6 +3,7 @@ package com.district11.stackoverflow.member.service;
 import com.district11.stackoverflow.auth.utils.CustomAuthorityUtils;
 import com.district11.stackoverflow.exception.BusinessLogicException;
 import com.district11.stackoverflow.exception.ExceptionCode;
+import com.district11.stackoverflow.member.dto.MemberDto;
 import com.district11.stackoverflow.member.entity.Member;
 import com.district11.stackoverflow.member.mapper.MemberMapper;
 import com.district11.stackoverflow.member.repository.MemberRepository;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -23,11 +25,13 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
     private final CustomAuthorityUtils authorityUtils;
+    private final MemberMapper memberMapper;
 
-    public MemberService(PasswordEncoder passwordEncoder, MemberRepository memberRepository, MemberMapper memberMapper, CustomAuthorityUtils authorityUtils) {
+    public MemberService(PasswordEncoder passwordEncoder, MemberRepository memberRepository, CustomAuthorityUtils authorityUtils, MemberMapper memberMapper) {
         this.passwordEncoder = passwordEncoder;
         this.memberRepository = memberRepository;
         this.authorityUtils = authorityUtils;
+        this.memberMapper = memberMapper;
     }
 
     public Member createMember(Member member) {
@@ -58,6 +62,15 @@ public class MemberService {
 
     public Page<Member> findMembers(int page, int size) {
         return memberRepository.findAll(PageRequest.of(page, size, Sort.by("memberId").descending()));
+    }
+
+    public List<MemberDto.Response> findMembers() {
+        List<Member> members = memberRepository.findAll();
+        List<MemberDto.Response> response =
+                members.stream()
+                        .map(member -> memberMapper.memberToMemberResponseDto(member))
+                        .collect(Collectors.toList());
+        return response;
     }
 
     public void deleteMember(long memberId) {
