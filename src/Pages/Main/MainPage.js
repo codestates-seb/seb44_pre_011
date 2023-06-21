@@ -7,6 +7,7 @@ import Footer from "../../Components/Footer/Footer";
 import Questions from "../../Components/Questions/Questions";
 import Button from "@mui/material/Button";
 import style from "./MainPage.module.css";
+import { Link } from "react-router-dom";
 
 const MainPage = () => {
   const [page, setPage] = useState(1);
@@ -54,7 +55,7 @@ const MainPage = () => {
                 </Button>
               </Link>
             </div>
-            {array.length} questions
+            {data.length} questions
           </div>
           {data.slice(offset, offset + 15).map((obj) => (
             <Questions
