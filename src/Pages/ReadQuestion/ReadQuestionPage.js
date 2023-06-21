@@ -53,18 +53,29 @@ const Login = () => {
 };
 
 const Answer = () => {
+  const [text, setText] = useState("");
+  const Submit = () => {
+    console.log(text);
+    //답변 서버에 전송
+  };
   return (
     <div id={style.answer}>
-      <span>Your Answer</span>
-      <textarea id={style.textarea}>text</textarea>
-      <Link to="/">
+      <span id={style.answertitle}>Your Answer</span>
+      <textarea
+        id={style.textarea}
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+      />
+      <Link to="/questions/read">
         <Button
           variant="contained"
           sx={{
             fontSize: 12,
             width: "165px",
             height: "40px",
+            marginTop: "20px",
           }}
+          onClick={Submit}
         >
           Post Your Answer
         </Button>
@@ -86,6 +97,21 @@ const ReadQuestionPage = () => {
           <div id={style.title}>
             <h1 id={style.h1}>
               What is the fastest way to get the value of π?
+              <Link to="/questions/ask">
+                <Button
+                  variant="contained"
+                  sx={{
+                    fontSize: 13,
+                    width: "140px",
+                    height: "50px",
+                    marginTop: "10px",
+                    marginLeft: "10px",
+                    float: "right",
+                  }}
+                >
+                  Ask Question
+                </Button>
+              </Link>
             </h1>
             Asked 2023/06/16 at 12:00
           </div>
