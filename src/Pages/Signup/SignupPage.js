@@ -1,19 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../../Components/Header/Header";
 import Style from "./SignupPage.module.css";
 import Button from "@mui/material/Button";
 import Oauth from "../../Components/Oauth/Oauth";
+import axios from "axios";
 
 const SignupPage = () => {
   return (
     <>
       <Header />
-      <div id={Style.signUpContainer}>
-        <div id={Style.HeadLine}>
+      <div className={Style.signUpContainer}>
+        <div className={Style.HeadLine}>
           <HeadLine />
         </div>
-        <div id={Style.SignUpForm}>
-          <Oauth />
+        <div className={Style.SignUpForm}>
+          <Oauth value="Sign up with Google" />
           <SignUpForm />
           <p>
             Already have an account?
@@ -80,8 +81,71 @@ const HeadLine = () => {
 };
 
 const SignUpForm = () => {
+  const [memberData, setMemberData] = useState({
+    email: "",
+    password: "",
+    displayName: "",
+  });
+  const [emailErrMsg, setEmailErrMsg] = useState("");
+  const [pwdErrMsg, setPwdErrMsg] = useState("");
+  const [nameErrMsg, setNameErrMsg] = useState("");
+
+  const regExpPwd =
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+
+  // email 값 설정 및 유효성검사
+  const handleEmailValue = (e) => {
+    setMemberData({ ...memberData, email: e.target.value });
+  };
+  const handlePwdValue = (e) => {
+    setMemberData({ ...memberData, password: e.target.value });
+  };
+  const handleNameValue = (e) => {
+    setMemberData({ ...memberData, displayName: e.target.value });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (memberData.email === "") {
+      setEmailErrMsg("이메일을 입력해주세요.");
+    } else {
+      setEmailErrMsg("");
+    }
+
+    if (memberData.password === "") {
+      setPwdErrMsg("비밀번호를 입력해주세요.");
+    } else if (regExpPwd.test(memberData.password)) {
+      setPwdErrMsg("");
+    } else {
+      setPwdErrMsg(
+        "최소 8자, 하나의 이상의 대소문자, 숫자, 특수문자를 포함해야 합니다."
+      );
+    }
+
+    if (memberData.displayName === "") {
+      setNameErrMsg("닉네임을 입력해주세요.");
+    } else {
+      setNameErrMsg("");
+    }
+
+    if (!emailErrMsg && !nameErrMsg && !pwdErrMsg) {
+      axios({
+        url: "https://b843-61-77-96-105.ngrok-free.app/members",
+        method: "post",
+        data: {
+          ...memberData,
+        },
+      })
+        .then((res) => {
+          console.log(res);
+          window.location.href = "/";
+        })
+        .catch((err) => {
+          console.log(err);
+          setEmailErrMsg("이미 사용중인 이메일 입니다.");
+          setNameErrMsg("이미 사용중인 닉네임 입니다.");
+        });
+    }
   };
 
   return (
@@ -89,15 +153,30 @@ const SignUpForm = () => {
       <form className={Style.form} onSubmit={handleSubmit}>
         <label className={Style.title}>
           Display Name
-          <input className={Style.input} type="text" />
+          <input
+            className={Style.input}
+            type="text"
+            onChange={handleNameValue}
+          />
+          <div className={Style.errMsg}>{nameErrMsg}</div>
         </label>
         <label className={Style.title}>
           Email
-          <input className={Style.input} type="email" />
+          <input
+            className={Style.input}
+            type="email"
+            onChange={handleEmailValue}
+          />
+          <div className={Style.errMsg}>{emailErrMsg}</div>
         </label>
         <label className={Style.title}>
           Password
-          <input className={Style.input} type="password" />
+          <input
+            className={Style.input}
+            type="password"
+            onChange={handlePwdValue}
+          />
+          <div className={Style.errMsg}>{pwdErrMsg}</div>
         </label>
 
         <div className={Style.checkBox}>
@@ -114,6 +193,7 @@ const SignUpForm = () => {
         </div>
         <Button
           className={Style.button}
+          type="submit"
           variant="contained"
           sx={{ fontSize: 14, width: "100%", height: "40px" }}
         >
