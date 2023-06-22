@@ -69,14 +69,19 @@ public class QuestionController {
 
         return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToQuestionResponseDto(question)),HttpStatus.OK);
     }
+
+    @GetMapping("/member/{member-id}") //질문 조회
+    public ResponseEntity getQuestionByMemberId(@PathVariable("member-id") long memberId){
+        List<QuestionResponseDto> response = questionService.findQuestionsByMemberId(memberId);
+
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
+
     @GetMapping
     public ResponseEntity getQuestions() {
-        List<Question> questions = questionService.findQuestions();
+        List<QuestionResponseDto> response = questionService.findQuestions();
 
-        List<QuestionResponseDto> response =
-                questions.stream()
-                        .map(question -> mapper.questionToQuestionResponseDto(question))
-                        .collect(Collectors.toList());
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

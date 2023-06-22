@@ -3,6 +3,7 @@ package com.district11.stackoverflow.question.service;
 import com.district11.stackoverflow.exception.BusinessLogicException;
 import com.district11.stackoverflow.exception.ExceptionCode;
 import com.district11.stackoverflow.member.entity.Member;
+import com.district11.stackoverflow.question.dto.QuestionResponseDto;
 import com.district11.stackoverflow.question.entity.Question;
 import com.district11.stackoverflow.question.entity.QuestionTag;
 import com.district11.stackoverflow.question.mapper.QuestionMapper;
@@ -30,27 +31,27 @@ public class QuestionService {
         this.tagRepository = tagRepository;
     }
 
-    public Question createQuestion(Question question){
+    public Question createQuestion(Question question) {
         //todo: Tags 서비스 로직 추가해야함
         List<QuestionTag> questionTags = question.getTags()
-                .stream().map(questionTag ->{
+                .stream().map(questionTag -> {
                     String tagName = questionTag.getTag().getName();
                     Optional<Tag> optionalTag = tagRepository.findByName(tagName);
 
-                    if(optionalTag.isPresent()) questionTag.setTag(optionalTag.get());
-                    else{
+                    if (optionalTag.isPresent()) questionTag.setTag(optionalTag.get());
+                    else {
                         questionTag.getTag();
                         Tag newTag = tagRepository.save(questionTag.getTag());
                         questionTag.setTag(newTag);
                     }
                     return questionTag;
                 }).collect(Collectors.toList());
-        question.setTags( questionTags );
+        question.setTags(questionTags);
 
         return questionRepository.save(question);
     }
 
-    public Question updateQuestion(Question question){
+    public Question updateQuestion(Question question) {
         Question findQuestion = findQuestion(question.getQuestionId());
         Optional.ofNullable(question.getTitle())
                 .ifPresent(findQuestion::setTitle);
@@ -59,23 +60,32 @@ public class QuestionService {
 
         return findQuestion;
     }
-    public void deleteQuestion(long questionId){
+
+    public List<QuestionResponseDto> findQuestionsByMemberId(long memberId) {
+        List<QuestionResponseDto> Dto = findQuestions();
+        return Dto.stream().filter(d -> d.getMemberId() == memberId).collect(Collectors.toList());
+    }
+
+    public void deleteQuestion(long questionId) {
         Question question = findQuestion(questionId);
         questionRepository.deleteById(questionId);
     }
-    public Question findQuestion(long questionId){
+
+    public Question findQuestion(long questionId) {
         Optional<Question> optionalQuestion = questionRepository.findById(questionId);
-        Question findQuestion = optionalQuestion.orElseThrow(()->new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+        Question findQuestion = optionalQuestion.orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
 
         return findQuestion;
     }
 
-    public Page<Question> findQuestions(int page, int size){
-        return questionRepository.findAll(PageRequest.of(page,size, Sort.by("questionId").descending()));
+
+    public Page<Question> findQuestions(int page, int size) {
+        return questionRepository.findAll(PageRequest.of(page, size, Sort.by("questionId").descending()));
     }
 
 
-    public List<Question> findQuestions() {
-        return questionRepository.findAll();
+    public List<QuestionResponseDto> findQuestions() {
+        List<Question> questions = questionRepository.findAll();
+        return questionMapper.questionToQuestionResponseDtos(questions);
     }
 }
