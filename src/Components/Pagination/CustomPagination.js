@@ -1,7 +1,7 @@
 import React from "react";
 import { Pagination } from "@mui/material";
 
-const CustomPagination = ({ array, currentPage, setCurrentPage,pageSize }) => {
+const CustomPagination = ({ array, currentPage, setCurrentPage, pageSize }) => {
   return (
     <Pagination
       count={Math.ceil(array.length / pageSize)}
@@ -9,7 +9,6 @@ const CustomPagination = ({ array, currentPage, setCurrentPage,pageSize }) => {
       variant="outlined"
       shape="rounded"
       sx={{
-        color: "red",
         "& .MuiPaginationItem-root": {
           color: "black",
           "&.Mui-selected": {
