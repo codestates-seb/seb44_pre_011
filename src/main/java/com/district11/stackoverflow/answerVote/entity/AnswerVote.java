@@ -30,14 +30,14 @@ public class AnswerVote extends Auditable {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private AnswerVoteStatus answerVoteStatus = AnswerVoteStatus.VOTE_NONE;
-
+    private AnswerVoteStatus answerVoteStatus;
 
     // 답변 vote 상태
     public enum AnswerVoteStatus {
         VOTE_NONE("VOTE_NONE"),
-        VOTE_UP("VOTE_OK"),
+        VOTE_UP("VOTE_UP"),
         VOTE_DOWN("VOTE_DOWN");
+
 
         @Getter
         private String status;

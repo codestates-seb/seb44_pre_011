@@ -39,19 +39,15 @@ public class Answer extends Auditable {
 
 
     // 답변 투표
-    @Column
+    @Column(nullable = false)
     private long voteCount;
 
+    /*
     @OneToMany(mappedBy = "answer", cascade = {CascadeType.REMOVE})
     private List<AnswerVote> answerVotes = new ArrayList<>();
-
-    /*
-    public void addAnswerVote(AnswerVote answerVote) {
-        this.answerVotes.add(answerVote);
-        answerVote.setAnswer(this);
-    }
-
      */
+
+
 
     // 답변 상태
     public enum AnswerStatus {
@@ -68,15 +64,35 @@ public class Answer extends Auditable {
     }
 
     /*
-    public void voteScore() {
-        long score = 0;
+    public void addAnswerVote(AnswerVote answerVote) { //answer 와 answerVote 매핑
+        this.answerVotes.add(answerVote);
+        answerVote.setAnswer(this);
+        updateScore();
+    }
 
-        for(AnswerVote answerVote : answerVotes) {
-            if(answerVote.getAnswerVoteStatus() == AnswerVote.AnswerVoteStatus.VOTE_OK) {
-                score++;
+    public void removeAnswerVote(AnswerVote answerVote) {
+        this.answerVotes.remove(answerVote);
+        if(answerVote.getAnswer() != this) {
+            answerVote.setAnswer(this);
+        }
+        updateScore();
+    }
+
+    public void updateScore() {
+        int voteCount = 0;
+
+        for (AnswerVote answerVote : answerVotes) {
+            if(answerVote.getAnswerVoteStatus() == AnswerVote.AnswerVoteStatus.VOTE_UP) {
+                voteCount++;
+            } else if (answerVote.getAnswerVoteStatus() == AnswerVote.AnswerVoteStatus.VOTE_DOWN) {
+                voteCount--;
             }
         }
+
+        this.voteCount = voteCount;
     }
 
      */
+
+
 }

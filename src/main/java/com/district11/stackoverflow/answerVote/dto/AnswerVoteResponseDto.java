@@ -13,6 +13,7 @@ public class AnswerVoteResponseDto {
     private long memberId;
     private long answerId;
     private long answerVoteId;
+    public long voteCount;
 
     private AnswerVote.AnswerVoteStatus answerVoteStatus;
 

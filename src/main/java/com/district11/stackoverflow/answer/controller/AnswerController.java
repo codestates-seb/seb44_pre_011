@@ -7,6 +7,7 @@ import com.district11.stackoverflow.answer.entity.Answer;
 import com.district11.stackoverflow.answer.mapper.AnswerMapper;
 import com.district11.stackoverflow.answer.service.AnswerService;
 import com.district11.stackoverflow.dto.SingleResponseDto;
+import com.district11.stackoverflow.member.dto.MemberDto;
 import com.district11.stackoverflow.member.service.MemberService;
 import com.district11.stackoverflow.question.service.QuestionService;
 import com.district11.stackoverflow.utils.UriCreator;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/answers")
@@ -39,18 +41,18 @@ public class AnswerController {
         this.questionService = questionService;
     }
 
-    @PostMapping        // 연습용 :     진짜 : /{question-id}/{answer-id}
+    @PostMapping
     public ResponseEntity<?> postAnswer(@Valid @RequestBody AnswerPostDto answerPostDto) {
 
         memberService.findMember(answerPostDto.getMemberId());
-        questionService.findQuestion(answerPostDto.getQuestionId());
+        //questionService.findQuestion(answerPostDto.getQuestionId());
         Answer answer = answerService.createAnswer(answerMapper.AnswerPostDtoToAnswer(answerPostDto));
         URI location = UriCreator.createUri(ANSWER_DEFAULT_URL, answer.getAnswerId());
 
         return ResponseEntity.created(location).build();
     }
 
-    @PatchMapping("/{answer-id}")     // 연습용 : /{answer-id}     진짜 : /{question-id}/{answer-id}
+    @PatchMapping("/{answer-id}")
     public ResponseEntity<?> patchAnswer(@PathVariable("answer-id") @Positive long answerId,
                                          @Valid @RequestBody AnswerPatchDto answerPatchDto) {
 
@@ -70,12 +72,38 @@ public class AnswerController {
 
     }
 
+    @GetMapping
+    public ResponseEntity<?> getAnswers() {
+        List<AnswerResponseDto> answers = answerService.findAnswers();
+
+        return new ResponseEntity<>(answers, HttpStatus.OK);
+    }
+
     @DeleteMapping("/{answer-id}")        // 연습용 : /{answer-id}     진짜 : /{question-id}/{answer-id}
     public ResponseEntity<?> deleteAnswer(@PathVariable("answer-id") @Positive long answerId) {
 
         answerService.deleteAnswer(answerId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    // 추천기능
+    @PostMapping("/upVote/{answer-Id}")
+    public ResponseEntity upVoteAnswer(@PathVariable("answer-Id") long answerId) {
+
+        Answer votedAnswerUp = answerService.upVote(answerId);
+        AnswerResponseDto response = answerMapper.AnswerToAnswerResponseDto(votedAnswerUp);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/downVote/{answer-id}")
+    public ResponseEntity downVoteAnswer(@PathVariable("answer-id") long answerId) {
+
+        Answer votedAnswerDown = answerService.downVote(answerId);
+        AnswerResponseDto response = answerMapper.AnswerToAnswerResponseDto(votedAnswerDown);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }

@@ -8,7 +8,9 @@ public enum ExceptionCode {
     ANSWER_NOT_FOUND(404, "Answer not found"),
     QUESTION_NOT_FOUND(404, "Question not found"),
     ANSWER_VOTE_NOT_FOUND(404, "Answer Vote not found"),
-    TAG_NOT_FOUND(404, "Tag not found");
+    TAG_NOT_FOUND(404, "Tag not found"),
+    VOTE_EXISTS(409, "Vote exists"),
+    AUTHORITY_NOT_FOUND(404, "authority not found");
 
     @Getter
     private int status;

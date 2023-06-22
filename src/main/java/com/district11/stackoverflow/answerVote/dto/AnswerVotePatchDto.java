@@ -10,6 +10,7 @@ import lombok.Setter;
 public class AnswerVotePatchDto {
 
     private long memberId;
+    private long answerId;
     private long answerVoteId;
 
     private AnswerVote.AnswerVoteStatus answerVoteStatus;
