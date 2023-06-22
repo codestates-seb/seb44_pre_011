@@ -4,8 +4,11 @@ import com.district11.stackoverflow.exception.BusinessLogicException;
 import com.district11.stackoverflow.exception.ExceptionCode;
 import com.district11.stackoverflow.member.entity.Member;
 import com.district11.stackoverflow.question.entity.Question;
+import com.district11.stackoverflow.question.entity.QuestionTag;
 import com.district11.stackoverflow.question.mapper.QuestionMapper;
 import com.district11.stackoverflow.question.repository.QuestionRepository;
+import com.district11.stackoverflow.tag.entity.Tag;
+import com.district11.stackoverflow.tag.repository.TagRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -19,14 +22,30 @@ import java.util.stream.Collectors;
 public class QuestionService {
     private QuestionRepository questionRepository;
     private QuestionMapper questionMapper;
+    private TagRepository tagRepository;
 
-    public QuestionService(QuestionRepository questionRepository, QuestionMapper questionMapper) {
+    public QuestionService(QuestionRepository questionRepository, QuestionMapper questionMapper, TagRepository tagRepository) {
         this.questionRepository = questionRepository;
         this.questionMapper = questionMapper;
+        this.tagRepository = tagRepository;
     }
 
     public Question createQuestion(Question question){
         //todo: Tags 서비스 로직 추가해야함
+        List<QuestionTag> questionTags = question.getTags()
+                .stream().map(questionTag ->{
+                    String tagName = questionTag.getTag().getName();
+                    Optional<Tag> optionalTag = tagRepository.findByName(tagName);
+
+                    if(optionalTag.isPresent()) questionTag.setTag(optionalTag.get());
+                    else{
+                        questionTag.getTag();
+                        Tag newTag = tagRepository.save(questionTag.getTag());
+                        questionTag.setTag(newTag);
+                    }
+                    return questionTag;
+                }).collect(Collectors.toList());
+        question.setTags( questionTags );
 
         return questionRepository.save(question);
     }

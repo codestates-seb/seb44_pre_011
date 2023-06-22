@@ -48,7 +48,6 @@ public class Question {
     private Member member;
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<QuestionTag> tags = new ArrayList<>();
-
     public void setMember(Member member) {
         this.member = member;
     }

@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -17,6 +18,7 @@ public class QuestionResponseDto {
     private String title;
     private String content;
     private String displayName;
+    private List<QuestionTagDto> tags;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
