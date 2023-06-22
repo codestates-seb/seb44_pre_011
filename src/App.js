@@ -23,7 +23,6 @@ function App() {
         element={<UserProfilePage memberId={memberId} />}
         path={`/users/${memberId}/${displayName}`}
       />
-      <Route element={<CreateQuestionPage />} path="/questions/ask" />
     </Routes>
   );
 }
