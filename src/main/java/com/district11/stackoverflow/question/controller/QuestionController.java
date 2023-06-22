@@ -66,17 +66,17 @@ public class QuestionController {
     }
 
     @GetMapping("/{question-id}") //질문 조회
-    public ResponseEntity getQuestion(@PathVariable("question-id") long questionId) {
+    public ResponseEntity getQuestion(@PathVariable("question-id") long questionId){
         Question question = questionService.findQuestion(questionId);
 
-        return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToQuestionResponseDto(question)), HttpStatus.OK);
+        return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToQuestionResponseDto(question)),HttpStatus.OK);
     }
 
     @GetMapping("/member/{member-id}") //질문 조회
-    public ResponseEntity getQuestionByMemberId(@PathVariable("member-id") long memberId) {
+    public ResponseEntity getQuestionByMemberId(@PathVariable("member-id") long memberId){
         List<QuestionResponseDto> response = questionService.findQuestionsByMemberId(memberId);
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
 
@@ -105,19 +105,21 @@ public class QuestionController {
     }
 
     // Vote 기능
-    @PostMapping("/voteUp/{question-id}")
-    public ResponseEntity<?> voteQuestionUp(@PathVariable("question-id") long questionId) {
+    @PostMapping("/voteUp/{question-id}/{member-id}")
+    public ResponseEntity<?> voteQuestionUp(@PathVariable("question-id") long questionId,
+                                            @PathVariable("member-id") long memberId) {
 
-        Question voteQuestionUp = questionService.questionVoteUp(questionId);
+        Question voteQuestionUp = questionService.questionVoteUp(questionId,memberId);
         QuestionResponseDto response = mapper.questionToQuestionResponseDto(voteQuestionUp);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/voteDown/{question-id}")
-    public ResponseEntity<?> voteQuestionDown(@PathVariable("question-id") long questionId) {
-
-        Question voteQuestionDown = questionService.questionVoteDown(questionId);
+    @PostMapping("/voteDown/{question-id}/{member-id}")
+    public ResponseEntity<?> voteQuestionDown(@PathVariable("question-id") long questionId,
+                                              @PathVariable("member-id") long memberId) {
+        memberService.findMember(memberId);
+        Question voteQuestionDown = questionService.questionVoteDown(questionId,memberId);
         QuestionResponseDto response = mapper.questionToQuestionResponseDto(voteQuestionDown);
 
         return new ResponseEntity<>(response, HttpStatus.OK);

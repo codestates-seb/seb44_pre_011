@@ -12,7 +12,9 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Getter
@@ -40,6 +42,12 @@ public class Question {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return modifiedAt.format(formatter);
     }
+
+    @ElementCollection
+    @CollectionTable(name = "question_map", joinColumns = @JoinColumn(name = "question_id"))
+    @MapKeyColumn(name = "map_key")
+    @Column(name = "map_value")
+    public Map<Long,String> map = new HashMap<>();
 
     @LastModifiedDate
     @Column(name = "LAST_MODIFIED_AT")

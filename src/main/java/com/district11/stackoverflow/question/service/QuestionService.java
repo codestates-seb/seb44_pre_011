@@ -17,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -91,19 +92,29 @@ public class QuestionService {
     }
 
     // Vote 기능
-    public Question questionVoteUp(long questionId) {
-        Question findQuestion = findQuestion(questionId);
-        findQuestion.setQuestionVoteCount(findQuestion.getQuestionVoteCount() + 1);
-        Question updateQuestion = questionRepository.save(findQuestion);
+    public Question questionVoteUp(long questionId, long memberId) {
 
-        return updateQuestion;
+        Question findQuestion = findQuestion(questionId);
+        Map<Long, String> map = findQuestion.getMap();
+        if (!map.containsKey(memberId) || map.get(memberId).equals("down") || map.get(memberId).equals("none")) {
+            if (!map.containsKey(memberId) || map.get(memberId).equals("none")) map.put(memberId, "up");
+            else if (map.get(memberId).equals("down")) map.put(memberId, "none");
+            findQuestion.setQuestionVoteCount(findQuestion.getQuestionVoteCount() + 1);
+            Question updateQuestion = questionRepository.save(findQuestion);
+            return updateQuestion;
+        } else throw new BusinessLogicException(ExceptionCode.VOTE_EXISTS);
     }
 
-    public Question questionVoteDown(long questionId) {
+    public Question questionVoteDown(long questionId, long memberId) {
         Question findQuestion = findQuestion(questionId);
-        findQuestion.setQuestionVoteCount(findQuestion.getQuestionVoteCount() - 1);
-        Question updateQuestion = questionRepository.save(findQuestion);
+        Map<Long, String> map = findQuestion.getMap();
+        if (!map.containsKey(memberId) || map.get(memberId).equals("up") || map.get(memberId).equals("none")) {
+            if (!map.containsKey(memberId) || map.get(memberId).equals("none")) map.put(memberId, "down");
+            else if (map.get(memberId).equals("up")) map.put(memberId, "none");
+            findQuestion.setQuestionVoteCount(findQuestion.getQuestionVoteCount() - 1);
+            Question updateQuestion = questionRepository.save(findQuestion);
 
-        return updateQuestion;
+            return updateQuestion;
+        } else throw new BusinessLogicException(ExceptionCode.VOTE_EXISTS);
     }
 }
