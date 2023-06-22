@@ -6,7 +6,6 @@ import com.district11.stackoverflow.answer.mapper.AnswerMapper;
 import com.district11.stackoverflow.answer.repository.AnswerRepository;
 import com.district11.stackoverflow.exception.BusinessLogicException;
 import com.district11.stackoverflow.exception.ExceptionCode;
-import com.district11.stackoverflow.member.dto.MemberDto;
 import com.district11.stackoverflow.member.entity.Member;
 import com.district11.stackoverflow.member.service.MemberService;
 import com.district11.stackoverflow.question.entity.Question;
@@ -88,23 +87,22 @@ public class AnswerService {
         answer.setMember(member);
 
         // 질문이 존재하는지 확인
-        //Question question = questionService.findQuestion(answer.getQuestion().getQuestionId());
-        //answer.setQuestion(question);
+        Question question = questionService.findQuestion(answer.getQuestion().getQuestionId());
+        answer.setQuestion(question);
     }
 
-    // 추천 기능
-    public Answer upVote(long answerId) {
+    // Vote 기능
+    public Answer answerVoteUp(long answerId) {
         Answer findAnswer = findVerifyAnswer(answerId);
-        findAnswer.setVoteCount(findAnswer.getVoteCount() + 1);
+        findAnswer.setAnswerVoteCount(findAnswer.getAnswerVoteCount() + 1);
         Answer updateAnswer = answerRepository.save(findAnswer);
 
         return updateAnswer;
     }
 
-    // 비추천 기능
-    public Answer downVote(long answerId) {
+    public Answer answerVoteDown(long answerId) {
         Answer findAnswer = findVerifyAnswer(answerId);
-        findAnswer.setVoteCount(findAnswer.getVoteCount() - 1);
+        findAnswer.setAnswerVoteCount(findAnswer.getAnswerVoteCount() - 1);
         Answer updateAnswer = answerRepository.save(findAnswer);
 
         return updateAnswer;

@@ -11,15 +11,14 @@ import org.mapstruct.Mapping;
 public interface AnswerMapper {         // mapper : SQL을 호출하기 위한 인터페이스
 
     @Mapping(source = "memberId", target = "member.memberId")
-    //@Mapping(source = "questionId", target = "question.questionId")
+    @Mapping(source = "questionId", target = "question.questionId")
     @Mapping(source = "displayName", target = "member.displayName")
     Answer AnswerPostDtoToAnswer(AnswerPostDto answerPostDto);
     Answer AnswerPatchDtoToAnswer(AnswerPatchDto answerPatchDto);
 
     @Mapping(source = "member.memberId", target = "memberId")
-    //@Mapping(source = "question.questionId", target = "questionId")
+    @Mapping(source = "question.questionId", target = "questionId")
     @Mapping(source = "member.displayName", target = "displayName")
-    //@Mapping(source = "answerVote.voteCount", target = "voteCount")
     AnswerResponseDto AnswerToAnswerResponseDto(Answer answer);
 
     // 만약에 답변의 댓글이 필요하면 List 추가

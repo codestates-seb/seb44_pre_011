@@ -51,6 +51,12 @@ public class Question {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<QuestionTag> tags = new ArrayList<>();
 
+
+    // Vote 추가
+    @Column(nullable = false)
+    private long questionVoteCount;
+
+
     public void setMember(Member member) {
         this.member = member;
     }

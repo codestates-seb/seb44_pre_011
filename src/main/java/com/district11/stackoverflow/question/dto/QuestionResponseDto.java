@@ -18,6 +18,7 @@ public class QuestionResponseDto {
     private String title;
     private String content;
     private String displayName;
+    private long questionVoteCount;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 

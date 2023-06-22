@@ -1,6 +1,8 @@
 package com.district11.stackoverflow.question.controller;
 
 
+import com.district11.stackoverflow.answer.dto.AnswerResponseDto;
+import com.district11.stackoverflow.answer.entity.Answer;
 import com.district11.stackoverflow.dto.MultiResponseDto;
 import com.district11.stackoverflow.dto.SingleResponseDto;
 import com.district11.stackoverflow.member.entity.Member;
@@ -100,5 +102,24 @@ public class QuestionController {
     public ResponseEntity deleteQuestion(@PathVariable("question-id") long questionId) {
         questionService.deleteQuestion(questionId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    // Vote 기능
+    @PostMapping("/voteUp/{question-id}")
+    public ResponseEntity<?> voteQuestionUp(@PathVariable("question-id") long questionId) {
+
+        Question voteQuestionUp = questionService.questionVoteUp(questionId);
+        QuestionResponseDto response = mapper.questionToQuestionResponseDto(voteQuestionUp);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/voteDown/{question-id}")
+    public ResponseEntity<?> voteQuestionDown(@PathVariable("question-id") long questionId) {
+
+        Question voteQuestionDown = questionService.questionVoteDown(questionId);
+        QuestionResponseDto response = mapper.questionToQuestionResponseDto(voteQuestionDown);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

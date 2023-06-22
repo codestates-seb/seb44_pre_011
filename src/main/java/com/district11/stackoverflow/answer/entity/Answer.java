@@ -38,9 +38,9 @@ public class Answer extends Auditable {
     private Question question;
 
 
-    // 답변 투표
+    // 답변 Vote
     @Column(nullable = false)
-    private long voteCount;
+    private long answerVoteCount;
 
     /*
     @OneToMany(mappedBy = "answer", cascade = {CascadeType.REMOVE})

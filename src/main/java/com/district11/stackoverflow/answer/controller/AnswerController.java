@@ -45,7 +45,7 @@ public class AnswerController {
     public ResponseEntity<?> postAnswer(@Valid @RequestBody AnswerPostDto answerPostDto) {
 
         memberService.findMember(answerPostDto.getMemberId());
-        //questionService.findQuestion(answerPostDto.getQuestionId());
+        questionService.findQuestion(answerPostDto.getQuestionId());
         Answer answer = answerService.createAnswer(answerMapper.AnswerPostDtoToAnswer(answerPostDto));
         URI location = UriCreator.createUri(ANSWER_DEFAULT_URL, answer.getAnswerId());
 
@@ -63,8 +63,7 @@ public class AnswerController {
     }
 
     @GetMapping("/{answer-id}")
-    public  ResponseEntity<?> getAnswer(@PathVariable("answer-id") @Positive long answerId,
-                                        @Valid @RequestBody AnswerResponseDto answerResponseDto) {
+    public  ResponseEntity<?> getAnswer(@PathVariable("answer-id") @Positive long answerId) {
 
         Answer answer = answerService.findVerifyAnswer(answerId);
 
@@ -79,7 +78,7 @@ public class AnswerController {
         return new ResponseEntity<>(answers, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{answer-id}")        // 연습용 : /{answer-id}     진짜 : /{question-id}/{answer-id}
+    @DeleteMapping("/{answer-id}")
     public ResponseEntity<?> deleteAnswer(@PathVariable("answer-id") @Positive long answerId) {
 
         answerService.deleteAnswer(answerId);
@@ -87,21 +86,21 @@ public class AnswerController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    // 추천기능
-    @PostMapping("/upVote/{answer-Id}")
-    public ResponseEntity upVoteAnswer(@PathVariable("answer-Id") long answerId) {
+    // Vote 기능
+    @PostMapping("/voteUp/{answer-Id}")
+    public ResponseEntity<?> voteAnswerUp(@PathVariable("answer-id") long answerId) {
 
-        Answer votedAnswerUp = answerService.upVote(answerId);
-        AnswerResponseDto response = answerMapper.AnswerToAnswerResponseDto(votedAnswerUp);
+        Answer voteAnswerUp = answerService.answerVoteUp(answerId);
+        AnswerResponseDto response = answerMapper.AnswerToAnswerResponseDto(voteAnswerUp);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/downVote/{answer-id}")
-    public ResponseEntity downVoteAnswer(@PathVariable("answer-id") long answerId) {
+    @PostMapping("/voteDown/{answer-id}")
+    public ResponseEntity<?> voteAnswerDown(@PathVariable("answer-id") long answerId) {
 
-        Answer votedAnswerDown = answerService.downVote(answerId);
-        AnswerResponseDto response = answerMapper.AnswerToAnswerResponseDto(votedAnswerDown);
+        Answer voteAnswerDown = answerService.answerVoteDown(answerId);
+        AnswerResponseDto response = answerMapper.AnswerToAnswerResponseDto(voteAnswerDown);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

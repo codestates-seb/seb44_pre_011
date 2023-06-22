@@ -21,7 +21,7 @@ public class AnswerResponseDto {
 
     private String displayName;
 
-    private long voteCount;
+    private long answerVoteCount;
     private String content;
 
     private Answer.AnswerStatus answerStatus;

@@ -57,7 +57,8 @@ public class MemberService {
     }
 
     public Member findMember(long memberId) {
-        Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        Member findMember = memberRepository.findById(memberId).orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         return findMember;
     }
 

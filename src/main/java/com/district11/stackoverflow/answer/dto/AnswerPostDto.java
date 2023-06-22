@@ -13,8 +13,8 @@ public class AnswerPostDto {
 
     @Positive
     private long memberId;
-    //@Setter
-    //private long questionId;
+    @Setter
+    private long questionId;
     @Setter
     private String displayName;
     @NotBlank(message = "내용을 작성해주세요.")

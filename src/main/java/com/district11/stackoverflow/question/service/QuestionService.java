@@ -1,5 +1,6 @@
 package com.district11.stackoverflow.question.service;
 
+import com.district11.stackoverflow.answer.entity.Answer;
 import com.district11.stackoverflow.exception.BusinessLogicException;
 import com.district11.stackoverflow.exception.ExceptionCode;
 import com.district11.stackoverflow.member.entity.Member;
@@ -87,5 +88,22 @@ public class QuestionService {
     public List<QuestionResponseDto> findQuestions() {
         List<Question> questions = questionRepository.findAll();
         return questionMapper.questionToQuestionResponseDtos(questions);
+    }
+
+    // Vote 기능
+    public Question questionVoteUp(long questionId) {
+        Question findQuestion = findQuestion(questionId);
+        findQuestion.setQuestionVoteCount(findQuestion.getQuestionVoteCount() + 1);
+        Question updateQuestion = questionRepository.save(findQuestion);
+
+        return updateQuestion;
+    }
+
+    public Question questionVoteDown(long questionId) {
+        Question findQuestion = findQuestion(questionId);
+        findQuestion.setQuestionVoteCount(findQuestion.getQuestionVoteCount() - 1);
+        Question updateQuestion = questionRepository.save(findQuestion);
+
+        return updateQuestion;
     }
 }
