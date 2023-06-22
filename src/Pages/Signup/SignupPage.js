@@ -90,6 +90,10 @@ const SignUpForm = () => {
   const [pwdErrMsg, setPwdErrMsg] = useState("");
   const [nameErrMsg, setNameErrMsg] = useState("");
 
+  //유효성 검사 상태
+  const [isName, setIsName] = useState(false);
+  const [isEmail, setIsEmail] = useState(false);
+  const [isPassword, setIsPassword] = useState(false);
   const regExpPwd =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
@@ -108,12 +112,13 @@ const SignUpForm = () => {
     e.preventDefault();
     if (memberData.email === "") {
       setEmailErrMsg("이메일을 입력해주세요.");
+      setIsEmail(true);
     } else {
       setEmailErrMsg("");
     }
-
     if (memberData.password === "") {
       setPwdErrMsg("비밀번호를 입력해주세요.");
+      setIsPassword(true);
     } else if (regExpPwd.test(memberData.password)) {
       setPwdErrMsg("");
     } else {
@@ -121,16 +126,15 @@ const SignUpForm = () => {
         "최소 8자, 하나의 이상의 대소문자, 숫자, 특수문자를 포함해야 합니다."
       );
     }
-
     if (memberData.displayName === "") {
       setNameErrMsg("닉네임을 입력해주세요.");
+      setIsName(true);
     } else {
       setNameErrMsg("");
     }
-
-    if (!emailErrMsg && !nameErrMsg && !pwdErrMsg) {
+    if (!isEmail && !isName && !isPassword) {
       axios({
-        url: "https://b843-61-77-96-105.ngrok-free.app/members",
+        url: "http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/members",
         method: "post",
         data: {
           ...memberData,
@@ -142,8 +146,11 @@ const SignUpForm = () => {
         })
         .catch((err) => {
           console.log(err);
-          setEmailErrMsg("이미 사용중인 이메일 입니다.");
-          setNameErrMsg("이미 사용중인 닉네임 입니다.");
+          if (err.response.status === 500) {
+            setEmailErrMsg("이미 사용중인 이메일 입니다.");
+            setIsEmail(true);
+            // setNameErrMsg("이미 사용중인 닉네임 입니다.");
+          }
         });
     }
   };
@@ -158,7 +165,7 @@ const SignUpForm = () => {
             type="text"
             onChange={handleNameValue}
           />
-          <div className={Style.errMsg}>{nameErrMsg}</div>
+          {isName && <div className={Style.errMsg}>{nameErrMsg}</div>}
         </label>
         <label className={Style.title}>
           Email
@@ -167,7 +174,7 @@ const SignUpForm = () => {
             type="email"
             onChange={handleEmailValue}
           />
-          <div className={Style.errMsg}>{emailErrMsg}</div>
+          {isEmail && <div className={Style.errMsg}>{emailErrMsg}</div>}
         </label>
         <label className={Style.title}>
           Password
@@ -176,7 +183,7 @@ const SignUpForm = () => {
             type="password"
             onChange={handlePwdValue}
           />
-          <div className={Style.errMsg}>{pwdErrMsg}</div>
+          {isPassword && <div className={Style.errMsg}>{pwdErrMsg}</div>}
         </label>
 
         <div className={Style.checkBox}>
