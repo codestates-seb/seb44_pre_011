@@ -1,0 +1,67 @@
+.flex_row {
+  display: flex;
+}
+.flex_column {
+  display: flex;
+  flex-direction: column;
+}
+.justify_center {
+  justify-content: center;
+}
+.alignItems_center {
+  align-items: center;
+}
+.width_100 {
+  width: 100%;
+}
+.height_100 {
+  height: 100%;
+}
+.margin_right {
+  margin-right: 8px;
+}
+.margin_top_16 {
+  margin-top: 16px;
+}
+.margin_top_32 {
+  margin-top: 32px;
+}
+.flexGrow_1 {
+  flex-grow: 1;
+}
+#aside {
+  position: sticky;
+  top: 70px;
+  clear: both;
+  overflow: visible;
+  height: 168px;
+}
+#field {
+  min-height: 100vh;
+}
+#content {
+  width: 60vw;
+  max-width: 1000px;
+  border-left: 1px solid #ccc;
+  padding: 3%;
+}
+#SearchBarContainer {
+  width: 30%;
+  border: 1px solid gray;
+  border-radius: 3px;
+  padding: 4px 8px;
+}
+.searchBar {
+  width: 100%;
+  border-style: none;
+  outline: none;
+  font-size: 14px;
+  color: rgb(63, 63, 63);
+}
+#pagination {
+  justify-content: flex-end;
+}
+#userList {
+  flex-wrap: wrap;
+  margin-top: 32px;
+}

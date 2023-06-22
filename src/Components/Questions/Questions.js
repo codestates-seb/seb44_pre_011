@@ -2,12 +2,11 @@ import React from "react";
 import style from "./Questions.module.css";
 import { useNavigate } from "react-router";
 
-
 const Questions = ({ key, title, content }) => {
   return (
     <div id={style.container}>
-      <h3>{title}</h3>
-      <div id={style.text}>{content}</div>
+      <h3>title</h3>
+      <div id={style.text}>content</div>
       <div id={style.bottom}>
         <div id={style.taglist}>
           <div className={style.tag}>tag1</div>
