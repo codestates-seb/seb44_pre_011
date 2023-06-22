@@ -63,6 +63,7 @@ const MainPage = () => {
               title={obj.title}
               content={obj.content}
               questionId={obj.questionId}
+              createdAt={obj.createdAt}
             />
           ))}
         </div>
