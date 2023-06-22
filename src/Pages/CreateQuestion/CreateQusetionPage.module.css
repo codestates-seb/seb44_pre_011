@@ -68,11 +68,11 @@
 }
 
 #title_div3{
-    margin: 5px 0px 0px 25px;
+    margin: 5px 0px 25px 25px;
    
 }
 
-#title_div3_input{
+.title_div3_input{
     width: 940px;
     height: 30px;
     font-size: 15px;
@@ -81,7 +81,7 @@
     padding-left: 10px;
 }
 
-#title_div3_input:focus{
+.title_div3_input:focus{
     outline: 4px solid rgb(234, 234, 246);
     border: 2px solid rgb(107,162,217);
 }
@@ -90,4 +90,24 @@
     background-color: white;
     height: auto;
     width: 1000px;
+    border-color: rgb(193,	196,	197	);
+    border-radius: 3px;
+    border-style: solid;
+}
+
+#problem_div1{
+    margin: 5px 25px 25px 25px;
+}
+
+#tags{
+    background-color: white;
+    height: auto;
+    width: 1000px;
+    border-color: rgb(193,	196,	197	);
+    border-radius: 3px;
+    border-style: solid;
+}
+
+#tags_div{
+    margin: 5px 0px 25px 25px;
 }

@@ -1,0 +1,6 @@
+.ck.ck-editor__main>.ck-editor__editable:not(.ck-focused){
+height: 300px;
+}
+.ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable, .ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners{
+    height: 300px;
+}
