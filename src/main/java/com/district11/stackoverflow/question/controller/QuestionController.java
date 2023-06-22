@@ -64,17 +64,17 @@ public class QuestionController {
     }
 
     @GetMapping("/{question-id}") //질문 조회
-    public ResponseEntity getQuestion(@PathVariable("question-id") long questionId){
+    public ResponseEntity getQuestion(@PathVariable("question-id") long questionId) {
         Question question = questionService.findQuestion(questionId);
 
-        return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToQuestionResponseDto(question)),HttpStatus.OK);
+        return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToQuestionResponseDto(question)), HttpStatus.OK);
     }
 
     @GetMapping("/member/{member-id}") //질문 조회
-    public ResponseEntity getQuestionByMemberId(@PathVariable("member-id") long memberId){
+    public ResponseEntity getQuestionByMemberId(@PathVariable("member-id") long memberId) {
         List<QuestionResponseDto> response = questionService.findQuestionsByMemberId(memberId);
 
-        return new ResponseEntity<>(response,HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 

@@ -1,4 +1,5 @@
 package com.district11.stackoverflow.question.entity;
+
 import com.district11.stackoverflow.audit.Auditable;
 import com.district11.stackoverflow.member.entity.Member;
 import lombok.Getter;
@@ -29,6 +30,7 @@ public class Question {
     @CreatedDate
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
+
     public String formatCreatedAt() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return createdAt.format(formatter);
@@ -48,6 +50,7 @@ public class Question {
     private Member member;
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<QuestionTag> tags = new ArrayList<>();
+
     public void setMember(Member member) {
         this.member = member;
     }

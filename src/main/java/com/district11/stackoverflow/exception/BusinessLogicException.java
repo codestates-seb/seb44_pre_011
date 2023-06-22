@@ -5,19 +5,19 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class BusinessLogicException extends RuntimeException{
+public class BusinessLogicException extends RuntimeException {
     private ExceptionCode exceptionCode;
     private String message;
 
-    public BusinessLogicException(ExceptionCode exceptionCode){
+    public BusinessLogicException(ExceptionCode exceptionCode) {
         this.exceptionCode = exceptionCode;
         this.message = null;
     }
 
 
     @Override
-    public String getMessage(){
-        if(message == null){
+    public String getMessage() {
+        if (message == null) {
             return exceptionCode.getMessage();
         }
 

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
-public interface QuestionMapper{
+public interface QuestionMapper {
     @Mapping(source = "memberId", target = "member.memberId")
     Question questionPostDtoToQuestion(QuestionDto.Post qustionPostDto);
 
@@ -22,9 +22,8 @@ public interface QuestionMapper{
     @Mapping(source = "member.memberId", target = "memberId")
     @Mapping(source = "member.displayName", target = "displayName")
     QuestionResponseDto questionToQuestionResponseDto(Question question);
+
     List<QuestionResponseDto> questionToQuestionResponseDtos(List<Question> questions);
-
-
 
 
 }

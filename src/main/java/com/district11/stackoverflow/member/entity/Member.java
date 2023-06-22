@@ -22,20 +22,19 @@ public class Member extends Auditable {
     private Long memberId;
 
     @Email
-    @Column(length = 100, nullable = false,unique = true)
+    @Column(length = 100, nullable = false, unique = true)
     private String email;
 
     @Column(length = 100)
     private String password;
 
-    @Column(length = 100, nullable = false,unique = true)
+    @Column(length = 100, nullable = false, unique = true)
     private String displayName;
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
     //private String profileImg;
-
 
 
     public Member(String email, String password, String displayName) {

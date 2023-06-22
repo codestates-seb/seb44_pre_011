@@ -29,22 +29,24 @@ public class TagService {
 
         List<QuestionTag> questions = tag.getQuestionTagList()
                 .stream()
-                .filter(q->!q.getQuestion().getTags().contains(tagId))
+                .filter(q -> !q.getQuestion().getTags().contains(tagId))
                 .collect(Collectors.toList());
 
-        if(questions == null || questions.isEmpty()){
-            return new PageImpl<>(new ArrayList<>(),pageable,0);
+        if (questions == null || questions.isEmpty()) {
+            return new PageImpl<>(new ArrayList<>(), pageable, 0);
         }
 
-        return new PageImpl<>(questions,pageable,questions.size());
+        return new PageImpl<>(questions, pageable, questions.size());
     }
+
     public Page<Tag> findTags(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("tagId").descending());
         return tagRepository.findAll(pageable);
     }
+
     public Tag findVerifyTags(long tagId) {
         Optional<Tag> optionalTag = tagRepository.findById(tagId);
-        Tag findTag = optionalTag.orElseThrow(()-> new BusinessLogicException(ExceptionCode.TAG_NOT_FOUND));
+        Tag findTag = optionalTag.orElseThrow(() -> new BusinessLogicException(ExceptionCode.TAG_NOT_FOUND));
         return findTag;
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Positive;
 import java.util.List;
+
 @Validated
 @RestController
 @RequestMapping("/tags")
@@ -42,21 +43,20 @@ public class TagController {
         Tag tag = tagService.findVerifyTags(tagId);
         String name = tag.getName();
 
-        CustomResponseDto responseDto = new CustomResponseDto(name,tagResponseDtoList,questionPage);
+        CustomResponseDto responseDto = new CustomResponseDto(name, tagResponseDtoList, questionPage);
 
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
 
-
     //태그 전체 조회
     @GetMapping
     public ResponseEntity getTags(@Positive @RequestParam("page") int page,
-                                  @Positive @RequestParam("size") int size){
-        Page<Tag> tagPage = tagService.findTags(page-1,size);
+                                  @Positive @RequestParam("size") int size) {
+        Page<Tag> tagPage = tagService.findTags(page - 1, size);
         List<Tag> tagList = tagPage.getContent();
 
         return new ResponseEntity<>(
-                new MultiResponseDto<>(tagMapper.tagToTagResponseDtos(tagList),tagPage),HttpStatus.OK);
+                new MultiResponseDto<>(tagMapper.tagToTagResponseDtos(tagList), tagPage), HttpStatus.OK);
     }
 }

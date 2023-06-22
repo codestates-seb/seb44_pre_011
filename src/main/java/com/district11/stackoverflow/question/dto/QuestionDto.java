@@ -27,6 +27,7 @@ public class QuestionDto {
             this.content = content;
         }
     }
+
     @NoArgsConstructor
     @Getter
     @Setter

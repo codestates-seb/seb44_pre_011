@@ -16,19 +16,19 @@ public interface TagMapper {
 
     //[태그조회 : mapper]
     default List<OneTagResponseDto> tagToTagResponseDto(List<QuestionTag> questionList) {
-        if ( questionList == null ) {
+        if (questionList == null) {
             return null;
         }
-        List<OneTagResponseDto> responseDtoList = new ArrayList<OneTagResponseDto>( questionList.size() );
-        for ( QuestionTag questionTag : questionList ) {
-            responseDtoList.add( questionTagToOneTagResponseDto( questionTag ) );
+        List<OneTagResponseDto> responseDtoList = new ArrayList<OneTagResponseDto>(questionList.size());
+        for (QuestionTag questionTag : questionList) {
+            responseDtoList.add(questionTagToOneTagResponseDto(questionTag));
         }
         return responseDtoList;
     }
 
 
     default OneTagResponseDto questionTagToOneTagResponseDto(QuestionTag questionTag) {
-        if ( questionTag == null ) {
+        if (questionTag == null) {
             return null;
         }
         OneTagResponseDto responseDto = new OneTagResponseDto();
@@ -45,29 +45,29 @@ public interface TagMapper {
 
     //[태그조회 : member]
     default TagDto.TagUserResponseDto changeUser(Member member) {
-        if ( member == null ) {
+        if (member == null) {
             return null;
         }
         TagDto.TagUserResponseDto responseDto = new TagDto.TagUserResponseDto();
-        responseDto.setMemberId( member.getMemberId() );
-        responseDto.setDisplayName( member.getDisplayName() );
+        responseDto.setMemberId(member.getMemberId());
+        responseDto.setDisplayName(member.getDisplayName());
         return responseDto;
     }
 
     default List<TagDto.TagQuestionResponseDto> changeTags(List<QuestionTag> list) {
-        if ( list == null ) {
+        if (list == null) {
             return null;
         }
-        List<TagDto.TagQuestionResponseDto> responseDtoList = new ArrayList<TagDto.TagQuestionResponseDto>( list.size() );
-        for ( QuestionTag questionTag : list ) {
-            responseDtoList.add( questionTagToTagQuestionResponseDto( questionTag ) );
+        List<TagDto.TagQuestionResponseDto> responseDtoList = new ArrayList<TagDto.TagQuestionResponseDto>(list.size());
+        for (QuestionTag questionTag : list) {
+            responseDtoList.add(questionTagToTagQuestionResponseDto(questionTag));
         }
         return responseDtoList;
     }
 
 
     default TagDto.TagQuestionResponseDto questionTagToTagQuestionResponseDto(QuestionTag questionTag) {
-        if ( questionTag == null ) {
+        if (questionTag == null) {
             return null;
         }
         TagDto.TagQuestionResponseDto responseDto = new TagDto.TagQuestionResponseDto();
@@ -77,18 +77,18 @@ public interface TagMapper {
     }
 
     default List<AllTagResponseDto> tagToTagResponseDtos(List<Tag> tagList) {
-        if ( tagList == null ) {
+        if (tagList == null) {
             return null;
         }
-        List<AllTagResponseDto> responseDtoList = new ArrayList<AllTagResponseDto>( tagList.size() );
-        for ( Tag tag : tagList ) {
+        List<AllTagResponseDto> responseDtoList = new ArrayList<AllTagResponseDto>(tagList.size());
+        for (Tag tag : tagList) {
             responseDtoList.add(SubResponseDtos(tag));
         }
         return responseDtoList;
     }
 
     default AllTagResponseDto SubResponseDtos(Tag tag) {
-        if ( tag == null ) {
+        if (tag == null) {
             return null;
         }
         AllTagResponseDto responseDto = new AllTagResponseDto();
