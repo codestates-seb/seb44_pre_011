@@ -2,7 +2,7 @@ import React from "react";
 import style from "./Questions.module.css";
 import { useNavigate } from "react-router";
 
-const Questions = ({ questionId, title, content, createdAt }) => {
+const Questions = ({ questionId, title, content, createdAt, displayName }) => {
   const navigate = useNavigate();
   const ReadQuestios = () => {
     navigate(`/questions/read?id=${questionId}`);
@@ -22,7 +22,7 @@ const Questions = ({ questionId, title, content, createdAt }) => {
             src={process.env.PUBLIC_URL + "/img/test_img.jpg"}
             alt={questionId}
           />
-          Username {createdAt.slice(0, 10)} at {createdAt.slice(11, 16)}
+          {displayName} {createdAt.slice(0, 10)} at {createdAt.slice(11, 16)}
         </div>
       </div>
     </div>
