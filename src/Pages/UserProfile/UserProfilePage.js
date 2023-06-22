@@ -18,7 +18,7 @@ const userInfo = {
     "https://lh3.googleusercontent.com/a/AAcHTtelXBjmABo2mqEjXfeLRF7MXkN4kyZNZ7lEctOHag=k-s256",
 };
 // 테스트용 array
-const questions = Array(18).fill();
+const questions = Array(0).fill();
 const answers = Array(100).fill();
 const UserProfilePage = ({ memberId }) => {
   const [nav, setNav] = useState("Questions");
@@ -61,13 +61,7 @@ const UserProfilePage = ({ memberId }) => {
             <Aside />
           </div>
           <div id={styles.content} className={`${styles.flex_column}`}>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                height: "100%",
-              }}
-            >
+            <div className={`${styles.flex_column} ${styles.flexGrow_1}`}>
               <div className={`${styles.flex_row}`}>
                 <img
                   alt="user"
@@ -137,8 +131,22 @@ const UserProfilePage = ({ memberId }) => {
                       nav === "Questions" ? questions.length : answers.length
                     } ${nav}`}
                   </Typography>
-                  <div id={styles.list} className={`${styles.flex_column}`}>
-                    {list}
+                  <div id={styles.list} className={`${styles.flex_column} `}>
+                    {list.length ? (
+                      list
+                    ) : (
+                      <Typography
+                        sx={{
+                          display: "flex",
+                          height: "50vh",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          color: "gray",
+                        }}
+                      >
+                        List is empty.
+                      </Typography>
+                    )}
                   </div>
                 </div>
               </div>
