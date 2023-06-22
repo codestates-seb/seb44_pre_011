@@ -64,6 +64,7 @@ const MainPage = () => {
               content={obj.content}
               questionId={obj.questionId}
               createdAt={obj.createdAt}
+              displayName={obj.displayName}
             />
           ))}
         </div>
