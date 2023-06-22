@@ -136,10 +136,14 @@ const SignUpForm = () => {
           ...memberData,
         },
       })
-        .then((res) => console.log(res))
+        .then((res) => {
+          console.log(res);
+          window.location.href = "/";
+        })
         .catch((err) => {
           console.log(err);
           setEmailErrMsg("이미 사용중인 이메일 입니다.");
+          setNameErrMsg("이미 사용중인 닉네임 입니다.");
         });
     }
   };

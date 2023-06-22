@@ -14,6 +14,7 @@ const LoginPage = () => {
           <img
             src={`${process.env.PUBLIC_URL}/img/StackOverFlow_logo.svg`}
             className={style.logoimg}
+            alt="StackOverFlow_logo"
           ></img>
         </div>
         <div className={style.Container}>
