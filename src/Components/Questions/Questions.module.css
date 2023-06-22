@@ -8,15 +8,16 @@ img {
 h3 {
   font-weight: lighter;
   color: blue;
+  cursor: pointer;
 }
 
 #container {
-  height: 10%;
-  border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   padding: 20px;
 }
-
+#container:last-child {
+  border: 0px;
+}
 #text {
   word-wrap: break-word;
   display: -webkit-box;
