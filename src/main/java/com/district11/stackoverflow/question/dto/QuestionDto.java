@@ -20,8 +20,6 @@ public class QuestionDto {
         private String title;
         @NotNull
         private String content;
-        @Size(min = 1, max = 5)
-        private List<String> tags;
 
         public Post(long memberId, String title, String content) {
             this.memberId = memberId;

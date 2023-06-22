@@ -18,7 +18,6 @@ public class QuestionResponseDto {
     private String title;
     private String content;
     private String displayName;
-    private List<QuestionTagDto> tags;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
