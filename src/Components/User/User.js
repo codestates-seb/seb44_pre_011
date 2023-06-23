@@ -1,12 +1,13 @@
 import React from "react";
-import styles from "./User.module.css";
 import { Button, Typography } from "@mui/material";
+import PersonIcon from "@mui/icons-material/Person";
 const User = ({ user }) => {
   return (
     <Button
-      href={`/users/${user.memberId}/${user.displayName}`}
+      href={`/users/${user.memberId}/${user.displayName}?tab=questions`}
       sx={{
         display: "flex",
+        justifyContent: "flex-start",
         padding: 0,
         textTransform: "none",
         width: "22%",
@@ -18,11 +19,29 @@ const User = ({ user }) => {
         },
       }}
     >
-      <img
-        src={user.userImage}
-        alt={`user${user.displayName}`}
-        id={styles.image}
-      />
+      {user.userImage ? (
+        <img
+          src={user.userImage}
+          alt={`user${user.displayName}`}
+          style={{
+            width: "96px",
+            height: "96px",
+            marginRight: "16px",
+            borderRadius: "8px",
+          }}
+        />
+      ) : (
+        <PersonIcon
+          sx={{
+            width: "96px",
+            height: "96px",
+            marginRight: "16px",
+            color: "white",
+            bgcolor: "#ccc",
+            borderRadius: "8px",
+          }}
+        />
+      )}
       <Typography sx={{ height: 1 }}>{user.displayName}</Typography>
     </Button>
   );

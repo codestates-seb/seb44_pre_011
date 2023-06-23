@@ -8,48 +8,48 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Button, Typography } from "@mui/material";
 import Questions from "../../Components/Questions/Questions";
 import CustomPagination from "../../Components/Pagination/CustomPagination";
+import PersonIcon from "@mui/icons-material/Person";
 import { makeList } from "../../Function/wrapperFunction";
-// 테스트용 유저 정보
-const userInfo = {
-  memberId: 1,
-  displayName: "FASTFOX",
-  email: "dhtmdcks1325@gmail.com",
-  userImage:
-    "https://lh3.googleusercontent.com/a/AAcHTtelXBjmABo2mqEjXfeLRF7MXkN4kyZNZ7lEctOHag=k-s256",
-};
-// 테스트용 array
-const questions = Array(0).fill();
-const answers = Array(100).fill();
-const UserProfilePage = ({ memberId }) => {
-  const [nav, setNav] = useState("Questions");
-  const [list, setList] = useState([]);
+import { useLocation, useParams } from "react-router-dom";
+import axios from "axios";
+const UserProfilePage = () => {
+  const { memberId, displayName } = useParams();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const tab = searchParams.get("tab");
+  const [user, setUser] = useState({});
+  const [items, setItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const handleList = () => {
-    if (nav === "Questions") {
-      setList(
-        makeList(questions, currentPage, 15).map((question, idx) => (
-          <Questions key={`question_${idx}`} />
-        ))
-      );
-    } else {
-      setList(
-        makeList(answers, currentPage, 15).map((answer, idx) => (
-          <Questions key={`answer_${idx}`} />
-        ))
-      );
-    }
-  };
+  const handleList = makeList(items, currentPage, 4).map((item, idx) => (
+    <Questions
+      key={`${tab}_${idx}`}
+      questionId={item.questionId}
+      title={item.title}
+      content={item.content}
+    />
+  ));
   useEffect(() => {
-    handleList();
-  }, [currentPage]);
-  useEffect(() => {
-    setCurrentPage(1);
-    handleList();
-  }, [nav]);
-  // fetch를 통해서 all questions와 all answers를 받아오는 useEffect
-  useEffect(() => {
-    (async () => {})();
-  }, []);
+    (async () => {
+      try {
+        await axios({
+          method: "get",
+          url: `http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/members/${memberId}`,
+        }).then((res) => {
+          setUser(res.data.data);
+        });
+        await axios({
+          method: "get",
+          url: `http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/${tab}`,
+        }).then((res) => {
+          setItems(
+            res.data.filter((item) => item.memberId === Number(memberId))
+          );
+        });
+      } catch (error) {
+        console.error("Error getting user Information", error);
+      }
+    })();
+  }, [tab]);
   return (
     <div className={styles.flex_column}>
       <div id={styles.field} className={`${styles.flex_column}`}>
@@ -63,17 +63,23 @@ const UserProfilePage = ({ memberId }) => {
           <div id={styles.content} className={`${styles.flex_column}`}>
             <div className={`${styles.flex_column} ${styles.flexGrow_1}`}>
               <div className={`${styles.flex_row}`}>
-                <img
-                  alt="user"
-                  src={userInfo.userImage}
-                  id={styles.user_image}
-                  className={styles.margin_right}
-                />
+                {user.userImage ? (
+                  <img
+                    alt="user"
+                    src={user.userImage}
+                    id={styles.user_image}
+                    className={styles.margin_right}
+                  />
+                ) : (
+                  <PersonIcon
+                    sx={{ width: "128px", height: "128px", color: "#ccc" }}
+                  />
+                )}
                 <div
                   id={styles.userInfo}
                   className={`${styles.flex_column} ${styles.justify_center}`}
                 >
-                  <span id={styles.displayName}>{userInfo.displayName}</span>
+                  <span id={styles.displayName}>{user.displayName}</span>
                   <span
                     id={styles.user_info_sub}
                     className={`${styles.flex_row} ${styles.alignItems_center} ${styles.margin_top}`}
@@ -82,10 +88,10 @@ const UserProfilePage = ({ memberId }) => {
                       sx={{ color: "#9298a1", fontSize: "18px" }}
                       className={styles.margin_right}
                     />
-                    {userInfo.email}
+                    {user.email}
                   </span>
                 </div>
-                {memberId === userInfo.memberId ? (
+                {memberId === user.memberId ? (
                   <div className={`${styles.flex_row}`}>
                     <Button
                       sx={{
@@ -94,7 +100,7 @@ const UserProfilePage = ({ memberId }) => {
                         border: "1px solid #6a737c",
                         color: "#6a737c",
                       }}
-                      href={`/users/edit/${userInfo.memberId}`}
+                      href={`/users/edit/${user.memberId}`}
                     >
                       <EditIcon />
                       Edit profile
@@ -107,33 +113,27 @@ const UserProfilePage = ({ memberId }) => {
               <div className={`${styles.flex_row} ${styles.margin_top}`}>
                 <div id={styles.nav} className={styles.flex_column}>
                   <Button
-                    id={nav === "Questions" ? styles.selected : null}
+                    id={tab === "questions" ? styles.selected : null}
                     className={styles.btn_sub}
-                    onClick={() => {
-                      setNav("Questions");
-                    }}
+                    href={`/users/${memberId}/${displayName}?tab=questions`}
                   >
                     Questions
                   </Button>
                   <Button
-                    id={nav === "Answers" ? styles.selected : null}
+                    id={tab === "answers" ? styles.selected : null}
                     className={styles.btn_sub}
-                    onClick={() => {
-                      setNav("Answers");
-                    }}
+                    href={`/users/${memberId}/${displayName}?tab=answers`}
                   >
                     Answers
                   </Button>
                 </div>
                 <div className={`${styles.flex_column} ${styles.flexGrow_1}`}>
                   <Typography sx={{ fontSize: "24px", marginBottom: "16px" }}>
-                    {`${
-                      nav === "Questions" ? questions.length : answers.length
-                    } ${nav}`}
+                    {`${items.length} ${tab}`}
                   </Typography>
                   <div id={styles.list} className={`${styles.flex_column} `}>
-                    {list.length ? (
-                      list
+                    {items.length ? (
+                      handleList
                     ) : (
                       <Typography
                         sx={{
@@ -156,10 +156,10 @@ const UserProfilePage = ({ memberId }) => {
               className={`${styles.flex_row} ${styles.margin_top} ${styles.margin_right}`}
             >
               <CustomPagination
-                array={nav === "Questions" ? questions : answers}
+                array={items}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
-                pageSize={15}
+                pageSize={4}
               />
             </div>
           </div>
