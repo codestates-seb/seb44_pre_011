@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Header from "../../Components/Header/Header";
 import Aside from "../../Components/Aside/Aside";
+import CustomPagination from "../../Components/Pagination/CustomPagination";
 import Footer from "../../Components/Footer/Footer";
 import Questions from "../../Components/Questions/Questions";
 import Button from "@mui/material/Button";
@@ -17,17 +18,16 @@ const MainPage = () => {
 
   useEffect(() => {
     axios({
-      url: "https://2a0e-119-66-103-226.ngrok-free.app/questions",
+      url: "http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/questions",
       method: "get",
       headers: {
         "ngrok-skip-browser-warning": "skip",
+        value: true,
       },
     })
       .then((response) => setData(response.data))
       .catch((err) => console.log(err));
   }, []);
-
-  const numPages = Math.ceil(data.length / 15);
 
   return (
     <div>
@@ -62,36 +62,20 @@ const MainPage = () => {
               key={obj.questionId}
               title={obj.title}
               content={obj.content}
+              questionId={obj.questionId}
+              createdAt={obj.createdAt}
+              displayName={obj.displayName}
             />
           ))}
         </div>
       </div>
       <div id={style.nav}>
-        <button
-          className={style.button}
-          onClick={() => setPage(page - 1)}
-          disabled={page === 1}
-        >
-          &lt;
-        </button>
-        {Array(numPages)
-          .fill()
-          .map((_, i) => (
-            <button
-              className={page === i + 1 ? style.buttonselect : style.button}
-              key={i + 1}
-              onClick={() => setPage(i + 1)}
-            >
-              {i + 1}
-            </button>
-          ))}
-        <button
-          className={style.button}
-          onClick={() => setPage(page + 1)}
-          disabled={page === numPages}
-        >
-          &gt;
-        </button>
+        <CustomPagination
+          array={data}
+          currentPage={page}
+          setCurrentPage={setPage}
+          pageSize={15}
+        />
       </div>
       <div id={style.footer}>
         <Footer />
