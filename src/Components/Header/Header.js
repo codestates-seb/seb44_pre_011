@@ -31,7 +31,7 @@ const Header = () => {
         </div>
       </div>
 
-      <Link to="/">
+      <Link to="/questions">
         <img
           className={Style.logo}
           src={`${process.env.PUBLIC_URL}/img/logo-stackoverflow.png`}

@@ -11,7 +11,7 @@ import CustomPagination from "../../Components/Pagination/CustomPagination";
 import PersonIcon from "@mui/icons-material/Person";
 import { makeList } from "../../Function/wrapperFunction";
 import { useLocation, useParams } from "react-router-dom";
-import axios from "axios";
+import { getList, getQuestions, getUser } from "../../Function/api";
 const UserProfilePage = () => {
   const { memberId, displayName } = useParams();
   const location = useLocation();
@@ -26,25 +26,35 @@ const UserProfilePage = () => {
       questionId={item.questionId}
       title={item.title}
       content={item.content}
+      createdAt={item.createdAt}
+      displayName={item.displayName}
     />
   ));
   useEffect(() => {
     (async () => {
       try {
-        await axios({
-          method: "get",
-          url: `http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/members/${memberId}`,
-        }).then((res) => {
+        await getUser(memberId).then((res) => {
           setUser(res.data.data);
         });
-        await axios({
-          method: "get",
-          url: `http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/${tab}`,
-        }).then((res) => {
-          setItems(
-            res.data.filter((item) => item.memberId === Number(memberId))
-          );
-        });
+        if (tab === "questions") {
+          await getList(tab, memberId).then((res) => {
+            setItems(res.data);
+          });
+        } else {
+          const arr_1 = [];
+          await getList(tab, memberId).then((res) => {
+            res.data.forEach((answer) => {
+              if (!arr_1.includes(answer.questionId)) {
+                arr_1.push(answer.questionId);
+              }
+            });
+          });
+          await getQuestions().then((res) => {
+            setItems(
+              res.data.filter((question) => arr_1.includes(question.questionId))
+            );
+          });
+        }
       } catch (error) {
         console.error("Error getting user Information", error);
       }

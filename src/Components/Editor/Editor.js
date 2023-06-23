@@ -3,13 +3,13 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import "./Editor.css";
 
-const Editor = () => {
+const Editor = ({ text, setText }) => {
   const [bodyMsg, setBodyMsg] = useState("");
-  const [editorData, setEditorData] = useState(""); // 입력된 값을 저장할 상태
+  // const [editorData, setEditorData] = useState(""); // 입력된 값을 저장할 상태
 
   const handleBody = (e, editor) => {
     const data = editor.getData(); // 입력된 값 가져오기
-    setEditorData(data); // 상태 업데이트
+    setText(data); // 상태 업데이트
     if (data === "") {
       setBodyMsg("❗️본문을 입력해주세요.");
     } else if (data.length < 20) {
@@ -21,7 +21,7 @@ const Editor = () => {
 
   return (
     <div className="editor-container">
-      <CKEditor editor={ClassicEditor} data={editorData} onBlur={handleBody} />
+      <CKEditor editor={ClassicEditor} data={text} onBlur={handleBody} />
       <p className="err-msg">{bodyMsg}</p>
     </div>
   );

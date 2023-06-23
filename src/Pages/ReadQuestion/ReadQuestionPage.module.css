@@ -60,12 +60,11 @@
   margin-top: 20px;
 }
 
-#AnswerText {
-}
-
 #answertitle {
   font-size: 25px;
+  margin: 20px 0;
 }
+
 #textarea {
   width: 70%;
   height: 300px;
