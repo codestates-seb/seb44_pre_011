@@ -105,6 +105,11 @@ public class AnswerService {
         return answerMapper.AnswerToAnswerResponseDtos(answers);
     }
 
+    public List<AnswerResponseDto> findAnswerByMemberId(long memberId) {
+        List<AnswerResponseDto> Dto = findAnswers();
+        return Dto.stream().filter(d -> d.getMemberId() == memberId).collect(Collectors.toList());
+    }
+
 
 
 
@@ -118,8 +123,7 @@ public class AnswerService {
             findAnswer.setAnswerVoteCount(findAnswer.getAnswerVoteCount() + 1);
             Answer updateAnswer = answerRepository.save(findAnswer);
             return updateAnswer;
-        }
-        else throw new BusinessLogicException(ExceptionCode.VOTE_EXISTS);
+        } else throw new BusinessLogicException(ExceptionCode.VOTE_EXISTS);
     }
 
     public Answer answerVoteDown(long answerId, long memberId) {

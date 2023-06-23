@@ -73,6 +73,14 @@ public class AnswerController {
 
     }
 
+    @GetMapping("/member/{member-id}") //질문 조회
+    public ResponseEntity getQuestionByMemberId(@PathVariable("member-id") long memberId){
+        List<AnswerResponseDto> response = answerService.findAnswerByMemberId(memberId);
+
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
+
     @GetMapping
     public ResponseEntity<?> getAnswers() {
         List<AnswerResponseDto> answers = answerService.findAnswers();
