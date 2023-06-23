@@ -28,6 +28,8 @@ public class AnswerVote extends Auditable {
     @JoinColumn(name = "answer_id")
     private Answer answer;
 
+    private long answerVoteCount;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private AnswerVoteStatus answerVoteStatus;

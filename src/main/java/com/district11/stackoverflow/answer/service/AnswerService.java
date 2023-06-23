@@ -8,6 +8,7 @@ import com.district11.stackoverflow.exception.BusinessLogicException;
 import com.district11.stackoverflow.exception.ExceptionCode;
 import com.district11.stackoverflow.member.entity.Member;
 import com.district11.stackoverflow.member.service.MemberService;
+import com.district11.stackoverflow.question.dto.QuestionResponseDto;
 import com.district11.stackoverflow.question.entity.Question;
 import com.district11.stackoverflow.question.service.QuestionService;
 import org.springframework.stereotype.Service;
@@ -69,7 +70,7 @@ public class AnswerService {
 
         return findAnswer;
     }
-
+    /*
     public List<AnswerResponseDto> findAnswers() {
         List<Answer> answers = answerRepository.findAll();
         List<AnswerResponseDto> response =
@@ -78,6 +79,8 @@ public class AnswerService {
                         .collect(Collectors.toList());
         return response;
     }
+
+     */
 
     // createAnswer 하기위해서 필요
     public void verifyAnswer(Answer answer) {
@@ -90,6 +93,17 @@ public class AnswerService {
         Question question = questionService.findQuestion(answer.getQuestion().getQuestionId());
         answer.setQuestion(question);
     }
+
+    public List<AnswerResponseDto> findAnswersByMemberIdAndQuestionId(long memberId, long questionId) {
+        List<AnswerResponseDto> Dto = findAnswers();
+        return Dto.stream().filter(id -> id.getMemberId() == memberId && id.getQuestionId() == questionId).collect(Collectors.toList());
+    }
+
+    public List<AnswerResponseDto> findAnswers() {
+        List<Answer> answers = answerRepository.findAll();
+        return answerMapper.AnswerToAnswerResponseDtos(answers);
+    }
+
 
     // Vote 기능
     public Answer answerVoteUp(long answerId) {

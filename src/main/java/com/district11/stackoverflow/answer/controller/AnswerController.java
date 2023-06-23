@@ -9,6 +9,7 @@ import com.district11.stackoverflow.answer.service.AnswerService;
 import com.district11.stackoverflow.dto.SingleResponseDto;
 import com.district11.stackoverflow.member.dto.MemberDto;
 import com.district11.stackoverflow.member.service.MemberService;
+import com.district11.stackoverflow.question.dto.QuestionResponseDto;
 import com.district11.stackoverflow.question.service.QuestionService;
 import com.district11.stackoverflow.utils.UriCreator;
 import org.springframework.http.HttpStatus;
@@ -84,6 +85,15 @@ public class AnswerController {
         answerService.deleteAnswer(answerId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/{member-id}/{question-id}") //답변 조회
+    public ResponseEntity getQuestionByMemberId(@PathVariable("member-id") @Positive long memberId,
+                                                @PathVariable("question-id") @Positive long questionId){
+
+        List<AnswerResponseDto> response = answerService.findAnswersByMemberIdAndQuestionId(memberId, questionId);
+
+        return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
     // Vote 기능
