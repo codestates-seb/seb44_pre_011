@@ -7,8 +7,11 @@ import UserProfilePage from "./Pages/UserProfile/UserProfilePage";
 import CreateQuestionPage from "./Pages/CreateQuestion/CreateQuestionPage";
 import "./App.module.css";
 import Users from "./Pages/Users/Users";
+import EditQuestionPage from "./Pages/EditQuestion/EditQuestionPage";
 
 function App() {
+  const memberId = 1;
+  const displayName = "FASTFOX";
 
   return (
     <Routes>
@@ -18,10 +21,11 @@ function App() {
       <Route element={<ReadQuestionPage />} path="/questions/read" />
       <Route element={<Users />} path="/users" />
       <Route
-        element={<UserProfilePage />}
-        path={`/users/:memberId/:displayName`}
+        element={<UserProfilePage memberId={memberId} />}
+        path={`/users/${memberId}/${displayName}`}
       />
       <Route element={<CreateQuestionPage />} path="/questions/ask"/>
+      <Route element={<EditQuestionPage />} path="/questions/edit" />
     </Routes>
   );
 }
