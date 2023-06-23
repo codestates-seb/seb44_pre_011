@@ -64,6 +64,7 @@ const MainPage = () => {
               content={obj.content}
               questionId={obj.questionId}
               createdAt={obj.createdAt}
+              displayName={obj.displayName}
             />
           ))}
         </div>
@@ -73,6 +74,7 @@ const MainPage = () => {
           array={data}
           currentPage={page}
           setCurrentPage={setPage}
+          pageSize={15}
         />
       </div>
       <div id={style.footer}>

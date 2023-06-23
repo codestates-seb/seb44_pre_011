@@ -9,8 +9,6 @@ import "./App.module.css";
 import Users from "./Pages/Users/Users";
 
 function App() {
-  const memberId = 1;
-  const displayName = "FASTFOX";
 
   return (
     <Routes>
@@ -20,8 +18,8 @@ function App() {
       <Route element={<ReadQuestionPage />} path="/questions/read" />
       <Route element={<Users />} path="/users" />
       <Route
-        element={<UserProfilePage memberId={memberId} />}
-        path={`/users/${memberId}/${displayName}`}
+        element={<UserProfilePage />}
+        path={`/users/:memberId/:displayName`}
       />
       <Route element={<CreateQuestionPage />} path="/questions/ask"/>
     </Routes>

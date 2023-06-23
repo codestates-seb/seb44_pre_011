@@ -111,3 +111,8 @@
 #tags_div{
     margin: 5px 0px 25px 25px;
 }
+
+.errMsg{
+    font-size: 13px;
+    color: rgb(191, 61, 61);
+}
