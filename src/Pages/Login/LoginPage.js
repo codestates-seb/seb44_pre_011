@@ -57,7 +57,7 @@ const LoginForm = () => {
     }
 
     return axios
-      .post( "http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/members/login",{loginInfo})
+      .post( "http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/auth/login",{loginInfo})
       .then((res)=>{
         setIsLogin(true)
         setErrorMessage("")
