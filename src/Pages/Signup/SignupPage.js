@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Header from "../../Components/Header/Header";
 import Style from "./SignupPage.module.css";
 import Button from "@mui/material/Button";
@@ -18,7 +19,7 @@ const SignupPage = () => {
           <SignUpForm />
           <p>
             Already have an account?
-            <a href="http://localhost:3000/login">Log in</a>
+            <Link to="/login">Log in</Link>
           </p>
           <p>
             Are you an employer?
@@ -91,12 +92,35 @@ const SignUpForm = () => {
   const [nameErrMsg, setNameErrMsg] = useState("");
 
   //유효성 검사 상태
-  const [isName, setIsName] = useState(false);
-  const [isEmail, setIsEmail] = useState(false);
-  const [isPassword, setIsPassword] = useState(false);
+  const [invalidName, setInvalidName] = useState(false);
+  const [invalidEmail, setInvalidEmail] = useState(false);
+  const [invalidPwd, setInvalidPwd] = useState(false);
+
   const regExpPwd =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+  useEffect(() => {
+    const handleFormSubmit = async () => {
+      if (!invalidName && !invalidEmail && !invalidPwd) {
+        try {
+          const response = await axios.post(
+            "http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/members",
+            memberData
+          );
+          console.log(response);
+          window.location.href = "/";
+        } catch (err) {
+          console.log(err);
+          if (err.response.status === 409) {
+            setEmailErrMsg("❗️ 이미 사용중인 이메일 입니다.");
+            setInvalidEmail(true);
+            // setNameErrMsg("이미 사용중인 닉네임 입니다.");
+          }
+        }
+      }
+    };
 
+    handleFormSubmit();
+  }, [invalidName, invalidEmail, invalidPwd, memberData]);
   // email 값 설정 및 유효성검사
   const handleEmailValue = (e) => {
     setMemberData({ ...memberData, email: e.target.value });
@@ -111,47 +135,30 @@ const SignUpForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (memberData.email === "") {
-      setEmailErrMsg("이메일을 입력해주세요.");
-      setIsEmail(true);
+      setEmailErrMsg("❗️ 이메일을 입력해주세요.");
+      setInvalidEmail(true);
     } else {
       setEmailErrMsg("");
+      setInvalidEmail(false);
     }
     if (memberData.password === "") {
-      setPwdErrMsg("비밀번호를 입력해주세요.");
-      setIsPassword(true);
-    } else if (regExpPwd.test(memberData.password)) {
-      setPwdErrMsg("");
-    } else {
+      setPwdErrMsg("❗️ 비밀번호를 입력해주세요.");
+      setInvalidPwd(true);
+    } else if (!regExpPwd.test(memberData.password)) {
       setPwdErrMsg(
-        "최소 8자, 하나의 이상의 대소문자, 숫자, 특수문자를 포함해야 합니다."
+        "❗️ 최소 8자, 하나의 이상의 대소문자, 숫자, 특수문자를 포함해야 합니다."
       );
+      setInvalidPwd(true);
+    } else {
+      setPwdErrMsg("");
+      setInvalidPwd(false);
     }
     if (memberData.displayName === "") {
-      setNameErrMsg("닉네임을 입력해주세요.");
-      setIsName(true);
+      setNameErrMsg("❗️ 닉네임을 입력해주세요.");
+      setInvalidName(true);
     } else {
       setNameErrMsg("");
-    }
-    if (!isEmail && !isName && !isPassword) {
-      axios({
-        url: "http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/members",
-        method: "post",
-        data: {
-          ...memberData,
-        },
-      })
-        .then((res) => {
-          console.log(res);
-          window.location.href = "/";
-        })
-        .catch((err) => {
-          console.log(err);
-          if (err.response.status === 500) {
-            setEmailErrMsg("이미 사용중인 이메일 입니다.");
-            setIsEmail(true);
-            // setNameErrMsg("이미 사용중인 닉네임 입니다.");
-          }
-        });
+      setInvalidName(false);
     }
   };
 
@@ -165,7 +172,7 @@ const SignUpForm = () => {
             type="text"
             onChange={handleNameValue}
           />
-          {isName && <div className={Style.errMsg}>{nameErrMsg}</div>}
+          {invalidName && <div className={Style.errMsg}>{nameErrMsg}</div>}
         </label>
         <label className={Style.title}>
           Email
@@ -174,7 +181,7 @@ const SignUpForm = () => {
             type="email"
             onChange={handleEmailValue}
           />
-          {isEmail && <div className={Style.errMsg}>{emailErrMsg}</div>}
+          {invalidEmail && <div className={Style.errMsg}>{emailErrMsg}</div>}
         </label>
         <label className={Style.title}>
           Password
@@ -183,7 +190,7 @@ const SignUpForm = () => {
             type="password"
             onChange={handlePwdValue}
           />
-          {isPassword && <div className={Style.errMsg}>{pwdErrMsg}</div>}
+          {invalidPwd && <div className={Style.errMsg}>{pwdErrMsg}</div>}
         </label>
 
         <div className={Style.checkBox}>
