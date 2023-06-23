@@ -99,7 +99,7 @@ public class QuestionController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/quetionVoteUp/{question-id}/{member-id}")
+    @PostMapping("/questionVoteUp/{question-id}/{member-id}")
     public ResponseEntity<?> voteQuestionUp(@PathVariable("question-id") long questionId,
                                             @PathVariable("member-id") long memberId) {
 

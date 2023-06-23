@@ -96,6 +96,7 @@ public class AnswerController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    // 한 사람이 만든 질문 하나의 답변들
     @GetMapping("/{member-id}/{question-id}") //답변 조회
     public ResponseEntity getQuestionByMemberId(@PathVariable("member-id") @Positive long memberId,
                                                 @PathVariable("question-id") @Positive long questionId){
@@ -106,7 +107,7 @@ public class AnswerController {
     }
 
     // Vote 기능
-    @PostMapping("/answerVoteUp/{answer-Id}/{member-Id}")
+    @PostMapping("/answerVoteUp/{answer-id}/{member-id}")
     public ResponseEntity<?> voteAnswerUp(@PathVariable("answer-id") long answerId,
                                           @PathVariable("member-id") long memberId) {
 

@@ -47,7 +47,7 @@ public class Question {
     @CollectionTable(name = "question_map", joinColumns = @JoinColumn(name = "question_id"))
     @MapKeyColumn(name = "map_key")
     @Column(name = "map_value")
-    public Map<Long,String> map = new HashMap<>();
+    public Map<Long,String> questionMap = new HashMap<>();
 
     @LastModifiedDate
     @Column(name = "LAST_MODIFIED_AT")

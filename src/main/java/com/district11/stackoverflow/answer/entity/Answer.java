@@ -48,8 +48,13 @@ public class Answer extends Auditable {
     @CollectionTable(name = "answer_map", joinColumns = @JoinColumn(name = "answer_id"))
     @MapKeyColumn(name = "map_key")
     @Column(name = "map_value")
-    public Map<Long,String> map = new HashMap<>();
+    public Map<Long,String> AnswerMap = new HashMap<>();
 
+    @ElementCollection
+    @CollectionTable(name = "question_map", joinColumns = @JoinColumn(name = "question_id"))
+    @MapKeyColumn(name = "map_key")
+    @Column(name = "map_value")
+    public Map<Long,String> questionMap = new HashMap<>();
     /*
     @OneToMany(mappedBy = "answer", cascade = {CascadeType.REMOVE})
     private List<AnswerVote> answerVotes = new ArrayList<>();

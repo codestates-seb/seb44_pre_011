@@ -95,7 +95,7 @@ public class QuestionService {
     public Question questionVoteUp(long questionId, long memberId) {
 
         Question findQuestion = findQuestion(questionId);
-        Map<Long, String> map = findQuestion.getMap();
+        Map<Long, String> map = findQuestion.getQuestionMap();
         if (!map.containsKey(memberId) || map.get(memberId).equals("down") || map.get(memberId).equals("none")) {
             if (!map.containsKey(memberId) || map.get(memberId).equals("none")) map.put(memberId, "up");
             else if (map.get(memberId).equals("down")) map.put(memberId, "none");
@@ -107,7 +107,7 @@ public class QuestionService {
 
     public Question questionVoteDown(long questionId, long memberId) {
         Question findQuestion = findQuestion(questionId);
-        Map<Long, String> map = findQuestion.getMap();
+        Map<Long, String> map = findQuestion.getQuestionMap();
         if (!map.containsKey(memberId) || map.get(memberId).equals("up") || map.get(memberId).equals("none")) {
             if (!map.containsKey(memberId) || map.get(memberId).equals("none")) map.put(memberId, "down");
             else if (map.get(memberId).equals("up")) map.put(memberId, "none");

@@ -110,13 +110,11 @@ public class AnswerService {
         return Dto.stream().filter(d -> d.getMemberId() == memberId).collect(Collectors.toList());
     }
 
-
-
-
     // Vote 기능
+    /*
     public Answer answerVoteUp(long answerId, long memberId) {
         Answer findAnswer = findVerifyAnswer(answerId);
-        Map<Long, String> map = findAnswer.getMap();
+        Map<Long, String> map = findAnswer.getAnswerMap();
         if (!map.containsKey(memberId) || map.get(memberId).equals("down") || map.get(memberId).equals("none")) {
             if (!map.containsKey(memberId) || map.get(memberId).equals("none")) map.put(memberId, "up");
             else if (map.get(memberId).equals("down")) map.put(memberId, "none");
@@ -126,9 +124,26 @@ public class AnswerService {
         } else throw new BusinessLogicException(ExceptionCode.VOTE_EXISTS);
     }
 
+
+     */
+
+    public Answer answerVoteUp(long answerId, long memberId) {
+
+        Answer findAnswer = findVerifyAnswer(answerId);
+        Map<Long, String> map = findAnswer.getAnswerMap();
+        if (!map.containsKey(memberId) || map.get(memberId).equals("down") || map.get(memberId).equals("none")) {
+            if (!map.containsKey(memberId) || map.get(memberId).equals("none")) map.put(memberId, "up");
+            else if (map.get(memberId).equals("down")) map.put(memberId, "none");
+            findAnswer.setAnswerVoteCount(findAnswer.getAnswerVoteCount() + 1);
+            Answer updateAnswer = answerRepository.save(findAnswer);
+            return updateAnswer;
+        } else throw new BusinessLogicException(ExceptionCode.VOTE_EXISTS);
+    }
+
+
     public Answer answerVoteDown(long answerId, long memberId) {
         Answer findAnswer = findVerifyAnswer(answerId);
-        Map<Long, String> map = findAnswer.getMap();
+        Map<Long, String> map = findAnswer.getAnswerMap();
         if (!map.containsKey(memberId) || map.get(memberId).equals("up") || map.get(memberId).equals("none")) {
             if (!map.containsKey(memberId) || map.get(memberId).equals("none")) map.put(memberId, "down");
             else if (map.get(memberId).equals("up")) map.put(memberId, "none");
