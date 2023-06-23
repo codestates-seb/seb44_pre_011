@@ -100,6 +100,7 @@ public class AnswerService {
 
     // Vote 기능
     public Answer answerVoteUp(long answerId, long memberId) {
+
         Answer findAnswer = findVerifyAnswer(answerId);
         Map<Long, String> map = findAnswer.getAnswerMap();
         if (!map.containsKey(memberId) || map.get(memberId).equals("down") || map.get(memberId).equals("none")) {
