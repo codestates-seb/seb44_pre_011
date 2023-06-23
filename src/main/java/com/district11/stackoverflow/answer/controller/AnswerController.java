@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Path;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
@@ -97,19 +98,21 @@ public class AnswerController {
     }
 
     // Vote 기능
-    @PostMapping("/voteUp/{answer-Id}")
-    public ResponseEntity<?> voteAnswerUp(@PathVariable("answer-id") long answerId) {
+    @PostMapping("/answerVoteUp/{answer-Id}/{member-Id}")
+    public ResponseEntity<?> voteAnswerUp(@PathVariable("answer-id") long answerId,
+                                          @PathVariable("member-id") long memberId) {
 
-        Answer voteAnswerUp = answerService.answerVoteUp(answerId);
+        Answer voteAnswerUp = answerService.answerVoteUp(answerId, memberId);
         AnswerResponseDto response = answerMapper.AnswerToAnswerResponseDto(voteAnswerUp);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/voteDown/{answer-id}")
-    public ResponseEntity<?> voteAnswerDown(@PathVariable("answer-id") long answerId) {
-
-        Answer voteAnswerDown = answerService.answerVoteDown(answerId);
+    @PostMapping("/answerVoteDown/{answer-id}/{member-id}")
+    public ResponseEntity<?> voteAnswerDown(@PathVariable("answer-id") long answerId,
+                                            @PathVariable("member-id") long memberId) {
+        memberService.findMember(memberId);
+        Answer voteAnswerDown = answerService.answerVoteDown(answerId, memberId);
         AnswerResponseDto response = answerMapper.AnswerToAnswerResponseDto(voteAnswerDown);
 
         return new ResponseEntity<>(response, HttpStatus.OK);

@@ -10,7 +10,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @NoArgsConstructor
 @Getter
@@ -41,6 +43,12 @@ public class Answer extends Auditable {
     // 답변 Vote
     @Column(nullable = false)
     private long answerVoteCount;
+
+    @ElementCollection
+    @CollectionTable(name = "answer_map", joinColumns = @JoinColumn(name = "answer_id"))
+    @MapKeyColumn(name = "map_key")
+    @Column(name = "map_value")
+    public Map<Long,String> map = new HashMap<>();
 
     /*
     @OneToMany(mappedBy = "answer", cascade = {CascadeType.REMOVE})

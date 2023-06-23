@@ -126,9 +126,8 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         return UriComponentsBuilder
                 .newInstance()
                 .scheme("http")
-                .host("localhost") // Todo 리액트 서버 도메인 주소 입력
-//                .port(3000) // Todo 포트번호 변경 주의
-                .path("/receive-token.html")        // test 용
+                .host("localhost")
+                .port(3000)
                 .queryParams(queryParams)
                 .build()
                 .toUri();

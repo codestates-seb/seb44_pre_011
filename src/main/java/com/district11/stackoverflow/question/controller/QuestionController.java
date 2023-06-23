@@ -1,9 +1,4 @@
 package com.district11.stackoverflow.question.controller;
-
-
-import com.district11.stackoverflow.answer.dto.AnswerResponseDto;
-import com.district11.stackoverflow.answer.entity.Answer;
-import com.district11.stackoverflow.dto.MultiResponseDto;
 import com.district11.stackoverflow.dto.SingleResponseDto;
 import com.district11.stackoverflow.member.entity.Member;
 import com.district11.stackoverflow.member.service.MemberService;
@@ -104,8 +99,7 @@ public class QuestionController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    // Vote 기능
-    @PostMapping("/voteUp/{question-id}/{member-id}")
+    @PostMapping("/quetionVoteUp/{question-id}/{member-id}")
     public ResponseEntity<?> voteQuestionUp(@PathVariable("question-id") long questionId,
                                             @PathVariable("member-id") long memberId) {
 
@@ -115,7 +109,7 @@ public class QuestionController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/voteDown/{question-id}/{member-id}")
+    @PostMapping("/questionVoteDown/{question-id}/{member-id}")
     public ResponseEntity<?> voteQuestionDown(@PathVariable("question-id") long questionId,
                                               @PathVariable("member-id") long memberId) {
         memberService.findMember(memberId);

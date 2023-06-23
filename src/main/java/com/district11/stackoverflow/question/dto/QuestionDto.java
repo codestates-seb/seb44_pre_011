@@ -21,6 +21,7 @@ public class QuestionDto {
         @NotNull
         private String content;
 
+
         public Post(long memberId, String title, String content) {
             this.memberId = memberId;
             this.title = title;

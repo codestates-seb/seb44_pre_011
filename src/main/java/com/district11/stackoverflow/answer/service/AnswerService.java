@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -105,21 +106,33 @@ public class AnswerService {
     }
 
 
-    // Vote 기능
-    public Answer answerVoteUp(long answerId) {
-        Answer findAnswer = findVerifyAnswer(answerId);
-        findAnswer.setAnswerVoteCount(findAnswer.getAnswerVoteCount() + 1);
-        Answer updateAnswer = answerRepository.save(findAnswer);
 
-        return updateAnswer;
+
+    // Vote 기능
+    public Answer answerVoteUp(long answerId, long memberId) {
+        Answer findAnswer = findVerifyAnswer(answerId);
+        Map<Long, String> map = findAnswer.getMap();
+        if (!map.containsKey(memberId) || map.get(memberId).equals("down") || map.get(memberId).equals("none")) {
+            if (!map.containsKey(memberId) || map.get(memberId).equals("none")) map.put(memberId, "up");
+            else if (map.get(memberId).equals("down")) map.put(memberId, "none");
+            findAnswer.setAnswerVoteCount(findAnswer.getAnswerVoteCount() + 1);
+            Answer updateAnswer = answerRepository.save(findAnswer);
+            return updateAnswer;
+        }
+        else throw new BusinessLogicException(ExceptionCode.VOTE_EXISTS);
     }
 
-    public Answer answerVoteDown(long answerId) {
+    public Answer answerVoteDown(long answerId, long memberId) {
         Answer findAnswer = findVerifyAnswer(answerId);
-        findAnswer.setAnswerVoteCount(findAnswer.getAnswerVoteCount() - 1);
-        Answer updateAnswer = answerRepository.save(findAnswer);
+        Map<Long, String> map = findAnswer.getMap();
+        if (!map.containsKey(memberId) || map.get(memberId).equals("up") || map.get(memberId).equals("none")) {
+            if (!map.containsKey(memberId) || map.get(memberId).equals("none")) map.put(memberId, "down");
+            else if (map.get(memberId).equals("up")) map.put(memberId, "none");
+            findAnswer.setAnswerVoteCount(findAnswer.getAnswerVoteCount() - 1);
+            Answer updateAnswer = answerRepository.save(findAnswer);
 
-        return updateAnswer;
+            return updateAnswer;
+        }else throw new BusinessLogicException(ExceptionCode.VOTE_EXISTS);
     }
 
 
