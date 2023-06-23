@@ -1,19 +1,33 @@
 import React from "react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import Header from "../../Components/Header/Header";
 import Aside from "../../Components/Aside/Aside";
+import CustomPagination from "../../Components/Pagination/CustomPagination";
 import Footer from "../../Components/Footer/Footer";
 import Questions from "../../Components/Questions/Questions";
 import Button from "@mui/material/Button";
 import style from "./MainPage.module.css";
+import { Link } from "react-router-dom";
 
 const MainPage = () => {
   const [page, setPage] = useState(1);
   const offset = (page - 1) * 15;
 
-  const array = Array(50).fill();
-  const numPages = Math.ceil(array.length / 15);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    axios({
+      url: "http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/questions",
+      method: "get",
+      headers: {
+        "ngrok-skip-browser-warning": "skip",
+        value: true,
+      },
+    })
+      .then((response) => setData(response.data))
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <div>
@@ -41,39 +55,26 @@ const MainPage = () => {
                 </Button>
               </Link>
             </div>
-            {array.length} questions
+            {data.length} questions
           </div>
-          {array.slice(offset, offset + 15).map((index) => (
-            <Questions key={index} />
+          {data.slice(offset, offset + 15).map((obj) => (
+            <Questions
+              key={obj.questionId}
+              title={obj.title}
+              content={obj.content}
+              questionId={obj.questionId}
+              createdAt={obj.createdAt}
+              displayName={obj.displayName}
+            />
           ))}
         </div>
       </div>
       <div id={style.nav}>
-        <button
-          className={style.button}
-          onClick={() => setPage(page - 1)}
-          disabled={page === 1}
-        >
-          &lt;
-        </button>
-        {Array(numPages)
-          .fill()
-          .map((_, i) => (
-            <button
-              className={page === i + 1 ? style.buttonselect : style.button}
-              key={i + 1}
-              onClick={() => setPage(i + 1)}
-            >
-              {i + 1}
-            </button>
-          ))}
-        <button
-          className={style.button}
-          onClick={() => setPage(page + 1)}
-          disabled={page === numPages}
-        >
-          &gt;
-        </button>
+        <CustomPagination
+          array={data}
+          currentPage={page}
+          setCurrentPage={setPage}
+        />
       </div>
       <div id={style.footer}>
         <Footer />

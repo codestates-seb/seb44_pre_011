@@ -2,20 +2,15 @@ import React from "react";
 import style from "./Questions.module.css";
 import { useNavigate } from "react-router";
 
-const Questions = () => {
+const Questions = ({ questionId, title, content, createdAt, displayName }) => {
   const navigate = useNavigate();
-  const ReadQuestion = () => {
-    navigate("/questions/read");
+  const ReadQuestios = () => {
+    navigate(`/questions/read?id=${questionId}`);
   };
-
   return (
-    <div id={style.container} onClick={ReadQuestion}>
-      <h3>What is the fastest way to get the value of π?</h3>
-      <div id={style.text}>
-        'm looking for the fastest way to obtain the value of π, as a personal
-        challenge. More specifically, I'm using ways that don't involve using
-        #define constants like M_PI, or hard-coding the number in.
-      </div>
+    <div id={style.container}>
+      <h3 onClick={ReadQuestios}>{title}</h3>
+      <div id={style.text}>{content}</div>
       <div id={style.bottom}>
         <div id={style.taglist}>
           <div className={style.tag}>tag1</div>
@@ -23,8 +18,11 @@ const Questions = () => {
           <div className={style.tag}>tag3</div>
         </div>
         <div id={style.userInfo}>
-          <img src={process.env.PUBLIC_URL + "/img/test_img.jpg"} alt="test" />
-          Username 2023/06/16 at 12:00
+          <img
+            src={process.env.PUBLIC_URL + "/img/test_img.jpg"}
+            alt={questionId}
+          />
+          {displayName} {createdAt.slice(0, 10)} at {createdAt.slice(11, 16)}
         </div>
       </div>
     </div>

@@ -31,14 +31,14 @@
   border-radius: 16px !important;
   margin-bottom: 8px;
 }
-#profileBody {
-  margin-top: 70px;
+.flexGrow_1 {
+  flex-grow: 1;
 }
 #content {
-  width: 70vw;
+  width: 60vw;
   max-width: 1000px;
   border-left: 1px solid #ccc;
-  padding: 24px;
+  padding: 3%;
 }
 #user_image {
   width: 128px;
@@ -56,7 +56,8 @@
   margin-right: 24px;
 }
 #list {
-  border: 1px solid #525960;
+  border: 1px solid #ccc;
+  border-radius: 8px;
   width: 100%;
 }
 #pagination {
@@ -67,4 +68,7 @@
 }
 #selected {
   background-color: #f1f2f3;
+}
+#field {
+  min-height: 100vh;
 }
