@@ -10,9 +10,6 @@ import Users from "./Pages/Users/Users";
 import EditQuestionPage from "./Pages/EditQuestion/EditQuestionPage";
 
 function App() {
-  const memberId = 1;
-  const displayName = "FASTFOX";
-
   return (
     <Routes>
       <Route element={<MainPage />} path="/" />
@@ -21,10 +18,10 @@ function App() {
       <Route element={<ReadQuestionPage />} path="/questions/read" />
       <Route element={<Users />} path="/users" />
       <Route
-        element={<UserProfilePage memberId={memberId} />}
-        path={`/users/${memberId}/${displayName}`}
+        element={<UserProfilePage />}
+        path={`/users/:memberId/:displayName`}
       />
-      <Route element={<CreateQuestionPage />} path="/questions/ask"/>
+      <Route element={<CreateQuestionPage />} path="/questions/ask" />
       <Route element={<EditQuestionPage />} path="/questions/edit" />
     </Routes>
   );
