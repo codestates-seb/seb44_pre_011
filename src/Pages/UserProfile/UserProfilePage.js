@@ -50,9 +50,6 @@ const UserProfilePage = () => {
             });
           });
           await getQuestions().then((res) => {
-            console.log(
-              res.data.filter((question) => arr_1.includes(question.questionId))
-            );
             setItems(
               res.data.filter((question) => arr_1.includes(question.questionId))
             );

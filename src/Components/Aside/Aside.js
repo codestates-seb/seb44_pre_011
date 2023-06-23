@@ -11,7 +11,7 @@ const Aside = () => {
   return (
     <div id="Btns_aside">
       <NavLink
-        to="/"
+        to="/questions"
         className="asideButton"
         activeclassname="asideButton active"
       >

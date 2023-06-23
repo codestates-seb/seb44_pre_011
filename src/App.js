@@ -12,7 +12,7 @@ import EditQuestionPage from "./Pages/EditQuestion/EditQuestionPage";
 function App() {
   return (
     <Routes>
-      <Route element={<MainPage />} path="/" />
+      <Route element={<MainPage />} path="/questions" />
       <Route element={<LoginPage />} path="/login" />
       <Route element={<SignupPage />} path="/signup" />
       <Route element={<ReadQuestionPage />} path="/questions/read" />

@@ -19,7 +19,6 @@ const Users = () => {
     (async () => {
       try {
         await getUsers().then((res) => {
-          console.log(res.data);
           setUserList(res.data);
         });
       } catch (error) {
