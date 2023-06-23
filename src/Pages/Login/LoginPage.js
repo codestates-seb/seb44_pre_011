@@ -41,7 +41,7 @@ const LoginForm = () => {
   const [isLogin, setIsLogin] = useState(false);
 
   const [loginInfo, setLoginInfo] = useState({
-    email: '',
+    username: '',
     password: '',
   });
   const [errorMessage, setErrorMessage] = useState('');
@@ -51,7 +51,7 @@ const LoginForm = () => {
   };
 
   const loginRequestHandler = () => {
-    if(!loginInfo.email || !loginInfo.password){
+    if(!loginInfo.username || !loginInfo.password){
       setErrorMessage("아이디와 비밀번호를 입력하세요.")
       return;
     }
@@ -74,7 +74,7 @@ const LoginForm = () => {
       <form className={style.form} onSubmit={(e) => e.preventDefault()}>
         <label className={style.title}>
           Email
-          <input className={style.input} type="email" onChange={handleInputValue('email')}/>
+          <input className={style.input} type="email" onChange={handleInputValue('username')}/>
         </label>
         <label className={style.title}>
           Password
