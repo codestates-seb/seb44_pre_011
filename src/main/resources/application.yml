@@ -2,7 +2,7 @@ spring:
   h2:
     console:
       enabled: true
-      setting:
+      settings:
         web-allow-others: true
       path: /h2
   datasource:
