@@ -8,7 +8,6 @@ import com.district11.stackoverflow.exception.BusinessLogicException;
 import com.district11.stackoverflow.exception.ExceptionCode;
 import com.district11.stackoverflow.member.entity.Member;
 import com.district11.stackoverflow.member.service.MemberService;
-import com.district11.stackoverflow.question.dto.QuestionResponseDto;
 import com.district11.stackoverflow.question.entity.Question;
 import com.district11.stackoverflow.question.service.QuestionService;
 import org.springframework.stereotype.Service;
@@ -71,17 +70,6 @@ public class AnswerService {
 
         return findAnswer;
     }
-    /*
-    public List<AnswerResponseDto> findAnswers() {
-        List<Answer> answers = answerRepository.findAll();
-        List<AnswerResponseDto> response =
-                answers.stream()
-                        .map(answerMapper::AnswerToAnswerResponseDto)
-                        .collect(Collectors.toList());
-        return response;
-    }
-
-     */
 
     // createAnswer 하기위해서 필요
     public void verifyAnswer(Answer answer) {
@@ -111,7 +99,6 @@ public class AnswerService {
     }
 
     // Vote 기능
-    /*
     public Answer answerVoteUp(long answerId, long memberId) {
         Answer findAnswer = findVerifyAnswer(answerId);
         Map<Long, String> map = findAnswer.getAnswerMap();
@@ -123,23 +110,6 @@ public class AnswerService {
             return updateAnswer;
         } else throw new BusinessLogicException(ExceptionCode.VOTE_EXISTS);
     }
-
-
-     */
-
-    public Answer answerVoteUp(long answerId, long memberId) {
-
-        Answer findAnswer = findVerifyAnswer(answerId);
-        Map<Long, String> map = findAnswer.getAnswerMap();
-        if (!map.containsKey(memberId) || map.get(memberId).equals("down") || map.get(memberId).equals("none")) {
-            if (!map.containsKey(memberId) || map.get(memberId).equals("none")) map.put(memberId, "up");
-            else if (map.get(memberId).equals("down")) map.put(memberId, "none");
-            findAnswer.setAnswerVoteCount(findAnswer.getAnswerVoteCount() + 1);
-            Answer updateAnswer = answerRepository.save(findAnswer);
-            return updateAnswer;
-        } else throw new BusinessLogicException(ExceptionCode.VOTE_EXISTS);
-    }
-
 
     public Answer answerVoteDown(long answerId, long memberId) {
         Answer findAnswer = findVerifyAnswer(answerId);
@@ -153,6 +123,5 @@ public class AnswerService {
             return updateAnswer;
         }else throw new BusinessLogicException(ExceptionCode.VOTE_EXISTS);
     }
-
 
 }
