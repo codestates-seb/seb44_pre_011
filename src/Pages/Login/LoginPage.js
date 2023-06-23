@@ -1,11 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
 import Header from "../../Components/Header/Header";
 import Oauth from "../../Components/Oauth/Oauth";
 import style from "./LoginPage.module.css";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const LoginPage = () => {
+
   return (
     <>
       <Header />
@@ -14,13 +16,14 @@ const LoginPage = () => {
           <img
             src={`${process.env.PUBLIC_URL}/img/StackOverFlow_logo.svg`}
             className={style.logoimg}
+            alt="StackOverFlow_logo"
           ></img>
         </div>
         <div className={style.Container}>
           <Oauth value="Log in with Google" />
         </div>
         <div className={style.Container}>
-          <SignUpForm />
+          <LoginForm />
         </div>
         <div className={style.Container}>
           <p>Don’t have an account? &nbsp;</p>
@@ -33,29 +36,65 @@ const LoginPage = () => {
 
 export default LoginPage;
 
-const SignUpForm = () => {
-  const handleSubmit = (e) => {
-    e.preventDefault();
+const LoginForm = () => {
+
+  const [isLogin, setIsLogin] = useState(false);
+
+  const [loginInfo, setLoginInfo] = useState({
+    username: '',
+    password: '',
+  });
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleInputValue = (key) => (e) => {
+    setLoginInfo({ ...loginInfo, [key]: e.target.value });
   };
+
+  const loginRequestHandler = () => {
+    if(!loginInfo.username || !loginInfo.password){
+      setErrorMessage("아이디와 비밀번호를 입력하세요.")
+      return;
+    }
+
+    return axios
+      .post( "http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/auth/login",{loginInfo})
+      .then((res)=>{
+        setIsLogin(true)
+        setErrorMessage("")
+      })
+      .catch((err)=>{
+        console.log(err.response.data)
+        setErrorMessage("로그인에 실패했습니다.")
+      })
+  };
+
 
   return (
     <div className={style.formContainer}>
-      <form className={style.form} onSubmit={handleSubmit}>
+      <form className={style.form} onSubmit={(e) => e.preventDefault()}>
         <label className={style.title}>
           Email
-          <input className={style.input} type="email" />
+          <input className={style.input} type="email" onChange={handleInputValue('username')}/>
         </label>
         <label className={style.title}>
           Password
-          <input className={style.input} type="password" />
+          <input className={style.input} type="password"  onChange={handleInputValue('password')}/>
         </label>
         <Button
           className={style.button}
           variant="contained"
           sx={{ fontSize: 14, width: "100%", height: "40px" }}
+          onClick={loginRequestHandler}
         >
           Log in
         </Button>
+        {errorMessage ? (
+            <div id='alert-message' data-testid='alert-message'>
+              {errorMessage}
+            </div>
+          ) : (
+            ''
+          )}
       </form>
     </div>
   );
