@@ -4,6 +4,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import Header from "../../Components/Header/Header";
 import Aside from "../../Components/Aside/Aside";
+import Editor from "../../Components/Editor/Editor";
 import Footer from "../../Components/Footer/Footer";
 import style from "./ReadQuestionPage.module.css";
 
@@ -57,27 +58,22 @@ const Answer = () => {
   const [text, setText] = useState("");
   const Submit = () => {
     console.log(text);
-    axios({
-      url: "",
-      method: "post",
-      data: {},
-    })
-      .then((res) => {
-        console.log(res);
-        window.location.href = "/";
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // axios({
+    //   url: "",
+    //   method: "post",
+    //   data: {},
+    // })
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
   return (
     <div id={style.answer}>
       <span id={style.answertitle}>Your Answer</span>
-      <textarea
-        id={style.textarea}
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-      />
+      <Editor text={text} setText={setText} />
       <Link to="/questions/read">
         <Button
           variant="contained"
