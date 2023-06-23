@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -87,7 +88,7 @@ public class QuestionService {
 
 
     public List<QuestionResponseDto> findQuestions() {
-        List<Question> questions = questionRepository.findAll();
+        List<Question> questions = questionRepository.findAll(Sort.by(Sort.Direction.DESC, "questionId"));
         return questionMapper.questionToQuestionResponseDtos(questions);
     }
 

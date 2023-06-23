@@ -88,6 +88,8 @@ public class AnswerService {
         return Dto.stream().filter(id -> id.getMemberId() == memberId && id.getQuestionId() == questionId).collect(Collectors.toList());
     }
 
+
+
     public List<AnswerResponseDto> findAnswers() {
         List<Answer> answers = answerRepository.findAll();
         return answerMapper.AnswerToAnswerResponseDtos(answers);
@@ -96,6 +98,10 @@ public class AnswerService {
     public List<AnswerResponseDto> findAnswerByMemberId(long memberId) {
         List<AnswerResponseDto> Dto = findAnswers();
         return Dto.stream().filter(d -> d.getMemberId() == memberId).collect(Collectors.toList());
+    }
+    public List<AnswerResponseDto> findAnswerByQuestionId(long questionId) {
+        List<AnswerResponseDto> Dto = findAnswers();
+        return Dto.stream().filter(d -> d.getQuestionId() == questionId).collect(Collectors.toList());
     }
 
     // Vote 기능

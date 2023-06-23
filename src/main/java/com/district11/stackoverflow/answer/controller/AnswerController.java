@@ -80,6 +80,13 @@ public class AnswerController {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
+    @GetMapping("/question/{question-id}") //질문 조회
+    public ResponseEntity getQuestionByQuestionId(@PathVariable("question-id") long questionId){
+        List<AnswerResponseDto> response = answerService.findAnswerByQuestionId(questionId);
+
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
 
     @GetMapping
     public ResponseEntity<?> getAnswers() {
