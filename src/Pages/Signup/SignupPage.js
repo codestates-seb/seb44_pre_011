@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../Components/Header/Header";
 import Style from "./SignupPage.module.css";
@@ -82,6 +82,9 @@ const HeadLine = () => {
 };
 
 const SignUpForm = () => {
+  // const [name, setName] = useState("");
+  // const [pwd, setPwd] = useState("");
+  // const [email, setEmail] = useState("");
   const [memberData, setMemberData] = useState({
     email: "",
     password: "",
@@ -91,74 +94,75 @@ const SignUpForm = () => {
   const [pwdErrMsg, setPwdErrMsg] = useState("");
   const [nameErrMsg, setNameErrMsg] = useState("");
 
-  //유효성 검사 상태
-  const [invalidName, setInvalidName] = useState(false);
-  const [invalidEmail, setInvalidEmail] = useState(false);
-  const [invalidPwd, setInvalidPwd] = useState(false);
+  // const NameInputRef = useRef();
+  // const EmailInputRef = useRef();
+  // const PwdInputRef = useRef();
 
   const regExpPwd =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
-  useEffect(() => {
-    const handleFormSubmit = async () => {
-      if (!invalidName && !invalidEmail && !invalidPwd) {
-        try {
-          const response = await axios.post(
-            "http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/members",
-            memberData
-          );
-          console.log(response);
-          window.location.href = "/";
-        } catch (err) {
-          console.log(err);
-          if (err.response.status === 409) {
-            setEmailErrMsg("❗️ 이미 사용중인 이메일 입니다.");
-            setInvalidEmail(true);
-            // setNameErrMsg("이미 사용중인 닉네임 입니다.");
-          }
-        }
-      }
-    };
 
-    handleFormSubmit();
-  }, [invalidName, invalidEmail, invalidPwd, memberData]);
+  // useEffect(() => {
+  //   // isValid
+
+  // }, [name, pwd, email]);
+
   // email 값 설정 및 유효성검사
   const handleEmailValue = (e) => {
-    setMemberData({ ...memberData, email: e.target.value });
+    let emailInput = e.target.value;
+    setMemberData({ ...memberData, email: emailInput });
+    if (emailInput === "") {
+      setEmailErrMsg("❗️ 이메일을 입력해주세요.");
+    } else {
+      setEmailErrMsg("");
+      // setEmail(emailInput);
+    }
   };
+
   const handlePwdValue = (e) => {
-    setMemberData({ ...memberData, password: e.target.value });
+    let pwdInput = e.target.value;
+    setMemberData({ ...memberData, password: pwdInput });
+    // console.log(memberData);
+    if (pwdInput === "") {
+      setPwdErrMsg("❗️ 비밀번호를 입력해주세요.");
+    } else if (!regExpPwd.test(pwdInput)) {
+      setPwdErrMsg(
+        "❗️ 최소 8자, 하나의 이상의 대소문자, 숫자, 특수문자를 포함해야 합니다."
+      );
+    } else {
+      setPwdErrMsg("");
+      // setPwd(pwdInput);
+    }
   };
   const handleNameValue = (e) => {
-    setMemberData({ ...memberData, displayName: e.target.value });
+    let nameInput = e.target.value;
+    setMemberData({ ...memberData, displayName: nameInput });
+    if (nameInput === "") {
+      setNameErrMsg("❗️ 닉네임을 입력해주세요.");
+    } else {
+      setNameErrMsg("");
+      // setName(nameInput);
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (memberData.email === "") {
-      setEmailErrMsg("❗️ 이메일을 입력해주세요.");
-      setInvalidEmail(true);
-    } else {
-      setEmailErrMsg("");
-      setInvalidEmail(false);
-    }
-    if (memberData.password === "") {
-      setPwdErrMsg("❗️ 비밀번호를 입력해주세요.");
-      setInvalidPwd(true);
-    } else if (!regExpPwd.test(memberData.password)) {
-      setPwdErrMsg(
-        "❗️ 최소 8자, 하나의 이상의 대소문자, 숫자, 특수문자를 포함해야 합니다."
-      );
-      setInvalidPwd(true);
-    } else {
-      setPwdErrMsg("");
-      setInvalidPwd(false);
-    }
-    if (memberData.displayName === "") {
-      setNameErrMsg("❗️ 닉네임을 입력해주세요.");
-      setInvalidName(true);
-    } else {
-      setNameErrMsg("");
-      setInvalidName(false);
+
+    if (emailErrMsg === "" && pwdErrMsg === "" && nameErrMsg === "") {
+      axios
+        .post(
+          "http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/members",
+          { ...memberData }
+        )
+        .then((response) => {
+          console.log(response);
+          window.location.href = "/questions";
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.response.status === 409) {
+            setEmailErrMsg("❗️ 이미 사용중인 이메일 입니다.");
+          }
+        });
     }
   };
 
@@ -172,7 +176,9 @@ const SignUpForm = () => {
             type="text"
             onChange={handleNameValue}
           />
-          {invalidName && <div className={Style.errMsg}>{nameErrMsg}</div>}
+          {nameErrMsg !== "" && (
+            <div className={Style.errMsg}>{nameErrMsg}</div>
+          )}
         </label>
         <label className={Style.title}>
           Email
@@ -181,7 +187,9 @@ const SignUpForm = () => {
             type="email"
             onChange={handleEmailValue}
           />
-          {invalidEmail && <div className={Style.errMsg}>{emailErrMsg}</div>}
+          {emailErrMsg !== "" && (
+            <div className={Style.errMsg}>{emailErrMsg}</div>
+          )}
         </label>
         <label className={Style.title}>
           Password
@@ -190,7 +198,7 @@ const SignUpForm = () => {
             type="password"
             onChange={handlePwdValue}
           />
-          {invalidPwd && <div className={Style.errMsg}>{pwdErrMsg}</div>}
+          {pwdErrMsg !== "" && <div className={Style.errMsg}>{pwdErrMsg}</div>}
         </label>
 
         <div className={Style.checkBox}>
