@@ -3,18 +3,43 @@ import Header from "../../Components/Header/Header";
 import style from "./CreateQusetionPage.module.css";
 import Button from "@mui/material/Button";
 import Editor from "../../Components/Editor/Editor";
+import axios from "axios";
 
 const CreateQuestionPage = () => {
+  const [title, setTitle] = useState("");
   const [titleMsg, setTitleMsg] = useState("");
-  // Title : 15자 이상 미입력시 오류 메세지 출력.
-  //  Body : 20자 이상 미입력시 오류 메세지 출력.
-  const handleTitle = (e) => {
+  const [text, setText] = useState("");
+  const [tag, setTag] = useState("");
+
+  const Title = (e) => {
     let titleValue = e.target.value;
+
     if (titleValue.length < 15) {
       setTitleMsg("❗️제목은 15자 이상이어야 합니다.");
     } else {
+      setTitle(titleValue);
       setTitleMsg("");
     }
+  };
+
+  const Tag = (e) => {
+    let tagValue = e.target.value;
+
+    if (tagValue !== "") {
+      setTag(tagValue);
+    }
+  };
+
+  const Submit = () => {
+    axios({
+      // url: "http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/questions/ask",
+      method: "post",
+      data: {
+        title: title,
+        content: text,
+        tag: tag,
+      },
+    });
   };
 
   return (
@@ -55,7 +80,7 @@ const CreateQuestionPage = () => {
           <div id={style.title_div3}>
             <input
               type="text"
-              onBlur={handleTitle}
+              onBlur={Title}
               className={style.title_div3_input}
               placeholder="e.g. Is there an R function for finding the index of an element in a vector? "
             />
@@ -71,7 +96,7 @@ const CreateQuestionPage = () => {
             Minimum 20 characters.
           </div>
           <div id={style.problem_div1}>
-            <Editor />
+            <Editor text={text} setText={setText} />
           </div>
         </div>
         <div className={style.contents} id={style.tags}>
@@ -83,6 +108,7 @@ const CreateQuestionPage = () => {
           <div id={style.tags_div}>
             <input
               type="text"
+              onBlur={Tag}
               className={style.title_div3_input}
               placeholder="e.g. (angular regex django) "
             />
@@ -97,6 +123,8 @@ const CreateQuestionPage = () => {
               marginLeft: "25px",
               marginBottom: "20px",
             }}
+            onClick={Submit}
+            disabled={""}
           >
             Submit
           </Button>

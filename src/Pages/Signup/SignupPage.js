@@ -82,9 +82,6 @@ const HeadLine = () => {
 };
 
 const SignUpForm = () => {
-  // const [name, setName] = useState("");
-  // const [pwd, setPwd] = useState("");
-  // const [email, setEmail] = useState("");
   const [memberData, setMemberData] = useState({
     email: "",
     password: "",
@@ -94,17 +91,8 @@ const SignUpForm = () => {
   const [pwdErrMsg, setPwdErrMsg] = useState("");
   const [nameErrMsg, setNameErrMsg] = useState("");
 
-  // const NameInputRef = useRef();
-  // const EmailInputRef = useRef();
-  // const PwdInputRef = useRef();
-
   const regExpPwd =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
-
-  // useEffect(() => {
-  //   // isValid
-
-  // }, [name, pwd, email]);
 
   // email 값 설정 및 유효성검사
   const handleEmailValue = (e) => {
@@ -114,14 +102,13 @@ const SignUpForm = () => {
       setEmailErrMsg("❗️ 이메일을 입력해주세요.");
     } else {
       setEmailErrMsg("");
-      // setEmail(emailInput);
     }
   };
 
   const handlePwdValue = (e) => {
     let pwdInput = e.target.value;
     setMemberData({ ...memberData, password: pwdInput });
-    // console.log(memberData);
+
     if (pwdInput === "") {
       setPwdErrMsg("❗️ 비밀번호를 입력해주세요.");
     } else if (!regExpPwd.test(pwdInput)) {
@@ -130,7 +117,6 @@ const SignUpForm = () => {
       );
     } else {
       setPwdErrMsg("");
-      // setPwd(pwdInput);
     }
   };
   const handleNameValue = (e) => {
@@ -140,21 +126,28 @@ const SignUpForm = () => {
       setNameErrMsg("❗️ 닉네임을 입력해주세요.");
     } else {
       setNameErrMsg("");
-      // setName(nameInput);
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    if (
+      memberData.email === "" &&
+      memberData.displayName === "" &&
+      memberData.password === ""
+    ) {
+      alert("필드를 입력해주세요.");
+    }
     if (emailErrMsg === "" && pwdErrMsg === "" && nameErrMsg === "") {
-      axios
-        .post(
-          "http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/members",
-          { ...memberData }
-        )
-        .then((response) => {
-          console.log(response);
+      axios({
+        url: "http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/members",
+        method: "post",
+        data: {
+          ...memberData,
+        },
+      })
+        .then((res) => {
+          console.log(res);
           window.location.href = "/questions";
         })
         .catch((err) => {
@@ -200,7 +193,6 @@ const SignUpForm = () => {
           />
           {pwdErrMsg !== "" && <div className={Style.errMsg}>{pwdErrMsg}</div>}
         </label>
-
         <div className={Style.checkBox}>
           <p>
             Passwords must contain at least eight characters, including at least
