@@ -147,13 +147,16 @@ const SignUpForm = () => {
         },
       })
         .then((res) => {
-          console.log(res);
-          window.location.href = "/questions";
+          if (res.status === 201) {
+            console.log(res);
+            window.location.href = "/questions";
+          }
         })
         .catch((err) => {
           console.log(err);
           if (err.response.status === 409) {
             setEmailErrMsg("❗️ 이미 사용중인 이메일 입니다.");
+            //setNameErrMsg("❗️ 이미 사용중인 이메일 입니다.");
           }
         });
     }
