@@ -73,4 +73,5 @@ public class Question {
         this.title = title;
         this.content = content;
     }
+
 }

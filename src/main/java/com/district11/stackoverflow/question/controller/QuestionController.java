@@ -109,7 +109,7 @@ public class QuestionController {
     @PostMapping("/questionVoteUp/{question-id}/{member-id}")
     public ResponseEntity<?> voteQuestionUp(@PathVariable("question-id") long questionId,
                                             @PathVariable("member-id") long memberId) {
-
+        memberService.findMember(memberId);
         Question voteQuestionUp = questionService.questionVoteUp(questionId,memberId);
         QuestionResponseDto response = mapper.questionToQuestionResponseDto(voteQuestionUp);
 
