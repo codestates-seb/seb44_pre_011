@@ -145,9 +145,7 @@ const SignUpForm = () => {
       // setInvalidEmail(true);
     } else {
       setEmailErrMsg("");
-      console.log(memberData);
       // setInvalidEmail(false);
-      postData();
     }
     if (memberData.password === "") {
       setPwdErrMsg("❗️ 비밀번호를 입력해주세요.");
@@ -160,7 +158,6 @@ const SignUpForm = () => {
     } else {
       setPwdErrMsg("");
       // setInvalidPwd(false);
-      postData();
     }
     if (memberData.displayName === "") {
       setNameErrMsg("❗️ 닉네임을 입력해주세요.");
@@ -168,8 +165,8 @@ const SignUpForm = () => {
     } else {
       setNameErrMsg("");
       //   setInvalidName(false);
-      postData();
     }
+    return postData();
   };
 
   // useEffect(() => {
