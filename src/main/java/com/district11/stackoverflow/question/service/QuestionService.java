@@ -1,9 +1,7 @@
 package com.district11.stackoverflow.question.service;
 
-import com.district11.stackoverflow.answer.entity.Answer;
 import com.district11.stackoverflow.exception.BusinessLogicException;
 import com.district11.stackoverflow.exception.ExceptionCode;
-import com.district11.stackoverflow.member.entity.Member;
 import com.district11.stackoverflow.question.dto.QuestionResponseDto;
 import com.district11.stackoverflow.question.entity.Question;
 import com.district11.stackoverflow.question.entity.QuestionTag;
@@ -16,7 +14,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -92,6 +89,12 @@ public class QuestionService {
         return questionMapper.questionToQuestionResponseDtos(questions);
     }
 
+    // 검색 기능
+    public List<QuestionResponseDto> questionSearchList(String searchKeyword){
+        List<Question> questions = questionRepository.findByTitleContaining(searchKeyword);
+        return questionMapper.questionToQuestionResponseDtos(questions);
+    }
+
     // Vote 기능
     public Question questionVoteUp(long questionId, long memberId) {
 
@@ -105,6 +108,7 @@ public class QuestionService {
             return updateQuestion;
         } else throw new BusinessLogicException(ExceptionCode.VOTE_EXISTS);
     }
+
 
     public Question questionVoteDown(long questionId, long memberId) {
         Question findQuestion = findQuestion(questionId);

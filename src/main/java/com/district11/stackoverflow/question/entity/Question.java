@@ -29,6 +29,7 @@ public class Question {
     @Column(length = 2000, nullable = false)
     private String content;
 
+
     @CreatedDate
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();

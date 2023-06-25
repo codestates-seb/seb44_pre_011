@@ -24,7 +24,6 @@ public class MemberAuthenticationFailureHandler implements AuthenticationFailure
         response.setStatus(HttpServletResponse.SC_BAD_REQUEST); // 상태 코드 설정
         response.getWriter().write(businessLogicException.getMessage()); // 응답 내용 작성
         response.getWriter().flush();
-
     }
 
 }

@@ -74,6 +74,13 @@ public class QuestionController {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
+    //검색 기능
+    @GetMapping("/search/{search-Keyword}")
+    public ResponseEntity getQuestionsByTitleContaining(@PathVariable("search-Keyword") String searchKeyword){
+        List<QuestionResponseDto> response = questionService.questionSearchList(searchKeyword);
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
 
     @GetMapping
     public ResponseEntity getQuestions() {
