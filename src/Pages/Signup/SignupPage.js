@@ -142,38 +142,28 @@ const SignUpForm = () => {
 
     if (memberData.email === "") {
       setEmailErrMsg("❗️ 이메일을 입력해주세요.");
-      // setInvalidEmail(true);
     } else {
       setEmailErrMsg("");
-      // setInvalidEmail(false);
     }
+
     if (memberData.password === "") {
       setPwdErrMsg("❗️ 비밀번호를 입력해주세요.");
-      // setInvalidPwd(true)
     } else if (!regExpPwd.test(memberData.password)) {
       setPwdErrMsg(
         "❗️ 최소 8자, 하나의 이상의 대소문자, 숫자, 특수문자를 포함해야 합니다."
       );
-      // setInvalidPwd(true);
     } else {
       setPwdErrMsg("");
-      // setInvalidPwd(false);
     }
+
     if (memberData.displayName === "") {
       setNameErrMsg("❗️ 닉네임을 입력해주세요.");
-      // setInvalidName(true);
     } else {
       setNameErrMsg("");
-      //   setInvalidName(false);
     }
+
     return postData();
   };
-
-  // useEffect(() => {
-  //   const handleFormSubmit = () => {
-
-  //   };
-  // }, [memberData]);
 
   return (
     <div className={Style.formContainer}>
