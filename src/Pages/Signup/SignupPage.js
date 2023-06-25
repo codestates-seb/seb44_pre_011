@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../../Components/Header/Header";
 import Style from "./SignupPage.module.css";
 import Button from "@mui/material/Button";
@@ -91,64 +91,38 @@ const SignUpForm = () => {
   const [pwdErrMsg, setPwdErrMsg] = useState("");
   const [nameErrMsg, setNameErrMsg] = useState("");
 
+  const emailValRef = useRef(null);
+  const pwdValRef = useRef(null);
+  const nameValRef = useRef(null);
+
   const regExpPwd =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
-  // email 값 설정 및 유효성검사
-  const handleEmailValue = (e) => {
-    let emailInput = e.target.value;
-    setMemberData({ ...memberData, email: emailInput });
-    if (emailInput === "") {
-      setEmailErrMsg("❗️ 이메일을 입력해주세요.");
-    } else {
-      setEmailErrMsg("");
-    }
+  const navigate = useNavigate();
+
+  const handleEmailValue = () => {
+    let emailValue = emailValRef.current.value;
+    setMemberData({ ...memberData, email: emailValue });
+  };
+  const handlePwdValue = () => {
+    let pwdValue = pwdValRef.current.value;
+    setMemberData({ ...memberData, password: pwdValue });
+  };
+  const handleNameValue = () => {
+    let nameValue = nameValRef.current.value;
+    setMemberData({ ...memberData, displayName: nameValue });
   };
 
-  const handlePwdValue = (e) => {
-    let pwdInput = e.target.value;
-    setMemberData({ ...memberData, password: pwdInput });
-
-    if (pwdInput === "") {
-      setPwdErrMsg("❗️ 비밀번호를 입력해주세요.");
-    } else if (!regExpPwd.test(pwdInput)) {
-      setPwdErrMsg(
-        "❗️ 최소 8자, 하나의 이상의 대소문자, 숫자, 특수문자를 포함해야 합니다."
-      );
-    } else {
-      setPwdErrMsg("");
-    }
-  };
-  const handleNameValue = (e) => {
-    let nameInput = e.target.value;
-    setMemberData({ ...memberData, displayName: nameInput });
-    if (nameInput === "") {
-      setNameErrMsg("❗️ 닉네임을 입력해주세요.");
-    } else {
-      setNameErrMsg("");
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (
-      memberData.email === "" &&
-      memberData.displayName === "" &&
-      memberData.password === ""
-    ) {
-      alert("필드를 입력해주세요.");
-    }
-    if (emailErrMsg === "" && pwdErrMsg === "" && nameErrMsg === "") {
-      axios({
-        url: "http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/members",
-        method: "post",
-        data: {
-          ...memberData,
-        },
-      })
+  const postData = () => {
+    if (memberData.displayName && memberData.password && memberData.email) {
+      axios
+        .post(
+          "http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/members",
+          { ...memberData }
+        )
         .then((res) => {
           console.log(res);
-          window.location.href = "/questions";
+          navigate("/questions");
         })
         .catch((err) => {
           console.log(err);
@@ -159,15 +133,61 @@ const SignUpForm = () => {
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    handleEmailValue();
+    handlePwdValue();
+    handleNameValue();
+
+    if (memberData.email === "") {
+      setEmailErrMsg("❗️ 이메일을 입력해주세요.");
+      // setInvalidEmail(true);
+    } else {
+      setEmailErrMsg("");
+      console.log(memberData);
+      // setInvalidEmail(false);
+      postData();
+    }
+    if (memberData.password === "") {
+      setPwdErrMsg("❗️ 비밀번호를 입력해주세요.");
+      // setInvalidPwd(true)
+    } else if (!regExpPwd.test(memberData.password)) {
+      setPwdErrMsg(
+        "❗️ 최소 8자, 하나의 이상의 대소문자, 숫자, 특수문자를 포함해야 합니다."
+      );
+      // setInvalidPwd(true);
+    } else {
+      setPwdErrMsg("");
+      // setInvalidPwd(false);
+      postData();
+    }
+    if (memberData.displayName === "") {
+      setNameErrMsg("❗️ 닉네임을 입력해주세요.");
+      // setInvalidName(true);
+    } else {
+      setNameErrMsg("");
+      //   setInvalidName(false);
+      postData();
+    }
+  };
+
+  // useEffect(() => {
+  //   const handleFormSubmit = () => {
+
+  //   };
+  // }, [memberData]);
+
   return (
     <div className={Style.formContainer}>
-      <form className={Style.form} onSubmit={handleSubmit}>
+      <form className={Style.form}>
         <label className={Style.title}>
           Display Name
           <input
             className={Style.input}
             type="text"
             onChange={handleNameValue}
+            ref={nameValRef}
           />
           {nameErrMsg !== "" && (
             <div className={Style.errMsg}>{nameErrMsg}</div>
@@ -179,6 +199,7 @@ const SignUpForm = () => {
             className={Style.input}
             type="email"
             onChange={handleEmailValue}
+            ref={emailValRef}
           />
           {emailErrMsg !== "" && (
             <div className={Style.errMsg}>{emailErrMsg}</div>
@@ -190,9 +211,11 @@ const SignUpForm = () => {
             className={Style.input}
             type="password"
             onChange={handlePwdValue}
+            ref={pwdValRef}
           />
           {pwdErrMsg !== "" && <div className={Style.errMsg}>{pwdErrMsg}</div>}
         </label>
+
         <div className={Style.checkBox}>
           <p>
             Passwords must contain at least eight characters, including at least
@@ -208,6 +231,7 @@ const SignUpForm = () => {
         <Button
           className={Style.button}
           type="submit"
+          onClick={handleSubmit}
           variant="contained"
           sx={{ fontSize: 14, width: "100%", height: "40px" }}
         >
