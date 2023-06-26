@@ -8,13 +8,17 @@ import Footer from "../../Components/Footer/Footer";
 import Questions from "../../Components/Questions/Questions";
 import Button from "@mui/material/Button";
 import style from "./MainPage.module.css";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { loginState } from "../../store/auth";
 
 const MainPage = () => {
   const [page, setPage] = useState(1);
   const offset = (page - 1) * 15;
 
   const [data, setData] = useState([]);
+  const isLogin = useRecoilValue(loginState);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios({
@@ -29,6 +33,14 @@ const MainPage = () => {
       .catch((err) => console.log(err));
   }, []);
 
+  const handleAskButton = () => {
+    if (isLogin) {
+      navigate("/questions/ask");
+    } else {
+      navigate("/login");
+    }
+  };
+
   return (
     <div>
       <Header />
@@ -40,20 +52,21 @@ const MainPage = () => {
           <div id={style.questionHead}>
             <div id={style.questionHeadTitle}>
               <h1>All Questions</h1>
-              <Link to="/questions/ask">
-                <Button
-                  variant="contained"
-                  sx={{
-                    fontSize: 13,
-                    width: "140px",
-                    height: "50px",
-                    marginTop: "10px",
-                    marginLeft: "10px",
-                  }}
-                >
-                  Ask Question
-                </Button>
-              </Link>
+              {/* <Link to="/questions/ask"> */}
+              <Button
+                variant="contained"
+                sx={{
+                  fontSize: 13,
+                  width: "140px",
+                  height: "50px",
+                  marginTop: "10px",
+                  marginLeft: "10px",
+                }}
+                onClick={handleAskButton}
+              >
+                Ask Question
+              </Button>
+              {/* </Link> */}
             </div>
             {data.length} questions
           </div>
