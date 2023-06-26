@@ -3,7 +3,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://database-1.cfhkssdrrqpz.ap-northeast-2.rds.amazonaws.com:13306/stack?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: root
-    password: #${MYSQL_PASSWORD}
+    password: ${MYSQL_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: create  # 스키마 자동 생성
@@ -16,8 +16,8 @@ spring:
       client:
         registration:
           google:
-            clientId:  496738830911-oiv87jvsvmmore94fqcrbbsqgq26hg5v.apps.googleusercontent.com #${G_CLIENT_ID}
-            clientSecret: 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 #${G_CLIENT_SECRET}
+            clientId: ${G_CLIENT_ID}
+            clientSecret: ${G_CLIENT_SECRET}
             scope:
               - email
               - profile
@@ -35,6 +35,6 @@ mail:
   address:
     admin: admin@gmail.com
 jwt:
-  key: kevin1234123412341234123412341234 #${jwt_key}
+  key: ${jwt_key}
   access-token-expiration-minutes: 30
   refresh-token-expiration-minutes: 420
