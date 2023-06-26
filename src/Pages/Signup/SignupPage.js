@@ -122,7 +122,7 @@ const SignUpForm = () => {
         )
         .then((res) => {
           console.log(res);
-          navigate("/questions");
+          navigate("/login");
         })
         .catch((err) => {
           console.log(err);
