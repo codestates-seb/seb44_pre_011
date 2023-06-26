@@ -41,13 +41,11 @@ export const getList = async (tab, memberId) => {
   }
 };
 export const editProfile = async (memberId, updateInfo) => {
-  console.log(memberId,updateInfo)
   try {
-    return await axios({
-      method: "patch",
-      url: `http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/members/upload/${memberId}`,
-      data: updateInfo,
-    });
+    axios.patch(
+      `http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/members/${memberId}`,
+      updateInfo
+    );
   } catch (error) {
     console.error("Error updating profile", error);
   }

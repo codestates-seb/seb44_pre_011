@@ -7,25 +7,31 @@ import PersonIcon from "@mui/icons-material/Person";
 import EmailIcon from "@mui/icons-material/Email";
 import { Button, Divider, TextField, Typography } from "@mui/material";
 import { editProfile, getUser } from "../../Function/api";
+import { useNavigate } from "react-router-dom";
 const EditProfile = () => {
+  const navigate = useNavigate();
+  const id = sessionStorage.getItem("id");
   const [user, setUser] = useState({});
   const [updateInfo, setUpdateInfo] = useState({
     displayName: "",
     email: "",
   });
-  const [imageData, setIamgeData] = useState({
+  const [imageData, setImageData] = useState({
     image: user?.image,
     uploadImage: "",
   });
   const clickSave = async () => {
-    await editProfile(user.memberId, updateInfo)
-      .then((res) => console.log(res))
-      .catch((err) => console.error(err));
+    try {
+      await editProfile(user.memberId, updateInfo);
+      navigate(`/users/${id}/${updateInfo.displayName}/?tab=questions`);
+    } catch (error) {
+      console.error(error);
+    }
   };
   useEffect(() => {
     (async () => {
       try {
-        await getUser(1).then((res) => {
+        await getUser(id).then((res) => {
           setUser(res.data.data);
           setUpdateInfo({
             displayName: res.data.data.displayName,
@@ -114,7 +120,7 @@ const EditProfile = () => {
                       hidden
                       type="file"
                       onChange={(event) => {
-                        setIamgeData({
+                        setImageData({
                           image: URL.createObjectURL(event.target.files[0]),
                           uploadImage: event.target.files[0],
                         });

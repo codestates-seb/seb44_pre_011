@@ -13,6 +13,8 @@ import { makeList } from "../../Function/wrapperFunction";
 import { useLocation, useParams } from "react-router-dom";
 import { getList, getQuestions, getUser } from "../../Function/api";
 const UserProfilePage = () => {
+  const id = sessionStorage.getItem("id");
+  console.log(id);
   const { memberId, displayName } = useParams();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -101,7 +103,7 @@ const UserProfilePage = () => {
                     {user.email}
                   </span>
                 </div>
-                {memberId === user.memberId ? (
+                {memberId === id ? (
                   <div className={`${styles.flex_row}`}>
                     <Button
                       sx={{
@@ -110,7 +112,7 @@ const UserProfilePage = () => {
                         border: "1px solid #6a737c",
                         color: "#6a737c",
                       }}
-                      href={`/users/edit/${user.memberId}`}
+                      href={`/users/edit/${id}`}
                     >
                       <EditIcon />
                       Edit profile
