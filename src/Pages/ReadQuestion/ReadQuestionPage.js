@@ -103,11 +103,36 @@ const Answer = () => {
 };
 
 const ReadQuestionPage = () => {
+  const userid = 2;
   const [login, setLogin] = useState(true);
   const [data, setData] = useState({ createdAt: "00000000000" });
   const [answer, setAnswer] = useState([]);
+  const [answertext, setAnswertext] = useState("");
+  const [answerid, setAnswerid] = useState();
 
-  const EditAnswer = () => {};
+  const EditAnswer = (answerid, text) => {
+    setAnswertext(text);
+    setAnswerid(answerid);
+  };
+
+  const EditSubmit = (answerid, answertext) => {
+    axios({
+      url: `http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/answers/${answerid}`,
+      method: "PATCH",
+      headers: {
+        "ngrok-skip-browser-warning": "skip",
+        value: true,
+      },
+      data: {
+        content: answertext,
+      },
+    })
+      .then((response) => setData(response.data.data))
+      .catch((err) => console.log(err));
+    setAnswertext("");
+    setAnswerid();
+    window.location.reload();
+  };
 
   useEffect(() => {
     axios({
@@ -178,13 +203,41 @@ const ReadQuestionPage = () => {
 
             {answer.map((obj) => (
               <div id={style.AnswerText}>
-                <div>{obj.content}</div>
+                {answerid === obj.answerId ? (
+                  <div>
+                    <Editor text={answertext} setText={setAnswertext} />
+                    <Link
+                      to={`/questions/read?id=${document.location.search.slice(
+                        4
+                      )}`}
+                    >
+                      <Button
+                        variant="contained"
+                        sx={{
+                          fontSize: 12,
+                          width: "165px",
+                          height: "40px",
+                          marginTop: "20px",
+                        }}
+                        onClick={() => EditSubmit(obj.answerId, answertext)}
+                      >
+                        Edit Your Answer
+                      </Button>
+                    </Link>
+                  </div>
+                ) : (
+                  <div dangerouslySetInnerHTML={{ __html: obj.content }}></div>
+                )}
                 <div id={style.AnswerFooter}>
                   <button
                     id={style.EditButton}
-                    // onClick={userid === Answerid ? EditAnswer : undefined}
+                    onClick={
+                      userid === obj.memberId
+                        ? () => EditAnswer(obj.answerId, obj.content)
+                        : undefined
+                    }
                   >
-                    Edit
+                    {answerid ? "" : "Edit"}
                   </button>
                   <div id={style.answerUserInfo}>
                     <img
