@@ -52,7 +52,11 @@
   display: flex;
   flex-direction: column;
   margin-top: 20px;
-  border-top: 1px solid #ccc;
+}
+
+#answertitle {
+  font-size: 25px;
+  margin: 20px 0;
 }
 
 #Answer {
@@ -60,9 +64,28 @@
   margin-top: 20px;
 }
 
-#answertitle {
-  font-size: 25px;
-  margin: 20px 0;
+#AnswerText {
+  margin-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+}
+
+#AnswerFooter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+#EditButton {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+#answerUserInfo {
+  display: flex;
+  align-items: center;
 }
 
 #textarea {
