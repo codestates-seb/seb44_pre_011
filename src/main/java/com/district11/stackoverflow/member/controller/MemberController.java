@@ -110,6 +110,7 @@ public class MemberController {
             // 파일을 지정된 경로로 복사
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
+
             Member member = memberService.findMember(memberId);
             member.setProfileImg(filePath.toString());
             memberService.saveMember(member);

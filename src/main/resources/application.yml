@@ -44,3 +44,9 @@ jwt:
   key: kevin1234123412341234123412341234
   access-token-expiration-minutes: 30
   refresh-token-expiration-minutes: 420
+aws:
+  accessKey: ${aws.accessKey}
+  secretKey: ${aws.secretKey}
+  region: ap-northeast-2
+  s3:
+    bucketName: district11
