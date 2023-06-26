@@ -6,7 +6,7 @@ spring:
     password: ${MYSQL_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: create-drop  # 스키마 자동 생성
+      ddl-auto: update  # 스키마 자동 생성
     show-sql: true      # SQL 쿼리 출력
     properties:
       hibernate:
