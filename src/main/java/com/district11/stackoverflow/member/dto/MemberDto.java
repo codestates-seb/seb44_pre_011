@@ -34,7 +34,7 @@ public class MemberDto {
 
         private long memberId;
 
-        private String password;
+        private String email;
 
         private String displayName;
     }
