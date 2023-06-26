@@ -56,25 +56,35 @@ const Login = () => {
 
 const Answer = () => {
   const [text, setText] = useState("");
+
   const Submit = () => {
     console.log(text);
-    // axios({
-    //   url: "",
-    //   method: "post",
-    //   data: {},
-    // })
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    if (text.length > 20) {
+      axios({
+        url: "http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/answers",
+        method: "post",
+        data: {
+          memberId: 2,
+          questionId: document.location.search.slice(4),
+          displayName: "kecod",
+          content: text,
+        },
+      })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      setText("");
+      window.location.reload();
+    }
   };
   return (
     <div id={style.answer}>
       <span id={style.answertitle}>Your Answer</span>
       <Editor text={text} setText={setText} />
-      <Link to="/questions/read">
+      <Link to={`/questions/read?id=${document.location.search.slice(4)}`}>
         <Button
           variant="contained"
           sx={{
@@ -95,6 +105,9 @@ const Answer = () => {
 const ReadQuestionPage = () => {
   const [login, setLogin] = useState(true);
   const [data, setData] = useState({ createdAt: "00000000000" });
+  const [answer, setAnswer] = useState([]);
+
+  const EditAnswer = () => {};
 
   useEffect(() => {
     axios({
@@ -107,6 +120,18 @@ const ReadQuestionPage = () => {
       },
     })
       .then((response) => setData(response.data.data))
+      .catch((err) => console.log(err));
+
+    axios({
+      url: `http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/answers/question/
+      ${document.location.search.slice(4)}`,
+      method: "get",
+      headers: {
+        "ngrok-skip-browser-warning": "skip",
+        value: true,
+      },
+    })
+      .then((response) => setAnswer(response.data))
       .catch((err) => console.log(err));
   }, []);
 
@@ -150,7 +175,28 @@ const ReadQuestionPage = () => {
               </div>
             </div>
             <div id={style.Answer}>Answer</div>
-            <div id={style.AnswerText}>asdasdasd</div>
+
+            {answer.map((obj) => (
+              <div id={style.AnswerText}>
+                <div>{obj.content}</div>
+                <div id={style.AnswerFooter}>
+                  <button
+                    id={style.EditButton}
+                    // onClick={userid === Answerid ? EditAnswer : undefined}
+                  >
+                    Edit
+                  </button>
+                  <div id={style.answerUserInfo}>
+                    <img
+                      src={process.env.PUBLIC_URL + "/img/test_img.jpg"}
+                      alt="img"
+                    />
+                    {obj.displayName}
+                  </div>
+                </div>
+              </div>
+            ))}
+
             {login ? <Answer /> : <Login />}
           </div>
         </div>

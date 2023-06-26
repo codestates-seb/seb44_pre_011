@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Header from "../../Components/Header/Header";
 import style from "./CreateQusetionPage.module.css";
 import Button from "@mui/material/Button";
 import Editor from "../../Components/Editor/Editor";
 import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { userDataState } from "../../store/auth";
+import { useNavigate } from "react-router-dom";
 
 const CreateQuestionPage = () => {
   const [title, setTitle] = useState("");
@@ -11,10 +14,16 @@ const CreateQuestionPage = () => {
   const [text, setText] = useState("");
   const [tag, setTag] = useState("");
 
-  const Title = (e) => {
-    let titleValue = e.target.value;
+  const userInfo = useRecoilValue(userDataState);
+  const titleRef = useRef(null);
+  const navigate = useNavigate();
 
-    if (titleValue.length < 15) {
+  const Title = () => {
+    // let titleValue = e.target.value;
+    let titleValue = titleRef.current.value;
+    setTitle(titleValue);
+
+    if (title.length < 15) {
       setTitleMsg("❗️제목은 15자 이상이어야 합니다.");
     } else {
       setTitle(titleValue);
@@ -31,14 +40,23 @@ const CreateQuestionPage = () => {
   };
 
   const Submit = () => {
-    axios({
-      // url: "http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/questions/ask",
+    Title();
+    console.log(title);
+    console.log(text);
+
+    return axios({
+      url: "http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/questions",
       method: "post",
       data: {
+        memberId: userInfo.memberId,
+        displayName: userInfo.displayName,
         title: title,
         content: text,
         tag: tag,
       },
+    }).then((res) => {
+      console.log(res);
+      navigate("/questions");
     });
   };
 
@@ -80,7 +98,8 @@ const CreateQuestionPage = () => {
           <div id={style.title_div3}>
             <input
               type="text"
-              onBlur={Title}
+              onChange={Title}
+              ref={titleRef}
               className={style.title_div3_input}
               placeholder="e.g. Is there an R function for finding the index of an element in a vector? "
             />
