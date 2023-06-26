@@ -7,6 +7,8 @@ import Aside from "../../Components/Aside/Aside";
 import Editor from "../../Components/Editor/Editor";
 import Footer from "../../Components/Footer/Footer";
 import style from "./ReadQuestionPage.module.css";
+import { useRecoilValue } from "recoil";
+import { loginState } from "../../store/auth";
 
 const Login = () => {
   return (
@@ -103,8 +105,8 @@ const Answer = () => {
 };
 
 const ReadQuestionPage = () => {
-  const userid = 2;
-  const [login, setLogin] = useState(true);
+  const userid = sessionStorage.getItem("id");
+  const isLogin = useRecoilValue(loginState);
   const [data, setData] = useState({ createdAt: "00000000000" });
   const [answer, setAnswer] = useState([]);
   const [answertext, setAnswertext] = useState("");
@@ -250,7 +252,7 @@ const ReadQuestionPage = () => {
               </div>
             ))}
 
-            {login ? <Answer /> : <Login />}
+            {isLogin ? <Answer /> : <Login />}
           </div>
         </div>
       </div>
