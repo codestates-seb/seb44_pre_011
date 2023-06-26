@@ -1,10 +1,10 @@
 package com.district11.stackoverflow.auth.controller;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.security.core.Authentication;
 
 @Controller
 public class OAuth2Controller {

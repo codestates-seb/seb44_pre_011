@@ -7,9 +7,7 @@ import com.district11.stackoverflow.answer.entity.Answer;
 import com.district11.stackoverflow.answer.mapper.AnswerMapper;
 import com.district11.stackoverflow.answer.service.AnswerService;
 import com.district11.stackoverflow.dto.SingleResponseDto;
-import com.district11.stackoverflow.member.dto.MemberDto;
 import com.district11.stackoverflow.member.service.MemberService;
-import com.district11.stackoverflow.question.dto.QuestionResponseDto;
 import com.district11.stackoverflow.question.service.QuestionService;
 import com.district11.stackoverflow.utils.UriCreator;
 import org.springframework.http.HttpStatus;
@@ -17,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Path;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
@@ -65,7 +62,7 @@ public class AnswerController {
     }
 
     @GetMapping("/{answer-id}")
-    public  ResponseEntity<?> getAnswer(@PathVariable("answer-id") @Positive long answerId) {
+    public ResponseEntity<?> getAnswer(@PathVariable("answer-id") @Positive long answerId) {
 
         Answer answer = answerService.findVerifyAnswer(answerId);
 
@@ -74,17 +71,17 @@ public class AnswerController {
     }
 
     @GetMapping("/member/{member-id}") //질문 조회
-    public ResponseEntity getQuestionByMemberId(@PathVariable("member-id") long memberId){
+    public ResponseEntity getQuestionByMemberId(@PathVariable("member-id") long memberId) {
         List<AnswerResponseDto> response = answerService.findAnswerByMemberId(memberId);
 
-        return new ResponseEntity<>(response,HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/question/{question-id}") //질문 조회
-    public ResponseEntity getQuestionByQuestionId(@PathVariable("question-id") long questionId){
+    public ResponseEntity getQuestionByQuestionId(@PathVariable("question-id") long questionId) {
         List<AnswerResponseDto> response = answerService.findAnswerByQuestionId(questionId);
 
-        return new ResponseEntity<>(response,HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 
@@ -106,11 +103,11 @@ public class AnswerController {
     // 한 사람이 만든 질문 하나의 답변들
     @GetMapping("/{member-id}/{question-id}") //답변 조회
     public ResponseEntity getQuestionByMemberId(@PathVariable("member-id") @Positive long memberId,
-                                                @PathVariable("question-id") @Positive long questionId){
+                                                @PathVariable("question-id") @Positive long questionId) {
 
         List<AnswerResponseDto> response = answerService.findAnswersByMemberIdAndQuestionId(memberId, questionId);
 
-        return new ResponseEntity<>(response,HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     // Vote 기능

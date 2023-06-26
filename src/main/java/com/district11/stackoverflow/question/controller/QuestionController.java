@@ -1,6 +1,6 @@
 package com.district11.stackoverflow.question.controller;
+
 import com.district11.stackoverflow.dto.SingleResponseDto;
-import com.district11.stackoverflow.member.entity.Member;
 import com.district11.stackoverflow.member.service.MemberService;
 import com.district11.stackoverflow.question.dto.QuestionDto;
 import com.district11.stackoverflow.question.dto.QuestionResponseDto;
@@ -10,7 +10,6 @@ import com.district11.stackoverflow.question.service.QuestionService;
 import com.district11.stackoverflow.utils.UriCreator;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/questions")
@@ -29,11 +27,11 @@ public class QuestionController {
 
     private final static String QUESTION_DEFAULT_URL = "/questions";
 
-    private QuestionMapper mapper;
+    private final QuestionMapper mapper;
 
-    private QuestionService questionService;
+    private final QuestionService questionService;
 
-    private MemberService memberService;
+    private final MemberService memberService;
 
     public QuestionController(QuestionMapper mapper, QuestionService questionService, MemberService memberService) {
         this.mapper = mapper;
@@ -61,24 +59,24 @@ public class QuestionController {
     }
 
     @GetMapping("/{question-id}") //질문 조회
-    public ResponseEntity getQuestion(@PathVariable("question-id") long questionId){
+    public ResponseEntity getQuestion(@PathVariable("question-id") long questionId) {
         Question question = questionService.findQuestion(questionId);
 
-        return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToQuestionResponseDto(question)),HttpStatus.OK);
+        return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToQuestionResponseDto(question)), HttpStatus.OK);
     }
 
     @GetMapping("/member/{member-id}") //질문 조회
-    public ResponseEntity getQuestionByMemberId(@PathVariable("member-id") long memberId){
+    public ResponseEntity getQuestionByMemberId(@PathVariable("member-id") long memberId) {
         List<QuestionResponseDto> response = questionService.findQuestionsByMemberId(memberId);
 
-        return new ResponseEntity<>(response,HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     //검색 기능
     @GetMapping("/search/{search-Keyword}")
-    public ResponseEntity getQuestionsByTitleContaining(@PathVariable("search-Keyword") String searchKeyword){
+    public ResponseEntity getQuestionsByTitleContaining(@PathVariable("search-Keyword") String searchKeyword) {
         List<QuestionResponseDto> response = questionService.questionSearchList(searchKeyword);
-        return new ResponseEntity<>(response,HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 
@@ -110,7 +108,7 @@ public class QuestionController {
     public ResponseEntity<?> voteQuestionUp(@PathVariable("question-id") long questionId,
                                             @PathVariable("member-id") long memberId) {
         memberService.findMember(memberId);
-        Question voteQuestionUp = questionService.questionVoteUp(questionId,memberId);
+        Question voteQuestionUp = questionService.questionVoteUp(questionId, memberId);
         QuestionResponseDto response = mapper.questionToQuestionResponseDto(voteQuestionUp);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -120,7 +118,7 @@ public class QuestionController {
     public ResponseEntity<?> voteQuestionDown(@PathVariable("question-id") long questionId,
                                               @PathVariable("member-id") long memberId) {
         memberService.findMember(memberId);
-        Question voteQuestionDown = questionService.questionVoteDown(questionId,memberId);
+        Question voteQuestionDown = questionService.questionVoteDown(questionId, memberId);
         QuestionResponseDto response = mapper.questionToQuestionResponseDto(voteQuestionDown);
 
         return new ResponseEntity<>(response, HttpStatus.OK);

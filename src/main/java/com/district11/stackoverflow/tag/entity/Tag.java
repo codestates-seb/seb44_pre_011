@@ -2,7 +2,6 @@ package com.district11.stackoverflow.tag.entity;
 
 import com.district11.stackoverflow.audit.Auditable;
 import com.district11.stackoverflow.question.entity.QuestionTag;
-import lombok.CustomLog;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

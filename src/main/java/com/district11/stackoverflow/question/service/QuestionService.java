@@ -21,9 +21,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class QuestionService {
-    private QuestionRepository questionRepository;
-    private QuestionMapper questionMapper;
-    private TagRepository tagRepository;
+    private final QuestionRepository questionRepository;
+    private final QuestionMapper questionMapper;
+    private final TagRepository tagRepository;
 
     public QuestionService(QuestionRepository questionRepository, QuestionMapper questionMapper, TagRepository tagRepository) {
         this.questionRepository = questionRepository;
@@ -90,7 +90,7 @@ public class QuestionService {
     }
 
     // 검색 기능
-    public List<QuestionResponseDto> questionSearchList(String searchKeyword){
+    public List<QuestionResponseDto> questionSearchList(String searchKeyword) {
         List<Question> questions = questionRepository.findByTitleContaining(searchKeyword);
         return questionMapper.questionToQuestionResponseDtos(questions);
     }

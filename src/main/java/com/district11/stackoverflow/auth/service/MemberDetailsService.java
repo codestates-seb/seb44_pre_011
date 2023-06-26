@@ -23,6 +23,7 @@ public class MemberDetailsService implements UserDetailsService {
         this.memberRepository = memberRepository;
         this.authorityUtils = authorityUtils;
     }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Member> optionalMember = memberRepository.findByEmail(username);

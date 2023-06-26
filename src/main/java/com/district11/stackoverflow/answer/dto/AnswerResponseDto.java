@@ -1,7 +1,6 @@
 package com.district11.stackoverflow.answer.dto;
 
 import com.district11.stackoverflow.answer.entity.Answer;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

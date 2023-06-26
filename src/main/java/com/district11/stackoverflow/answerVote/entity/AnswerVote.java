@@ -3,7 +3,6 @@ package com.district11.stackoverflow.answerVote.entity;
 import com.district11.stackoverflow.answer.entity.Answer;
 import com.district11.stackoverflow.audit.Auditable;
 import com.district11.stackoverflow.member.entity.Member;
-import com.district11.stackoverflow.question.entity.Question;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -42,7 +41,7 @@ public class AnswerVote extends Auditable {
 
 
         @Getter
-        private String status;
+        private final String status;
 
         AnswerVoteStatus(String status) {
             this.status = status;

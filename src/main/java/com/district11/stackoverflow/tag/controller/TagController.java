@@ -9,7 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -30,13 +33,13 @@ public class TagController {
     @GetMapping
     public ResponseEntity getTags() {
         List<TagDto.Response> tagList = tagService.findTags();
-        return new ResponseEntity<>(tagList,HttpStatus.OK);
+        return new ResponseEntity<>(tagList, HttpStatus.OK);
     }
 
     @GetMapping("/{tag-id}")
     public ResponseEntity getTag(@PathVariable("tag-id") @Positive long tagId) {
         Tag tag = tagService.findVerifyTag(tagId);
         TagDto.Response response = tagMapper.tagToTagResponseDto(tag);
-        return new ResponseEntity(response,HttpStatus.OK);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 }

@@ -1,7 +1,6 @@
 package com.district11.stackoverflow.member.entity;
 
 import com.district11.stackoverflow.audit.Auditable;
-import lombok.Generated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

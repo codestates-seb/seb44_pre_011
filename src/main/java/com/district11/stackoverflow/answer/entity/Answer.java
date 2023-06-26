@@ -1,6 +1,5 @@
 package com.district11.stackoverflow.answer.entity;
 
-import com.district11.stackoverflow.answerVote.entity.AnswerVote;
 import com.district11.stackoverflow.audit.Auditable;
 import com.district11.stackoverflow.member.entity.Member;
 import com.district11.stackoverflow.question.entity.Question;
@@ -9,9 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @NoArgsConstructor
@@ -48,18 +45,17 @@ public class Answer extends Auditable {
     @CollectionTable(name = "answer_map", joinColumns = @JoinColumn(name = "answer_id"))
     @MapKeyColumn(name = "map_key")
     @Column(name = "map_value")
-    public Map<Long,String> AnswerMap = new HashMap<>();
+    public Map<Long, String> AnswerMap = new HashMap<>();
 
     @ElementCollection
     @CollectionTable(name = "question_map", joinColumns = @JoinColumn(name = "question_id"))
     @MapKeyColumn(name = "map_key")
     @Column(name = "map_value")
-    public Map<Long,String> questionMap = new HashMap<>();
+    public Map<Long, String> questionMap = new HashMap<>();
     /*
     @OneToMany(mappedBy = "answer", cascade = {CascadeType.REMOVE})
     private List<AnswerVote> answerVotes = new ArrayList<>();
      */
-
 
 
     // 답변 상태
@@ -68,7 +64,7 @@ public class Answer extends Auditable {
         ANSWER_DELETE("답변 삭제");
 
         @Getter
-        private String status;
+        private final String status;
 
         AnswerStatus(String status) {
             this.status = status;

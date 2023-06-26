@@ -66,7 +66,7 @@ public class AnswerService {
         Optional<Answer> optionalAnswer = answerRepository.findById(answerId);      // Optional : Null값 허용
 
         Answer findAnswer = optionalAnswer.orElseThrow(() ->
-                        new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
+                new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
 
         return findAnswer;
     }
@@ -89,7 +89,6 @@ public class AnswerService {
     }
 
 
-
     public List<AnswerResponseDto> findAnswers() {
         List<Answer> answers = answerRepository.findAll();
         return answerMapper.AnswerToAnswerResponseDtos(answers);
@@ -99,6 +98,7 @@ public class AnswerService {
         List<AnswerResponseDto> Dto = findAnswers();
         return Dto.stream().filter(d -> d.getMemberId() == memberId).collect(Collectors.toList());
     }
+
     public List<AnswerResponseDto> findAnswerByQuestionId(long questionId) {
         List<AnswerResponseDto> Dto = findAnswers();
         return Dto.stream().filter(d -> d.getQuestionId() == questionId).collect(Collectors.toList());
@@ -128,7 +128,7 @@ public class AnswerService {
             Answer updateAnswer = answerRepository.save(findAnswer);
 
             return updateAnswer;
-        }else throw new BusinessLogicException(ExceptionCode.VOTE_EXISTS);
+        } else throw new BusinessLogicException(ExceptionCode.VOTE_EXISTS);
     }
 
 }

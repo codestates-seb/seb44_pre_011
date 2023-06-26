@@ -39,7 +39,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {
-        var oAuth2User = (OAuth2User)authentication.getPrincipal();
+        var oAuth2User = (OAuth2User) authentication.getPrincipal();
         String email = String.valueOf(oAuth2User.getAttributes().get("email")); // OAuth2User 객체로부터 Resource Owner의 이메일 주소를 얻기
         String displayName = String.valueOf(oAuth2User.getAttributes().get("name")); // 이름을 얻기
 //        String profileImage = String.valueOf(oAuth2User.getAttributes().get("picture")); // 프로필 이미지 URL을 얻기
@@ -59,7 +59,8 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
     private Member saveMember(String email, String displayName) {
         memberRepository.findByEmail(email).ifPresent(it ->
-        {throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS, String.format("%s is duplicated 버그발생! OAuth2 핸들러 검사하시오.", email));
+        {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS, String.format("%s is duplicated 버그발생! OAuth2 핸들러 검사하시오.", email));
         });
         Member member = new Member();
         member.setEmail(email);

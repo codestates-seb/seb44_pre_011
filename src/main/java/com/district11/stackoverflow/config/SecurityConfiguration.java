@@ -23,6 +23,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -58,14 +59,14 @@ public class SecurityConfiguration {
                 .and()
                 .apply(new CustomFilterConfigurer())
                 .and()
-                        .authorizeHttpRequests(authorize -> authorize
-                                .antMatchers(HttpMethod.POST, "/*/members").permitAll()
-                                .antMatchers(HttpMethod.PATCH, "/*/members/**").hasRole("USER")
-                                .antMatchers(HttpMethod.GET, "/*/members").hasRole("USER")
-                                .antMatchers(HttpMethod.GET, "/*/members/**").hasAnyRole("USER", "ADMIN")
-                                .antMatchers(HttpMethod.DELETE, "/*/members/**").hasRole("USER")
-                                .antMatchers(HttpMethod.POST, "/*/questions/ask").hasRole("USER")
-                                .anyRequest().permitAll()
+                .authorizeHttpRequests(authorize -> authorize
+                        .antMatchers(HttpMethod.POST, "/*/members").permitAll()
+                        .antMatchers(HttpMethod.PATCH, "/*/members/**").hasRole("USER")
+                        .antMatchers(HttpMethod.GET, "/*/members").hasRole("USER")
+                        .antMatchers(HttpMethod.GET, "/*/members/**").hasAnyRole("USER", "ADMIN")
+                        .antMatchers(HttpMethod.DELETE, "/*/members/**").hasRole("USER")
+                        .antMatchers(HttpMethod.POST, "/*/questions/ask").hasRole("USER")
+                        .anyRequest().permitAll()
                 )
                 .oauth2Login(oauth2 -> oauth2
                         .successHandler(new OAuth2MemberSuccessHandler(jwtTokenizer, authorityUtils, memberRepository))
@@ -83,12 +84,12 @@ public class SecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3001"));
+        configuration.setAllowedOriginPatterns(List.of("*"));
+        configuration.setAllowedOrigins(List.of("http://localhost:3001"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowCredentials(true);
         configuration.addAllowedHeader("*");
-        configuration.setExposedHeaders(Arrays.asList("*"));
+        configuration.setExposedHeaders(List.of("*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

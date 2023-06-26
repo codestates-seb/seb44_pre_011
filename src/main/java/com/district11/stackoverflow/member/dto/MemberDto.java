@@ -1,15 +1,12 @@
 package com.district11.stackoverflow.member.dto;
 
 
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
-
 import java.time.LocalDateTime;
 
 public class MemberDto {

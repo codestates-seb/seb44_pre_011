@@ -1,6 +1,5 @@
 package com.district11.stackoverflow.question.entity;
 
-import com.district11.stackoverflow.audit.Auditable;
 import com.district11.stackoverflow.member.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,7 +47,7 @@ public class Question {
     @CollectionTable(name = "question_map", joinColumns = @JoinColumn(name = "question_id"))
     @MapKeyColumn(name = "map_key")
     @Column(name = "map_value")
-    public Map<Long,String> questionMap = new HashMap<>();
+    public Map<Long, String> questionMap = new HashMap<>();
 
     @LastModifiedDate
     @Column(name = "LAST_MODIFIED_AT")

@@ -1,7 +1,6 @@
 package com.district11.stackoverflow.member.controller;
 
 
-import com.district11.stackoverflow.dto.MultiResponseDto;
 import com.district11.stackoverflow.dto.SingleResponseDto;
 import com.district11.stackoverflow.exception.BusinessLogicException;
 import com.district11.stackoverflow.exception.ExceptionCode;
@@ -11,20 +10,19 @@ import com.district11.stackoverflow.member.mapper.MemberMapper;
 import com.district11.stackoverflow.member.service.MemberService;
 import com.district11.stackoverflow.utils.UriCreator;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.io.IOException;
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 
@@ -52,7 +50,7 @@ public class MemberController {
     }
 
 
-//    @GetMapping
+    //    @GetMapping
 //    public ResponseEntity getMembers(@Positive @RequestParam int page,
 //                                     @Positive @RequestParam int size) {
 //        Page<Member> pageMembers = memberService.findMembers(page - 1, size);
@@ -75,7 +73,7 @@ public class MemberController {
         requestBody.setMemberId(memberId);
         Member member = memberService.updateMember(memberMapper.memberPatchDtotoMember(requestBody));
         MemberDto.Response response = memberMapper.memberToMemberResponseDto(member);
-        return new ResponseEntity<>(response,HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/{member-id}")
