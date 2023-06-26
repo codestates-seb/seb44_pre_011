@@ -3,7 +3,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://database-1.cfhkssdrrqpz.ap-northeast-2.rds.amazonaws.com:13306/stack?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: root
-    password: ${MYSQL_PASSWORD} d4s5a612
+    password: ${MYSQL_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: create-drop  # 스키마 자동 생성
