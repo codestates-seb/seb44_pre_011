@@ -3,6 +3,8 @@ package com.district11.stackoverflow.member.controller;
 
 import com.district11.stackoverflow.dto.MultiResponseDto;
 import com.district11.stackoverflow.dto.SingleResponseDto;
+import com.district11.stackoverflow.exception.BusinessLogicException;
+import com.district11.stackoverflow.exception.ExceptionCode;
 import com.district11.stackoverflow.member.dto.MemberDto;
 import com.district11.stackoverflow.member.entity.Member;
 import com.district11.stackoverflow.member.mapper.MemberMapper;
@@ -14,11 +16,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/members")
@@ -84,6 +92,35 @@ public class MemberController {
     public ResponseEntity deleteMember(@PathVariable("member-id") @Positive long memberId) {
         memberService.deleteMember(memberId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/upload/{member-id}")
+    public String handleFileUpload(@RequestParam("file") MultipartFile file,
+                                   @PathVariable("member-id") @Positive long memberId) {
+        if (file.isEmpty()) {
+            // 파일이 없는 경우에 대한 처리
+
+            throw new BusinessLogicException(ExceptionCode.IMAGE_NOT_FOUND);
+        }
+
+        try {
+            // 파일을 저장할 경로 설정
+            String uploadDir = "/upload/img";
+            Path filePath = Path.of(uploadDir, file.getOriginalFilename());
+
+            // 파일을 지정된 경로로 복사
+            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+            Member member = memberService.findMember(memberId);
+            member.setProfileImg(filePath.toString());
+            memberService.saveMember(member);
+            // 파일 저장이 완료되었을 때 추가적인 처리를 수행할 수 있습니다.
+
+            return "파일 업로드가 완료되었습니다.";
+        } catch (IOException e) {
+            // 파일 저장 중 에러가 발생한 경우에 대한 처리
+            throw new BusinessLogicException(ExceptionCode.BAD_REQUEST);
+        }
     }
 }
 

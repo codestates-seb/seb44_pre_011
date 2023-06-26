@@ -48,5 +48,6 @@ public class MemberDto {
         private String displayName;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
+        private String profileImg;
     }
 }

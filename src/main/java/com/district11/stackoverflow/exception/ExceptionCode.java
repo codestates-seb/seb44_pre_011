@@ -10,7 +10,9 @@ public enum ExceptionCode {
     ANSWER_VOTE_NOT_FOUND(404, "Answer Vote not found"),
     TAG_NOT_FOUND(404, "Tag not found"),
     VOTE_EXISTS(409, "Vote exists"),
-    AUTHORITY_NOT_FOUND(404, "authority not found");
+    AUTHORITY_NOT_FOUND(404, "authority not found"),
+    BAD_REQUEST(400,"bad request"),
+    IMAGE_NOT_FOUND(404,"image not found");
 
     @Getter
     private int status;
