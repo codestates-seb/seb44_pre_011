@@ -40,3 +40,13 @@ export const getList = async (tab, memberId) => {
     console.error("Error getting user", error);
   }
 };
+export const editProfile = async (memberId, updateInfo) => {
+  try {
+    axios.patch(
+      `http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/members/${memberId}`,
+      updateInfo
+    );
+  } catch (error) {
+    console.error("Error updating profile", error);
+  }
+};
