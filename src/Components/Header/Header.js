@@ -1,20 +1,58 @@
 import Style from "./Header.module.css";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import Button from "@mui/material/Button";
 import MenuIcon from "@mui/icons-material/Menu";
 import Aside from "../Aside/Aside";
 import ProfileDropdown from "./ProfileDropdown";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { loginState, userDataState } from "../../store/auth";
+import axios from "axios";
 
 const Header = () => {
   const [menuView, setMenuView] = useState(false);
 
-  const [isLogin] = useState(false);
+  const isLogin = useRecoilValue(loginState);
+  const isUserData = useRecoilValue(userDataState);
+  const setLoginState = useSetRecoilState(loginState);
+  const setUserDataState = useSetRecoilState(userDataState);
 
   const toggleDropdown = () => {
     setMenuView(!menuView);
   };
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+
+    if (token) {
+      setLoginState(true);
+    }
+    const memberId = sessionStorage.getItem("id");
+    axios
+      .get(
+        `http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/members/${memberId}`
+      )
+      .then((res) => {
+        // console.log(res);
+        // const name = res.data.displayName;
+        // console.log(name);
+
+        setUserDataState({
+          createdAt: res.data.createdAt,
+          displayName: res.data.displayName,
+          email: res.data.email,
+          memberId: res.data.memberId,
+          modifiedAt: res.data.modifiedAt,
+        });
+        console.log(isUserData);
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+  }, []);
+
+  // const userInfo = () => {};
 
   return (
     <header className={Style.headerContainer}>
