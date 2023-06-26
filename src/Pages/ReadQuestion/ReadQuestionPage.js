@@ -105,7 +105,7 @@ const Answer = () => {
 const ReadQuestionPage = () => {
   const [login, setLogin] = useState(true);
   const [data, setData] = useState({ createdAt: "00000000000" });
-  const [answer, setAnswer] = useState();
+  const [answer, setAnswer] = useState([]);
 
   const EditAnswer = () => {};
 
