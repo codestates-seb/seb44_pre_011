@@ -62,6 +62,7 @@ const LoginForm = () => {
         "http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/auth/login",
         loginInfo
       )
+
       .then((res) => {
         console.log(res);
 
@@ -70,8 +71,6 @@ const LoginForm = () => {
           const token = authHeader.split(" ")[1];
           // axios.defaults.headers.common["authorization"] = `Bearer ${token}`;
           const memberId = res.headers.memberid;
-
-          console.log(memberId);
           sessionStorage.setItem("token", token);
           sessionStorage.setItem("id", memberId);
           setLoginState(true);
