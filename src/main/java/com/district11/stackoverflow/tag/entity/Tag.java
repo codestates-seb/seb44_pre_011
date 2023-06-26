@@ -23,9 +23,6 @@ public class Tag extends Auditable {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String info;
-
     @OneToMany(mappedBy = "tag")
     private List<QuestionTag> questionTags = new ArrayList<>();
 

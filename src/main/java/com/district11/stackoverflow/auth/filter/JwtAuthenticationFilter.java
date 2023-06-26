@@ -49,19 +49,21 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String accessToken = delegateAccessToken(member);
         String refreshToken = delegateRefreshToken(member);
+        String memberId = String.valueOf(member.getMemberId());
 
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh", refreshToken);
+        response.setHeader("MemberId", memberId);
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
     }
 
     private String delegateAccessToken(Member member) {
         Map<String, Object> claims = new HashMap<>();
-        //claims.put("memberId", member.getMemberId());   // 추가
+        claims.put("memberId", member.getMemberId());   // 추가
         claims.put("username", member.getEmail());
         claims.put("roles", member.getRoles());
-        //claims.put("displayName", member.getDisplayName());     // 추가
+        claims.put("displayName", member.getDisplayName());     // 추가
 
         String subject = member.getEmail();
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
