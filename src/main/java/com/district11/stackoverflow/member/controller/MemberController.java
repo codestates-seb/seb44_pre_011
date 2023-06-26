@@ -3,6 +3,8 @@ package com.district11.stackoverflow.member.controller;
 
 import com.district11.stackoverflow.dto.MultiResponseDto;
 import com.district11.stackoverflow.dto.SingleResponseDto;
+import com.district11.stackoverflow.exception.BusinessLogicException;
+import com.district11.stackoverflow.exception.ExceptionCode;
 import com.district11.stackoverflow.member.dto.MemberDto;
 import com.district11.stackoverflow.member.entity.Member;
 import com.district11.stackoverflow.member.mapper.MemberMapper;
@@ -97,7 +99,8 @@ public class MemberController {
                                    @PathVariable("member-id") @Positive long memberId) {
         if (file.isEmpty()) {
             // 파일이 없는 경우에 대한 처리
-            return "파일을 선택해주세요.";
+
+            throw new BusinessLogicException(ExceptionCode.IMAGE_NOT_FOUND);
         }
 
         try {
@@ -110,12 +113,13 @@ public class MemberController {
 
             Member member = memberService.findMember(memberId);
             member.setProfileImg(filePath.toString());
+            memberService.saveMember(member);
             // 파일 저장이 완료되었을 때 추가적인 처리를 수행할 수 있습니다.
 
             return "파일 업로드가 완료되었습니다.";
         } catch (IOException e) {
             // 파일 저장 중 에러가 발생한 경우에 대한 처리
-            return "파일 업로드 중 에러가 발생했습니다.";
+            throw new BusinessLogicException(ExceptionCode.BAD_REQUEST);
         }
     }
 }

@@ -50,6 +50,10 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
+    public void saveMember(Member member) {
+        memberRepository.save(member);
+    }
+
 
     public Member updateMember(Member member) {
         Member findMember = findMember(member.getMemberId());
