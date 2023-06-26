@@ -6,6 +6,7 @@ import Editor from "../../Components/Editor/Editor";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { userDataState } from "../../store/auth";
+import { useNavigate } from "react-router-dom";
 
 const CreateQuestionPage = () => {
   const [title, setTitle] = useState("");
@@ -14,8 +15,8 @@ const CreateQuestionPage = () => {
   const [tag, setTag] = useState("");
 
   const userInfo = useRecoilValue(userDataState);
-
   const titleRef = useRef(null);
+  const navigate = useNavigate();
 
   const Title = () => {
     // let titleValue = e.target.value;
@@ -53,7 +54,10 @@ const CreateQuestionPage = () => {
         content: text,
         tag: tag,
       },
-    }).then((res) => console.log(res));
+    }).then((res) => {
+      console.log(res);
+      navigate("/questions");
+    });
   };
 
   return (
