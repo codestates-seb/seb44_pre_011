@@ -40,14 +40,13 @@ export const getList = async (tab, memberId) => {
     console.error("Error getting user", error);
   }
 };
-export const editProfile = async (memberId, file) => {
-  console.log(memberId);
-  console.log(file);
+export const editProfile = async (memberId, updateInfo) => {
+  console.log(memberId,updateInfo)
   try {
     return await axios({
-      method: "post",
+      method: "patch",
       url: `http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/members/upload/${memberId}`,
-      data: file,
+      data: updateInfo,
     });
   } catch (error) {
     console.error("Error updating profile", error);

@@ -9,20 +9,29 @@ import { Button, Divider, TextField, Typography } from "@mui/material";
 import { editProfile, getUser } from "../../Function/api";
 const EditProfile = () => {
   const [user, setUser] = useState({});
-  const [displayName, setDisplayName] = useState(user.displayName);
+  const [updateInfo, setUpdateInfo] = useState({
+    displayName: "",
+    email: "",
+  });
   const [imageData, setIamgeData] = useState({
     image: user?.image,
     uploadImage: "",
   });
-  const [imageFile, setTest] = useState({ imageUrl: "" });
-  console.log(imageFile);
   const clickSave = async () => {
-    await editProfile(1, imageFile);
+    await editProfile(user.memberId, updateInfo)
+      .then((res) => console.log(res))
+      .catch((err) => console.error(err));
   };
   useEffect(() => {
     (async () => {
       try {
-        await getUser(1).then((res) => setUser(res.data.data));
+        await getUser(1).then((res) => {
+          setUser(res.data.data);
+          setUpdateInfo({
+            displayName: res.data.data.displayName,
+            email: res.data.data.email,
+          });
+        });
       } catch (error) {
         console.error("Error getting user", error);
       }
@@ -105,11 +114,10 @@ const EditProfile = () => {
                       hidden
                       type="file"
                       onChange={(event) => {
-                        setTest({ imageUrl: event.target.files[0] });
-                        // setIamgeData({
-                        //   image: URL.createObjectURL(event.target.files[0]),
-                        //   uploadImage: event.target.files[0],
-                        // });
+                        setIamgeData({
+                          image: URL.createObjectURL(event.target.files[0]),
+                          uploadImage: event.target.files[0],
+                        });
                       }}
                     />
                   </Button>
@@ -119,8 +127,14 @@ const EditProfile = () => {
                     Display name
                   </Typography>
                   <TextField
-                    value={displayName}
                     sx={{ width: "300px", marginTop: "8px" }}
+                    value={updateInfo.displayName}
+                    onChange={(ev) => {
+                      setUpdateInfo({
+                        ...updateInfo,
+                        displayName: ev.target.value,
+                      });
+                    }}
                   />
                 </div>
                 <div>
@@ -128,8 +142,14 @@ const EditProfile = () => {
                     Email
                   </Typography>
                   <TextField
-                    value={user.email}
                     sx={{ width: "300px", marginTop: "8px" }}
+                    value={updateInfo.email}
+                    onChange={(ev) => {
+                      setUpdateInfo({
+                        ...updateInfo,
+                        email: ev.target.value,
+                      });
+                    }}
                   />
                 </div>
                 <div className={`${styles.margin_top}`}>
