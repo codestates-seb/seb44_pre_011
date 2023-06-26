@@ -69,15 +69,13 @@ public class MemberController {
         return new ResponseEntity<>(members, HttpStatus.OK);
     }
 
-    @PatchMapping("/{member-Id}")
-    public ResponseEntity patchMember(@PathVariable @Positive long memberId,
+    @PatchMapping("/{member-id}")
+    public ResponseEntity patchMember(@PathVariable("member-id") @Positive long memberId,
                                       @Valid @RequestBody MemberDto.Patch requestBody) {
+        requestBody.setMemberId(memberId);
         Member member = memberService.updateMember(memberMapper.memberPatchDtotoMember(requestBody));
-
-        return new ResponseEntity<>(
-                new SingleResponseDto<>(memberMapper.memberToMemberResponseDto(member))
-                , HttpStatus.OK
-        );
+        MemberDto.Response response = memberMapper.memberToMemberResponseDto(member);
+        return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
     @GetMapping("/{member-id}")
@@ -105,7 +103,8 @@ public class MemberController {
 
         try {
             // 파일을 저장할 경로 설정
-            String uploadDir = "/upload/img";
+
+            String uploadDir = System.getProperty("user.dir");
             Path filePath = Path.of(uploadDir, file.getOriginalFilename());
 
             // 파일을 지정된 경로로 복사

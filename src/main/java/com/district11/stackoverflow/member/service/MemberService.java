@@ -57,7 +57,9 @@ public class MemberService {
 
     public Member updateMember(Member member) {
         Member findMember = findMember(member.getMemberId());
-        return memberRepository.save(member);
+        findMember.setPassword(member.getPassword());
+        findMember.setDisplayName(member.getDisplayName());
+        return memberRepository.save(findMember);
     }
 
     public Member findMember(long memberId) {

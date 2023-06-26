@@ -4,6 +4,7 @@ package com.district11.stackoverflow.member.dto;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -30,14 +31,15 @@ public class MemberDto {
     }
 
     @Getter
+    @Setter
     @AllArgsConstructor
     public static class Patch {
 
-        private Long memberId;
-
-        private String displayName;
+        private long memberId;
 
         private String password;
+
+        private String displayName;
     }
 
     @Getter
