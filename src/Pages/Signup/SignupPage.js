@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../../Components/Header/Header";
 import Style from "./SignupPage.module.css";
@@ -122,7 +122,7 @@ const SignUpForm = () => {
         )
         .then((res) => {
           console.log(res);
-          navigate("/questions");
+          navigate("/login");
         })
         .catch((err) => {
           console.log(err);
