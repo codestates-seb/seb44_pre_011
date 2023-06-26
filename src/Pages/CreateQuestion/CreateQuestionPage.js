@@ -32,14 +32,14 @@ const CreateQuestionPage = () => {
 
   const Submit = () => {
     axios({
-      // url: "http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/questions/ask",
+      url: "http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/questions",
       method: "post",
       data: {
         title: title,
         content: text,
         tag: tag,
       },
-    });
+    }).then((res) => console.log(res));
   };
 
   return (
