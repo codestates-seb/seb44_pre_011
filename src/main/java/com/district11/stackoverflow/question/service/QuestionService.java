@@ -58,6 +58,8 @@ public class QuestionService {
         Optional.ofNullable(question.getContent())
                 .ifPresent(findQuestion::setContent);
 
+        questionRepository.save(findQuestion);
+
         return findQuestion;
     }
 
