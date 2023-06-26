@@ -8,6 +8,7 @@ import CreateQuestionPage from "./Pages/CreateQuestion/CreateQuestionPage";
 import "./App.module.css";
 import Users from "./Pages/Users/Users";
 import EditQuestionPage from "./Pages/EditQuestion/EditQuestionPage";
+import EditProfile from "./Pages/EditProfile/EditProfile";
 
 function App() {
   return (
@@ -19,8 +20,9 @@ function App() {
       <Route element={<Users />} path="/users" />
       <Route
         element={<UserProfilePage />}
-        path={`/users/:memberId/:displayName`}
+        path={"/users/:memberId/:displayName"}
       />
+      <Route element={<EditProfile />} path={"/users/edit/:memberId"} />
       <Route element={<CreateQuestionPage />} path="/questions/ask" />
       <Route element={<EditQuestionPage />} path="/questions/edit" />
     </Routes>
