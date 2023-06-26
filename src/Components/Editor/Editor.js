@@ -9,7 +9,7 @@ const Editor = ({ text, setText }) => {
 
   const handleBody = (e, editor) => {
     const data = editor.getData(); // 입력된 값 가져오기
-    const edit_data = data.replace(/(<([^>]+)>)/ig, "");
+    const edit_data = data.replace(/(<([^>]+)>)/gi, "");
     console.log(edit_data);
 
     setText(edit_data); // 상태 업데이트
