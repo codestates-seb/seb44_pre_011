@@ -34,7 +34,7 @@ public class Member extends Auditable {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
-    //private String profileImg;
+    private String profileImg;
 
 
     public Member(String email, String password, String displayName) {
