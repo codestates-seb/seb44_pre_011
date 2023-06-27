@@ -22,8 +22,9 @@ const EditProfile = () => {
   });
   const clickSave = async () => {
     try {
-      await editProfile(user.memberId, updateInfo);
-      navigate(`/users/${id}/${updateInfo.displayName}/?tab=questions`);
+      await editProfile(user.memberId, updateInfo).then((res) => {
+        navigate(`/users/${id}/${updateInfo.displayName}/?tab=questions`);
+      });
     } catch (error) {
       console.error(error);
     }

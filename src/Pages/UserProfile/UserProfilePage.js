@@ -12,9 +12,11 @@ import PersonIcon from "@mui/icons-material/Person";
 import { makeList } from "../../Function/wrapperFunction";
 import { useLocation, useParams } from "react-router-dom";
 import { getList, getQuestions, getUser } from "../../Function/api";
+import { userDataState } from "../../store/auth";
+import {useRecoilValue} from "recoil"
 const UserProfilePage = () => {
   const id = sessionStorage.getItem("id");
-  console.log(id);
+  const userInfo = useRecoilValue(userDataState);
   const { memberId, displayName } = useParams();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -22,14 +24,14 @@ const UserProfilePage = () => {
   const [user, setUser] = useState({});
   const [items, setItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const handleList = makeList(items, currentPage, 4).map((item, idx) => (
+  const handleList = makeList(items, currentPage, 15).map((item, idx) => (
     <Questions
       key={`${tab}_${idx}`}
       questionId={item.questionId}
       title={item.title}
       content={item.content}
       createdAt={item.createdAt}
-      displayName={item.displayName}
+      displayName={userInfo.displayName}
     />
   ));
   useEffect(() => {
@@ -91,7 +93,7 @@ const UserProfilePage = () => {
                   id={styles.userInfo}
                   className={`${styles.flex_column} ${styles.justify_center}`}
                 >
-                  <span id={styles.displayName}>{user.displayName}</span>
+                  <span id={styles.displayName}>{userInfo.displayName}</span>
                   <span
                     id={styles.user_info_sub}
                     className={`${styles.flex_row} ${styles.alignItems_center} ${styles.margin_top}`}
@@ -171,7 +173,7 @@ const UserProfilePage = () => {
                 array={items}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
-                pageSize={4}
+                pageSize={15}
               />
             </div>
           </div>
