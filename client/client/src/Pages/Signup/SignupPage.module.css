@@ -1,0 +1,101 @@
+
+.signUpContainer{
+    background: rgb(228, 228, 228);
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+}
+.SignUpForm {
+    margin: 100px 0;
+}
+.SignUpForm >p{
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+    font-size: 13px;
+    line-height:1.2rem;
+}
+
+/* HeadLine */
+
+.HeadLineContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 400px;
+    margin-right: 5rem;
+}
+.HeadLineTitle{
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 40px;
+}
+.listItem{
+    display: flex;
+    font-size: 17px;
+    margin-bottom: 30px;
+}
+.Link{
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+    color: rgb(83, 83, 83);
+}
+
+/* sign up form */
+
+.formContainer{
+    width: 300px;
+    margin: 30px 0;
+    padding: 10px 0;
+    border-radius: 7px;
+    background-color: #fff;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+.form{
+    margin: 0 20px;
+}
+.form> *{
+width: 100%;
+margin: 20px 0;
+}
+.title{
+display: flex;
+flex-direction: column;
+font-weight: bold;
+}
+.input{
+    border-style: none;
+    outline: none;
+    font-size: 14px;
+    color: rgb(63, 63, 63);
+    border: 1px solid rgb(180, 180, 180);
+    border-radius: 5px;
+    height: 35px;
+}
+.checkBox{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+.checkBox p{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    margin: 5px 0;
+    line-height:1.3rem;
+}
+.note{
+    font-size: 13px;
+    line-height:1.2rem;
+}
+
+.errMsg{
+    font-size: 13px;
+    font-weight: 400;
+    color: #d95050;
+    margin-top: 5px;
+}
