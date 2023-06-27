@@ -8,7 +8,7 @@ import Editor from "../../Components/Editor/Editor";
 import Footer from "../../Components/Footer/Footer";
 import style from "./ReadQuestionPage.module.css";
 import { useRecoilValue } from "recoil";
-import { loginState } from "../../store/auth";
+import { loginState, userDataState } from "../../store/auth";
 
 const Login = () => {
   return (
@@ -56,7 +56,7 @@ const Login = () => {
   );
 };
 
-const Answer = () => {
+const Answer = ({ userdata }) => {
   const [text, setText] = useState("");
 
   const Submit = () => {
@@ -66,9 +66,8 @@ const Answer = () => {
         url: "http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/answers",
         method: "post",
         data: {
-          memberId: 2,
+          memberId: userdata.memberId,
           questionId: document.location.search.slice(4),
-          displayName: "kecod",
           content: text,
         },
       })
@@ -105,7 +104,7 @@ const Answer = () => {
 };
 
 const ReadQuestionPage = () => {
-  const userid = sessionStorage.getItem("id");
+  const userdata = useRecoilValue(userDataState);
   const isLogin = useRecoilValue(loginState);
   const [data, setData] = useState({ createdAt: "00000000000" });
   const [answer, setAnswer] = useState([]);
@@ -234,7 +233,7 @@ const ReadQuestionPage = () => {
                   <button
                     id={style.EditButton}
                     onClick={
-                      userid === obj.memberId
+                      userdata.memberId === obj.memberId
                         ? () => EditAnswer(obj.answerId, obj.content)
                         : undefined
                     }
@@ -252,7 +251,7 @@ const ReadQuestionPage = () => {
               </div>
             ))}
 
-            {isLogin ? <Answer /> : <Login />}
+            {isLogin ? <Answer userdata={userdata} /> : <Login />}
           </div>
         </div>
       </div>

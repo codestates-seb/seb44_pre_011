@@ -10,6 +10,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
+  min-height: 52.1vh;
 }
 
 #asdie {
