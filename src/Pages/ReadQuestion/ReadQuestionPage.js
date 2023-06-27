@@ -10,14 +10,15 @@ import style from "./ReadQuestionPage.module.css";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { loginState, questionIdState, memberIdState } from "../../store/auth";
 
+
 const Login = () => {
   return (
     <>
       <div id={style.login}>
         To answer a question, you must either sign up for an account
       </div>
-      <div>
-        <span className={style.buttonContainer}>
+      <div className={style.buttonContainer}>
+        <span>
           <Link to="/login">
             <Button
               variant="contained"
@@ -56,7 +57,7 @@ const Login = () => {
   );
 };
 
-const Answer = () => {
+const Answer = ({ userdata }) => {
   const [text, setText] = useState("");
 
   const Submit = () => {
@@ -66,9 +67,8 @@ const Answer = () => {
         url: "http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/answers",
         method: "post",
         data: {
-          memberId: 2,
+          memberId: userdata.memberId,
           questionId: document.location.search.slice(4),
-          displayName: "kecod",
           content: text,
         },
       })
@@ -105,7 +105,7 @@ const Answer = () => {
 };
 
 const ReadQuestionPage = () => {
-  const userid = sessionStorage.getItem("id");
+  const userdata = useRecoilValue(userDataState);
   const isLogin = useRecoilValue(loginState);
   const isMemberId = useRecoilValue(memberIdState);
   const setQuestionIdState = useSetRecoilState(questionIdState);
@@ -244,7 +244,7 @@ const ReadQuestionPage = () => {
                   <button
                     id={style.EditButton}
                     onClick={
-                      userid === obj.memberId
+                      userdata.memberId === obj.memberId
                         ? () => EditAnswer(obj.answerId, obj.content)
                         : undefined
                     }
@@ -262,7 +262,7 @@ const ReadQuestionPage = () => {
               </div>
             ))}
 
-            {isLogin ? <Answer /> : <Login />}
+            {isLogin ? <Answer userdata={userdata} /> : <Login />}
           </div>
         </div>
       </div>
