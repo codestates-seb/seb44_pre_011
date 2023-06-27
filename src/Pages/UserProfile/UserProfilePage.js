@@ -12,11 +12,8 @@ import PersonIcon from "@mui/icons-material/Person";
 import { makeList } from "../../Function/wrapperFunction";
 import { useLocation, useParams } from "react-router-dom";
 import { getList, getQuestions, getUser } from "../../Function/api";
-import { userDataState } from "../../store/auth";
-import {useRecoilValue} from "recoil"
 const UserProfilePage = () => {
   const id = sessionStorage.getItem("id");
-  const userInfo = useRecoilValue(userDataState);
   const { memberId, displayName } = useParams();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -31,7 +28,7 @@ const UserProfilePage = () => {
       title={item.title}
       content={item.content}
       createdAt={item.createdAt}
-      displayName={userInfo.displayName}
+      displayName={item.displayName}
     />
   ));
   useEffect(() => {
@@ -93,7 +90,7 @@ const UserProfilePage = () => {
                   id={styles.userInfo}
                   className={`${styles.flex_column} ${styles.justify_center}`}
                 >
-                  <span id={styles.displayName}>{userInfo.displayName}</span>
+                  <span id={styles.displayName}>{displayName}</span>
                   <span
                     id={styles.user_info_sub}
                     className={`${styles.flex_row} ${styles.alignItems_center} ${styles.margin_top}`}
