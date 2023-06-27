@@ -26,27 +26,27 @@ const Header = () => {
 
     if (token) {
       setLoginState(true);
-    }
 
-    axios
-      .get(
-        `http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/members/${memberId}`,
-        { headers: { authorization: `Bearer ${token}` } }
-      )
-      .then((res) => {
-        if (res.status === 200) {
-          setUserDataState({
-            createdAt: res.data.data.createdAt,
-            displayName: res.data.data.displayName,
-            email: res.data.data.email,
-            memberId: res.data.data.memberId,
-            modifiedAt: res.data.data.modifiedAt,
-          });
-        }
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-      });
+      axios
+        .get(
+          `http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/members/${memberId}`,
+          { headers: { authorization: `Bearer ${token}` } }
+        )
+        .then((res) => {
+          if (res.status === 200) {
+            setUserDataState({
+              createdAt: res.data.data.createdAt,
+              displayName: res.data.data.displayName,
+              email: res.data.data.email,
+              memberId: res.data.data.memberId,
+              modifiedAt: res.data.data.modifiedAt,
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err.response.data);
+        });
+    }
   }, []);
 
   return (

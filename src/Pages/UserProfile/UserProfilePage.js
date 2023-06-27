@@ -13,6 +13,7 @@ import { makeList } from "../../Function/wrapperFunction";
 import { useLocation, useParams } from "react-router-dom";
 import { getList, getQuestions, getUser } from "../../Function/api";
 const UserProfilePage = () => {
+  const id = sessionStorage.getItem("id");
   const { memberId, displayName } = useParams();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -20,7 +21,7 @@ const UserProfilePage = () => {
   const [user, setUser] = useState({});
   const [items, setItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const handleList = makeList(items, currentPage, 4).map((item, idx) => (
+  const handleList = makeList(items, currentPage, 15).map((item, idx) => (
     <Questions
       key={`${tab}_${idx}`}
       questionId={item.questionId}
@@ -89,7 +90,7 @@ const UserProfilePage = () => {
                   id={styles.userInfo}
                   className={`${styles.flex_column} ${styles.justify_center}`}
                 >
-                  <span id={styles.displayName}>{user.displayName}</span>
+                  <span id={styles.displayName}>{displayName}</span>
                   <span
                     id={styles.user_info_sub}
                     className={`${styles.flex_row} ${styles.alignItems_center} ${styles.margin_top}`}
@@ -101,7 +102,7 @@ const UserProfilePage = () => {
                     {user.email}
                   </span>
                 </div>
-                {memberId === user.memberId ? (
+                {memberId === id ? (
                   <div className={`${styles.flex_row}`}>
                     <Button
                       sx={{
@@ -110,7 +111,7 @@ const UserProfilePage = () => {
                         border: "1px solid #6a737c",
                         color: "#6a737c",
                       }}
-                      href={`/users/edit/${user.memberId}`}
+                      href={`/users/edit/${id}`}
                     >
                       <EditIcon />
                       Edit profile
@@ -169,7 +170,7 @@ const UserProfilePage = () => {
                 array={items}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
-                pageSize={4}
+                pageSize={15}
               />
             </div>
           </div>

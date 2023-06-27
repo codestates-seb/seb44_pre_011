@@ -7,8 +7,9 @@ import Aside from "../../Components/Aside/Aside";
 import Editor from "../../Components/Editor/Editor";
 import Footer from "../../Components/Footer/Footer";
 import style from "./ReadQuestionPage.module.css";
-import { useRecoilValue } from "recoil";
-import { loginState, userDataState } from "../../store/auth";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { loginState, questionIdState, memberIdState } from "../../store/auth";
+
 
 const Login = () => {
   return (
@@ -106,6 +107,9 @@ const Answer = ({ userdata }) => {
 const ReadQuestionPage = () => {
   const userdata = useRecoilValue(userDataState);
   const isLogin = useRecoilValue(loginState);
+  const isMemberId = useRecoilValue(memberIdState);
+  const setQuestionIdState = useSetRecoilState(questionIdState);
+  const setMemberIdState = useSetRecoilState(memberIdState);
   const [data, setData] = useState({ createdAt: "00000000000" });
   const [answer, setAnswer] = useState([]);
   const [answertext, setAnswertext] = useState("");
@@ -145,7 +149,11 @@ const ReadQuestionPage = () => {
         value: true,
       },
     })
-      .then((response) => setData(response.data.data))
+      .then((response) => {
+        setData(response.data.data);
+        setQuestionIdState(response.data.data.questionId);
+        setMemberIdState(response.data.data.memberId);
+      })
       .catch((err) => console.log(err));
 
     axios({
@@ -172,21 +180,24 @@ const ReadQuestionPage = () => {
           <div id={style.title}>
             <h1 id={style.h1}>
               {data.title}
-              <Link to="/questions/ask">
-                <Button
-                  variant="contained"
-                  sx={{
-                    fontSize: 13,
-                    width: "140px",
-                    height: "50px",
-                    marginTop: "10px",
-                    marginLeft: "10px",
-                    float: "right",
-                  }}
-                >
-                  Ask Question
-                </Button>
-              </Link>
+
+              {String(isMemberId) === userid && (
+                <Link to="/questions/edit">
+                  <Button
+                    variant="contained"
+                    sx={{
+                      fontSize: 13,
+                      width: "140px",
+                      height: "50px",
+                      marginTop: "10px",
+                      marginLeft: "10px",
+                      float: "right",
+                    }}
+                  >
+                    Edit Question
+                  </Button>
+                </Link>
+              )}
             </h1>
             Asked {data.createdAt.slice(0, 10)} at{" "}
             {data.createdAt.slice(11, 16)}

@@ -15,3 +15,13 @@ export const userDataState = atom({
     modifiedAt: "",
   },
 });
+
+export const questionIdState = atom({
+  key: "questionIdState",
+  default: "",
+});
+
+export const memberIdState = atom({
+  key: "memberIdState",
+  default: "",
+});

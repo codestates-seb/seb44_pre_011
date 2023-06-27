@@ -42,7 +42,15 @@ const User = ({ user }) => {
           }}
         />
       )}
-      <Typography sx={{ height: 1 }}>{user.displayName}</Typography>
+      <Typography
+        sx={{
+          width: "80px",
+          height: "100%",
+          wordWrap: "break-word",
+        }}
+      >
+        {user.displayName}
+      </Typography>
     </Button>
   );
 };
