@@ -16,8 +16,8 @@ const Login = () => {
       <div id={style.login}>
         To answer a question, you must either sign up for an account
       </div>
-      <div>
-        <span className={style.buttonContainer}>
+      <div className={style.buttonContainer}>
+        <span>
           <Link to="/login">
             <Button
               variant="contained"
