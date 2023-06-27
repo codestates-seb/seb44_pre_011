@@ -41,23 +41,28 @@ const CreateQuestionPage = () => {
 
   const Submit = () => {
     Title();
-    console.log(title);
-    console.log(text);
-
-    return axios({
-      url: "http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/questions",
-      method: "post",
-      data: {
-        memberId: userInfo.memberId,
-        displayName: userInfo.displayName,
-        title: title,
-        content: text,
-        tag: tag,
-      },
-    }).then((res) => {
-      console.log(res);
-      navigate("/questions");
-    });
+    if (!titleMsg && text.length >= 20) {
+      axios({
+        url: "http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/questions",
+        method: "post",
+        data: {
+          memberId: userInfo.memberId,
+          displayName: userInfo.displayName,
+          title: title,
+          content: text,
+          tag: tag,
+        },
+      })
+        .then((res) => {
+          console.log(res);
+          navigate("/questions");
+        })
+        .catch((err) => {
+          console.log(err.response.data);
+        });
+    } else {
+      alert("필드를 기입해주세요!");
+    }
   };
 
   return (
