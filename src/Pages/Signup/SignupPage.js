@@ -114,7 +114,7 @@ const SignUpForm = () => {
   };
 
   const postData = () => {
-    if (memberData.displayName && memberData.password && memberData.email) {
+    if (!emailErrMsg && !pwdErrMsg && !nameErrMsg) {
       axios
         .post(
           "http://ec2-3-34-211-22.ap-northeast-2.compute.amazonaws.com:8080/members",
