@@ -9,6 +9,7 @@ import "./aside.css";
 
 const Aside = () => {
   return (
+<<<<<<< HEAD
       <div id="Btns_aside">
         <NavLink
           to="/"
@@ -43,6 +44,42 @@ const Aside = () => {
           <Typography>About</Typography>
         </NavLink>
       </div>
+=======
+    <div id="Btns_aside">
+      <NavLink
+        to="/questions"
+        className="asideButton"
+        activeclassname="asideButton active"
+      >
+        <QuestionMarkIcon className="icon" />
+        <Typography>Questions</Typography>
+      </NavLink>
+      <NavLink
+        to="/tags"
+        className="asideButton "
+        activeclassname="asideButton active"
+      >
+        <LocalOfferIcon className="icon" />
+        <Typography>Tags</Typography>
+      </NavLink>
+      <NavLink
+        to="/users"
+        className="asideButton "
+        activeclassname="asideButton active"
+      >
+        <PeopleAltIcon className="icon" />
+        <Typography>Users</Typography>
+      </NavLink>
+      <NavLink
+        to="about"
+        className="asideButton "
+        activeclassname="asideButton active"
+      >
+        <SettingsIcon className="icon" />
+        <Typography>About</Typography>
+      </NavLink>
+    </div>
+>>>>>>> dev
   );
 };
 
